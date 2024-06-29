@@ -10,7 +10,7 @@ import { MdLocalGasStation } from "react-icons/md";
 import { PiBarnDuotone, PiPoliceCarFill } from "react-icons/pi";
 import { TbCamper, TbRollercoaster } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
-
+import { FaMountainCity } from "react-icons/fa6";
 
 
 const items = [
@@ -48,6 +48,7 @@ const items = [
   {text: "Unikt fordon", icon: <IoCarSportSharp />},
   {text: "Cykel", icon: <Bike />},
   {text: "Ladugård", icon: <PiBarnDuotone />},
+   {text: "Kommunskylt", icon: <FaMountainCity /> },
 ];
 
 
