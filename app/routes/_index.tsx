@@ -17,7 +17,7 @@ export default function Index() {
         <h1>Skriv in ett ord för att skapa din bingobricka</h1>
         <Form action="/bingo">
           <div className="flex flex-col space-y-2">
-            <Input type="text" name="magicword" className="border" />
+            <Input type="text" name="magicword" className="border opacit-90" />
             <Button variant="default" type="submit">
               Kör!
             </Button>
