@@ -14,6 +14,8 @@ import { PiBarnDuotone, PiPoliceCarFill, PiWindmill } from "react-icons/pi";
 import { TbCamper, TbRollercoaster } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
 
+import { FaMountainCity } from "react-icons/fa6";
+
 
 const items = [
   {text: "Utländsk bil", icon: <Car className="text-purple-950 opacity-100 h-7 w-7 md:h-9 md:w-9" />},
@@ -54,6 +56,7 @@ const items = [
   {text: "Regn", icon: <CloudRain className="text-purple-950 opacity-100 h-7 w-7 md:h-9 md:w-9" />},
   {text: "Fluffigt moln", icon: <IoCloudOutline className="text-purple-950 opacity-100 h-7 w-7 md:h-9 md:w-9" />},
   {text: "Husvagn", icon: <Caravan className="text-purple-950 opacity-100 h-7 w-7 md:h-9 md:w-9" />},
+  {text: "Kommunskylt", icon: <FaMountainCity className="text-purple-950 opacity-100 h-7 w-7 md:h-9 md:w-9" />},
 ];
 
 
