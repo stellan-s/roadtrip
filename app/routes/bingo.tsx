@@ -304,12 +304,6 @@ const items = [
     ),
   },
   {
-    text: "Budbil",
-    icon: (
-      <Truck className="text-purple-950 opacity-100 h-7 w-7 md:h-9 md:w-9" />
-    ),
-  },
-  {
     text: "Ambulans",
     icon: (
       <Ambulance className="text-purple-950 opacity-100 h-7 w-7 md:h-9 md:w-9" />
