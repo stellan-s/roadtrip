@@ -16,7 +16,9 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body  style={{background: "linear-gradient(to bottom, #84fab0, #8fd3f4)"}}>
+      <body
+        style={{ background: "linear-gradient(to bottom, #84fab0, #8fd3f4)" }}
+      >
         <Outlet />
         <ScrollRestoration />
         <Scripts />
