@@ -16,6 +16,9 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@netlify/functions": "^2.6.0",
     "@netlify/remix-adapter": "^2.3.1",
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-scroll-area": "^1.1.0",
+    "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@remix-run/node": "^2.10.0",
     "@remix-run/react": "^2.10.0",
@@ -27,7 +30,8 @@
     "lucide-react": "^0.399.0",
     "react-icons": "^5.2.1",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^0.9.1"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.10.0",

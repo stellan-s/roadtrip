@@ -1,3 +1,4 @@
+import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -5,7 +6,9 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import "./tailwind.css";
+import "./styles/fontface.css";
+import styles from "./tailwind.css?url";
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
 
 export default function App() {
   return (
@@ -17,6 +20,7 @@ export default function App() {
         <Links />
       </head>
       <body
+        className="h-dvh overflow-hidden"
         style={{ background: "linear-gradient(to bottom, #84fab0, #8fd3f4)" }}
       >
         <Outlet />
