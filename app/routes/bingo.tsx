@@ -497,7 +497,7 @@ export default function Bingo() {
           <h1
             className={cn(
               themes[theme].header,
-              `text-center mb-3 md:mb-9 text-xl md:text-5xl font-bold tracking-widest`,
+              `text-center mb-3 md:mb-9 text-4xl md:text-5xl font-bold tracking-widest`,
               "drop-shadow-lg",
             )}
           >
