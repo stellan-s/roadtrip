@@ -72,7 +72,7 @@ export default function Index() {
         <div className="w-screen overflow-hidden">
           <div
             ref={carousel}
-            className="w-[200%] flex transition-all transform-gpu duration-700 ease-out items-center justify-center"
+            className="w-[200%] flex transition-all transform-gpu duration-700 ease-out items-center justify-around"
             style={{
               transform:
                 lang === "sv"

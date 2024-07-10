@@ -74,10 +74,12 @@ const UiText = {
   en: {
     newCard: "New card",
     resetCard: "Reset card",
+    themeSelect: "Choose theme",
   },
   sv: {
     newCard: "Ny bricka",
     resetCard: "Nollställ bricka",
+    themeSelect: "Välj tema",
   },
 };
 
@@ -139,7 +141,7 @@ const items = [
     icon: <Truck className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
   },
   {
-    text: { en: "Advertisement", sv: "Reklam" },
+    text: { en: "Billboard", sv: "Reklam" },
     icon: <Megaphone className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
   },
   {
@@ -353,14 +355,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 // "linear-gradient(to bottom, #a1c4fd, #c2e9fb)",
 
 const themes = {
-  main: {
-    gradient: "linear-gradient(to bottom, #84fab0, #8fd3f4)",
-    header: "text-violet-700 opacity-90",
-    cardborder: "border-violet-300 border-2 border-opacity-80",
-    cardbg: "bg-yellow-100 bg-opacity-70",
-    cardtextcolor: "text-violet-900",
-    textcolor: "text-violet-900",
-  },
   mintbreeze: {
     gradient: "linear-gradient(to bottom, #84fab0, #8fd3f4)",
     header: "text-violet-700 opacity-90",
@@ -497,7 +491,7 @@ export default function Bingo() {
           <h1
             className={cn(
               themes[theme].header,
-              `text-center mb-3 md:mb-9 text-4xl md:text-5xl font-bold tracking-widest`,
+              `text-center mb-3 md:mb-9 text-lg uppercase md:text-5xl font-bold tracking-widest`,
               "drop-shadow-lg",
             )}
           >
@@ -544,7 +538,7 @@ export default function Bingo() {
                   <p
                     className={cn(
                       themes[theme].textcolor,
-                      "text-[10px] md:text-sm",
+                      "text-[10px] md:text-sm max-w-16",
                       markedItems.includes(sha1(item.text[language])) &&
                         themes[theme].textcolor,
                     )}
@@ -597,7 +591,7 @@ export default function Bingo() {
         <DrawerContent>
           <div className="mx-auto w-full max-w-sm">
             <DrawerHeader>
-              <DrawerTitle>Choose theme</DrawerTitle>
+              <DrawerTitle>{UiText[language].themeSelect}</DrawerTitle>
             </DrawerHeader>
             <ScrollArea className="h-full">
               <div className="p-4 pb-0 grid gap-2">
