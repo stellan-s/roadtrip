@@ -82,7 +82,7 @@ export default function Index() {
                     : "translateX(0%)",
             }}
           >
-            <div className="text-center px-2 sm:p-10">
+            <div className="text-center px-2 sm:px-10">
               <h6 className="text-center uppercase mb-3 font-bold tracking-wider">
                 Roadtrip Bingo 2000
               </h6>
@@ -108,7 +108,7 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className="px-5">
+        <div className="px-5 md:px-96">
           <Form action="/bingo">
             <div className="flex flex-col space-y-2">
               <input type="hidden" value={lang} name="language" />
