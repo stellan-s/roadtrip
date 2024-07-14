@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { LoaderFunctionArgs, json } from "@remix-run/node";
-import { useLoaderData, useNavigate } from "@remix-run/react";
+import { Link, useLoaderData, useNavigate } from "@remix-run/react";
 import { clsx, type ClassValue } from "clsx";
 import { sha1 } from "js-sha1";
 import {
@@ -27,6 +27,7 @@ import {
   ChevronLeft,
   Church,
   CloudRain,
+  Loader,
   MapPinned,
   Megaphone,
   Milestone,
@@ -47,7 +48,7 @@ import {
   Utensils,
   Waves,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useReducer } from "react";
 import { FaHatCowboySide } from "react-icons/fa";
 import {
   FaBridge,
@@ -431,46 +432,163 @@ const themes = {
 
 type Theme = keyof typeof themes;
 
+type State = { theme: Theme | undefined; markeditems: (string | 0)[] };
+type Action = {
+  type: string;
+  payload: { value: string | string[] | null; position: number | null };
+};
+function createInitialState(): State {
+  return { theme: undefined, markeditems: new Array(25).fill(0) };
+}
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "LOAD_STATE":
+      return {
+        theme: state.theme,
+        markeditems: action.payload.value as State["markeditems"],
+      };
+    case "MARK_ITEM":
+      return {
+        theme: state.theme,
+        markeditems: [
+          ...state.markeditems.map((item: string | 0, index: number) =>
+            index === action.payload.position ? action.payload.value : item,
+          ),
+        ] as State["markeditems"],
+      };
+    case "UNMARK_ITEM":
+      return {
+        theme: state.theme,
+        markeditems: [
+          ...state.markeditems.map((item: string | 0, index: number) =>
+            index === action.payload.position ? 0 : item,
+          ),
+        ],
+      };
+    case "CLEAR_ITEMS":
+      return {
+        theme: state.theme,
+        markeditems: [
+          ...state.markeditems.map(() => 0),
+        ] as State["markeditems"],
+      };
+    case "SET_THEME":
+      return {
+        theme: action.payload.value as Theme,
+        markeditems: state.markeditems,
+      };
+    default:
+      return state;
+  }
+}
+
 export default function Bingo() {
   const { bingoGrid, language } = useLoaderData<typeof loader>();
-  const [markedItems, setMarkedItems] = useState<string[]>([]);
-  const [theme, setTheme] = useState<Theme>("lavenderbliss");
+  const [state, dispatch] = useReducer(reducer, null, createInitialState);
   const navigate = useNavigate();
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
 
-  // synchronize initially
+    let theme, markeditems;
+
+    // legacy cleanup
+    window.localStorage.removeItem("marked-items");
+    window.localStorage.removeItem("theme");
+
+    const stateString = window.localStorage.getItem("game_state");
+
+    if (!stateString || stateString === "") {
+      console.log("No saved state found");
+      window.localStorage.setItem(
+        "game_state",
+        JSON.stringify({
+          theme: "mintbreeze",
+          markeditems: new Array(25).fill(0),
+        }),
+      );
+      return;
+    }
+
+    try {
+      const parsedState = JSON.parse(stateString);
+
+      if (parsedState && typeof parsedState === "object") {
+        if (parsedState.theme && Array.isArray(parsedState.markeditems)) {
+          theme = parsedState.theme;
+          markeditems = parsedState.markeditems;
+        } else {
+          throw new Error("Invalid structure");
+        }
+      } else {
+        throw new Error("Invalid JSON");
+      }
+    } catch (error) {
+      console.error("Failed to parse state string:", error);
+      theme = "tropicalsunrise";
+      markeditems = [];
+    }
+
+    dispatch({
+      type: "LOAD_STATE",
+      payload: { value: markeditems, position: null },
+    });
+    dispatch({ type: "SET_THEME", payload: { value: theme, position: null } });
+  }, []);
+
+  // // sync to local storage
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
 
-    const itemString = window.localStorage.getItem("marked-items");
-    const themeString = window.localStorage.getItem("theme");
-
-    if (!itemString || itemString === "[]") {
-      console.log("No marked items found or marked items are empty.");
+    if (state.markeditems.every((item) => item === 0)) {
       return;
     }
 
-    if (!themeString || themeString === "") {
-      console.log("No theme found.");
+    const stateString = window.localStorage.getItem("game_state");
+
+    if (!stateString || stateString === "") {
+      console.info("No saved state found");
       return;
     }
 
-    const markedItems = JSON.parse(itemString);
-    const currenttheme = JSON.parse(themeString);
-    setMarkedItems(markedItems);
-    setTheme(currenttheme);
-  }, []);
+    const { theme } = JSON.parse(stateString);
 
-  // synchronize on change
-  useEffect(() => {
-    window.localStorage.setItem("marked-items", JSON.stringify(markedItems));
-  }, [markedItems]);
+    const currentState = { theme: theme, markeditems: state.markeditems };
+    window.localStorage.setItem("game_state", JSON.stringify(currentState));
+  }, [state.markeditems]);
 
-  // synchronize on change
+  // Check for bingo
   useEffect(() => {
-    window.localStorage.setItem("theme", JSON.stringify(theme));
-  }, [theme]);
+    // Check rows
+    for (let i = 0; i < 25; i += 5) {
+      if (state.markeditems.slice(i, i + 5).every((item) => item !== 0)) {
+        console.log("BINGO ON ROW", i / 5 + 1);
+      }
+    }
+    // Check columns
+    for (let i = 0; i < 5; i++) {
+      const arr = [];
+      for (let j = 0; j < 5; j++) {
+        arr.push(state.markeditems[j * 5 + i]);
+      }
+      if (arr.every((item) => item !== 0)) {
+        console.log("BINGO ON COLUMN", i + 1);
+      }
+    }
+    // Check diagonals
+    const diagonal1 = [0, 6, 12, 18, 24];
+    const diagonal2 = [4, 8, 12, 16, 20];
+    if (diagonal1.every((i) => state.markeditems[i] !== 0)) {
+      console.log("BINGO ON DIAGONAL 1");
+    }
+    if (diagonal2.every((i) => state.markeditems[i] !== 0)) {
+      console.log("BINGO ON DIAGONAL 2");
+    }
+  }, [state?.markeditems]);
 
   const handleStartOver = () => {
     handleReset();
@@ -478,27 +596,47 @@ export default function Bingo() {
   };
 
   const handleReset = () => {
-    setMarkedItems([]);
+    dispatch({ type: "CLEAR_ITEMS", payload: { value: null, position: null } });
+    // explicitly delete items from local storage
+    // if we do it in the useEffect above it will be reset on game load
+    const gamestate = window.localStorage.getItem("game_state");
+    if (gamestate) {
+      const { theme } = JSON.parse(gamestate);
+      window.localStorage.setItem(
+        "game_state",
+        JSON.stringify({ theme, markeditems: new Array(25).fill(0) }),
+      );
+    }
   };
+
+  if (!state.theme) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center">
+        <Loader size={96} className="animate-spin" color="violet" />
+      </div>
+    );
+  }
 
   return (
     <div
-      className="bg-green-300 w-full h-screen"
-      style={{ background: themes[theme].gradient }}
+      className="bg-green-300 w-full h-screen transition-all duration-1000 ease-in-out"
+      style={{
+        background: themes[state.theme as Theme].gradient,
+      }}
     >
       <div className="h-svh overflow-hidden container flex">
         <div className="m-auto">
           <h1
             className={cn(
-              themes[theme].header,
-              `text-center mb-3 md:mb-9 text-lg uppercase md:text-5xl font-bold tracking-widest`,
+              themes[state.theme as Theme].header,
+              `text-center mb-3 md:mb-5 text-lg uppercase md:text-4xl font-bold tracking-wider`,
               "drop-shadow-lg",
             )}
           >
             Roadtrip Bingo 2000
           </h1>
           <div className="grid grid-cols-5 gap-2">
-            {bingoGrid.map((item) => {
+            {bingoGrid.map((item, index) => {
               return (
                 <div
                   key={item.text[language]}
@@ -507,27 +645,34 @@ export default function Bingo() {
                   <div
                     key={item.text[language]}
                     className={cn(
-                      themes[theme].cardtextcolor,
-                      themes[theme].cardborder,
-                      themes[theme].cardbg,
-                      "box-border overflow-hidden text-wrap aspect-square rounded-md flex items-center justify-center p-3",
-                      markedItems.includes(sha1(item.text[language])) &&
+                      themes[state.theme as Theme].cardtextcolor,
+                      themes[state.theme as Theme].cardborder,
+                      themes[state.theme as Theme].cardbg,
+                      "box-border overflow-hidden text-wrap aspect-square rounded-md flex text-center items-center justify-center p-3",
+                      state?.markeditems.includes(sha1(item.text[language])) &&
                         "bg-green-400 border-green-300 border-2 border-opacity-100 bg-opacity-80 box-border",
                     )}
                     role="button"
                     tabIndex={0}
                     onClick={() => {
-                      if (markedItems.includes(sha1(item.text[language]))) {
-                        setMarkedItems(
-                          markedItems.filter(
-                            (i) => i !== sha1(item.text[language]),
-                          ),
-                        );
+                      if (
+                        state?.markeditems.includes(sha1(item.text[language]))
+                      ) {
+                        dispatch({
+                          type: "UNMARK_ITEM",
+                          payload: {
+                            value: sha1(item.text[language]),
+                            position: index,
+                          },
+                        });
                       } else {
-                        setMarkedItems([
-                          ...markedItems,
-                          sha1(item.text[language]),
-                        ]);
+                        dispatch({
+                          type: "MARK_ITEM",
+                          payload: {
+                            value: sha1(item.text[language]),
+                            position: index,
+                          },
+                        });
                       }
                     }}
                     onKeyDown={() => {}}
@@ -537,10 +682,11 @@ export default function Bingo() {
                   </div>
                   <p
                     className={cn(
-                      themes[theme].textcolor,
-                      "text-[10px] md:text-sm max-w-16",
-                      markedItems.includes(sha1(item.text[language])) &&
-                        themes[theme].textcolor,
+                      themes[state.theme as Theme].textcolor,
+                      "text-[10px] md:text-sm max-w-24 ",
+                      state?.markeditems.includes(sha1(item.text[language])) &&
+                        state.theme &&
+                        themes[state.theme as Theme].textcolor,
                     )}
                   >
                     {item.text[language]}
@@ -554,7 +700,10 @@ export default function Bingo() {
               onClick={handleStartOver}
               variant="link"
               size="sm"
-              className={cn(themes[theme].textcolor, "w-1/2 mt-3 text-sm")}
+              className={cn(
+                themes[state.theme as Theme].textcolor,
+                "w-1/2 mt-3 text-sm",
+              )}
             >
               <ChevronLeft className="w-4 h-4" />
               {UiText[language].newCard}
@@ -563,7 +712,10 @@ export default function Bingo() {
               onClick={handleReset}
               variant="link"
               size="sm"
-              className={cn(themes[theme].textcolor, "w-1/2 mt-3 text-sm")}
+              className={cn(
+                themes[state.theme as Theme].textcolor,
+                "w-1/2 mt-3 text-sm",
+              )}
             >
               <RefreshCcw className="w-4 h-4 mr-2" />
               {UiText[language].resetCard}
@@ -583,7 +735,10 @@ export default function Bingo() {
           <div className="absolute top-1 right-0">
             <Button variant="ghost">
               <Settings
-                className={cn(themes[theme].cardtextcolor, "w-5 h-5")}
+                className={cn(
+                  themes[state.theme as Theme].textcolor,
+                  "w-5 h-5",
+                )}
               />
             </Button>
           </div>
@@ -598,7 +753,20 @@ export default function Bingo() {
                 {Object.keys(themes).map((key) => (
                   <Button
                     key={key}
-                    onClick={() => setTheme(key as Theme)}
+                    onClick={() => {
+                      console.log(key);
+                      dispatch({
+                        type: "SET_THEME",
+                        payload: { value: key as Theme, position: null },
+                      });
+                      window.localStorage.setItem(
+                        "game_state",
+                        JSON.stringify({
+                          theme: key,
+                          markeditems: state.markeditems,
+                        }),
+                      );
+                    }}
                     variant="outline"
                     size="sm"
                     style={{ background: themes[key as Theme].gradient }}
@@ -630,5 +798,11 @@ export default function Bingo() {
 }
 
 export function ErrorBoundary() {
-  return <p>Ett oväntat fel uppstod</p>;
+  return (
+    <div className="h-screen w-full flex flex-col items-center justify-center font-sans">
+      <h1 className="uppercase text-7xl font-bold">Ouch!</h1>
+      <p>There was an error :(</p>
+      <Link to="/">Try again?</Link>
+    </div>
+  );
 }

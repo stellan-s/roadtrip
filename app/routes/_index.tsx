@@ -108,7 +108,7 @@ export default function Index() {
             </div>
           </div>
         </div>
-        <div className="px-5 md:px-96">
+        <div className="px-5 lg:px-80 3xl:px-96">
           <Form action="/bingo">
             <div className="flex flex-col space-y-2">
               <input type="hidden" value={lang} name="language" />
