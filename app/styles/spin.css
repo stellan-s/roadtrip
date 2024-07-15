@@ -1,0 +1,48 @@
+.is_bingo {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(360deg);
+  }
+}
+
+.neon-text {
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  text-shadow:
+    0 0 5px #00f,
+    0 0 10px #00f,
+    0 0 20px #00f,
+    0 0 40px #0ff,
+    0 0 80px #0ff,
+    0 0 120px #0ff;
+  animation: neon 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes neon {
+  from {
+    text-shadow:
+      0 0 5px #00f,
+      0 0 10px #00f,
+      0 0 20px #00f,
+      0 0 40px #0ff,
+      0 0 80px #0ff,
+      0 0 120px #0ff;
+  }
+  to {
+    text-shadow:
+      0 0 10px #00f,
+      0 0 20px #00f,
+      0 0 30px #00f,
+      0 0 50px #0ff,
+      0 0 100px #0ff,
+      0 0 150px #0ff;
+  }
+}

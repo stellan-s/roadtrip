@@ -48,7 +48,7 @@ import {
   Utensils,
   Waves,
 } from "lucide-react";
-import { useEffect, useLayoutEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { FaHatCowboySide } from "react-icons/fa";
 import {
   FaBridge,
@@ -67,7 +67,9 @@ import { LuCoffee } from "react-icons/lu";
 import { MdLocalGasStation } from "react-icons/md";
 import { PiBarnDuotone, PiPoliceCarFill, PiWindmill } from "react-icons/pi";
 import { TbCamper, TbHelicopter, TbRollercoaster } from "react-icons/tb";
+import { useReward } from "react-rewards";
 import { twMerge } from "tailwind-merge";
+import "../styles/spin.css";
 
 type Language = "en" | "sv";
 
@@ -76,11 +78,13 @@ const UiText = {
     newCard: "New card",
     resetCard: "Reset card",
     themeSelect: "Choose theme",
+    bingoStartOver: "Click to start over",
   },
   sv: {
     newCard: "Ny bricka",
     resetCard: "Nollställ bricka",
     themeSelect: "Välj tema",
+    bingoStartOver: "Klicka för att börja om",
   },
 };
 
@@ -486,8 +490,18 @@ function reducer(state: State, action: Action): State {
 export default function Bingo() {
   const { bingoGrid, language } = useLoaderData<typeof loader>();
   const [state, dispatch] = useReducer(reducer, null, createInitialState);
+  const { reward } = useReward("rewardId", "confetti", {
+    elementCount: 1200,
+    spread: 200,
+    decay: 0.9,
+    angle: 90,
+    lifetime: 600,
+    startVelocity: 40,
+  });
+  const [isBingo, setIsBingo] = useState(false);
   const navigate = useNavigate();
-  useLayoutEffect(() => {
+
+  useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
@@ -565,18 +579,21 @@ export default function Bingo() {
   useEffect(() => {
     // Check rows
     for (let i = 0; i < 25; i += 5) {
-      if (state.markeditems.slice(i, i + 5).every((item) => item !== 0)) {
+      const row = state.markeditems.slice(i, i + 5);
+      if (row.every((item) => item !== 0)) {
         console.log("BINGO ON ROW", i / 5 + 1);
+        setIsBingo(true);
       }
     }
     // Check columns
     for (let i = 0; i < 5; i++) {
-      const arr = [];
+      const col = [];
       for (let j = 0; j < 5; j++) {
-        arr.push(state.markeditems[j * 5 + i]);
+        col.push(state.markeditems[j * 5 + i]);
       }
-      if (arr.every((item) => item !== 0)) {
+      if (col.every((item) => item !== 0)) {
         console.log("BINGO ON COLUMN", i + 1);
+        setIsBingo(true);
       }
     }
     // Check diagonals
@@ -584,11 +601,22 @@ export default function Bingo() {
     const diagonal2 = [4, 8, 12, 16, 20];
     if (diagonal1.every((i) => state.markeditems[i] !== 0)) {
       console.log("BINGO ON DIAGONAL 1");
+
+      setIsBingo(true);
     }
     if (diagonal2.every((i) => state.markeditems[i] !== 0)) {
       console.log("BINGO ON DIAGONAL 2");
+
+      setIsBingo(true);
     }
   }, [state?.markeditems]);
+
+  useEffect(() => {
+    if (isBingo) {
+      reward();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBingo]);
 
   const handleStartOver = () => {
     handleReset();
@@ -607,6 +635,7 @@ export default function Bingo() {
         JSON.stringify({ theme, markeditems: new Array(25).fill(0) }),
       );
     }
+    setIsBingo(false);
   };
 
   if (!state.theme) {
@@ -619,11 +648,37 @@ export default function Bingo() {
 
   return (
     <div
-      className="bg-green-300 w-full h-screen transition-all duration-1000 ease-in-out"
+      className="bg-green-300 w-full h-screen transition-all duration-1000 ease-in-out relative"
       style={{
         background: themes[state.theme as Theme].gradient,
       }}
     >
+      {isBingo ? (
+        <div
+          role="button"
+          onClick={handleStartOver}
+          className="absolute w-full h-full bg-black bg-opacity-70 z-50 overflow-hidden"
+          tabIndex={0}
+          onKeyDown={handleStartOver}
+        >
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 bg-transparent h-0 w-0"
+            id="rewardId"
+          ></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2">
+            <p
+              className={cn(
+                "neon-text text-7xl font-extrabold text-pink-400 opacity-90",
+              )}
+            >
+              BINGO!
+            </p>
+            <p className="text-white font-light text-center drop-shadow-sm">
+              {UiText[language].bingoStartOver}
+            </p>
+          </div>
+        </div>
+      ) : null}
       <div className="h-svh overflow-hidden container flex">
         <div className="m-auto">
           <h1
@@ -635,7 +690,7 @@ export default function Bingo() {
           >
             Roadtrip Bingo 2000
           </h1>
-          <div className="grid grid-cols-5 gap-2">
+          <div className="relative grid grid-cols-5 gap-2">
             {bingoGrid.map((item, index) => {
               return (
                 <div
