@@ -27,7 +27,6 @@ import {
   ChevronLeft,
   Church,
   CloudRain,
-  Loader,
   MapPinned,
   Megaphone,
   Milestone,
@@ -70,6 +69,11 @@ import { TbCamper, TbHelicopter, TbRollercoaster } from "react-icons/tb";
 import { useReward } from "react-rewards";
 import { twMerge } from "tailwind-merge";
 import "../styles/spin.css";
+import { BingoHeader } from "@/components/bingo/BingoHeader";
+import { BingoOverlay } from "@/components/bingo/BingoOverlay";
+import { ActionButtons } from "@/components/bingo/ActionButtons";
+import { BingoGrid } from "@/components/bingo/BingoGrid";
+import { generateBingoGrid } from "@/lib/generateBingoGrid";
 
 type Language = "en" | "sv";
 
@@ -88,262 +92,19 @@ const UiText = {
   },
 };
 
-const items = [
-  {
-    text: { en: "Foreign car", sv: "Utländsk bil" },
-    icon: <Car className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Roadside diner", sv: "Vägkrog" },
-    icon: <Utensils className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Livestock", sv: "Boskap" },
-    icon: <FaHatCowboySide className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Rest area", sv: "Rastplats" },
-    icon: <LuCoffee className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Roadwork", sv: "Vägarbete" },
-    icon: <TrafficCone className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Railroad crossing", sv: "Tågövergång" },
-    icon: <TrainTrack className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Windmill", sv: "Väderkvarn" },
-    icon: <PiWindmill className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Watercourse", sv: "Vattendrag" },
-    icon: <Waves className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Campsite", sv: "Campingplats" },
-    icon: <Tent className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Hill", sv: "Kulle" },
-    icon: <Mountain className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Wildlife sign", sv: "Viltskylt" },
-    icon: <Milestone className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Park", sv: "Park" },
-    icon: <Shrub className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Bridge", sv: "Bro" },
-    icon: <FaBridge className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Truck", sv: "Lastbil" },
-    icon: <Truck className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Billboard", sv: "Reklam" },
-    icon: <Megaphone className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Motorcycle", sv: "Motorcykel" },
-    icon: <FaMotorcycle className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Police car", sv: "Polisbil" },
-    icon: <PiPoliceCarFill className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Emergency response", sv: "Utryckning" },
-    icon: <Siren className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Convertible", sv: "Cabriolet" },
-    icon: <CarFront className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Motorhome", sv: "Husbil" },
-    icon: <TbCamper className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Fast food", sv: "Snabbmat" },
-    icon: <IoFastFoodOutline className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Viewpoint", sv: "Utsikt" },
-    icon: <Telescope className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Amusement park", sv: "Nöjespark" },
-    icon: <TbRollercoaster className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Tractor", sv: "Traktor" },
-    icon: <Tractor className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Airport", sv: "Flygplats" },
-    icon: <TowerControl className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Tunnel", sv: "Tunnel" },
-    icon: <FaCarTunnel className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Gas station", sv: "Bensinstation" },
-    icon: <MdLocalGasStation className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Ferry", sv: "Färja" },
-    icon: <FaFerry className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Solar panels", sv: "Solpaneler" },
-    icon: <Sun className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Vintage car", sv: "Veteranbil" },
-    icon: <Car className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Radio advertisement", sv: "Radioreklam" },
-    icon: <BoomBox className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Unique vehicle", sv: "Unikt fordon" },
-    icon: <IoCarSportSharp className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Bicycle", sv: "Cykel" },
-    icon: <Bike className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Barn", sv: "Ladugård" },
-    icon: <PiBarnDuotone className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Landmark", sv: "Sevärdhet" },
-    icon: <Castle className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Rain", sv: "Regn" },
-    icon: <CloudRain className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Fluffy cloud", sv: "Fluffigt moln" },
-    icon: <IoCloudOutline className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Caravan", sv: "Husvagn" },
-    icon: <Caravan className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Changing municipality", sv: "Byter kommun" },
-    icon: <FaMountainCity className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Airplane", sv: "Flygplan" },
-    icon: <Plane className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Helicopter", sv: "Helikopter" },
-    icon: <TbHelicopter className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Delivery truck", sv: "Budbil" },
-    icon: <Truck className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Ambulance", sv: "Ambulans" },
-    icon: <Ambulance className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "County border", sv: "Korsar länsgräns" },
-    icon: <MapPinned className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Church", sv: "Kyrka" },
-    icon: <Church className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Rental car", sv: "Hyrbil" },
-    icon: <Car className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Wind turbine", sv: "Vindkraftverk" },
-    icon: <GiWindTurbine className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Speed camera", sv: "Fartkamera" },
-    icon: <Cctv className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-  {
-    text: { en: "Sea", sv: "Havet" },
-    icon: <Anchor className="opacity-100 h-7 w-7 md:h-9 md:w-9" />,
-  },
-];
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-}
-
-function generateBingoGrid(
-  seed: string,
-  numItems: number = 25,
-): { text: Record<Language, string>; icon: React.ReactNode }[] {
-  // Convert the seed string to a SHA-1 hash
-  const hash = sha1(seed);
-
-  // Convert the hash to a list of numbers
-  const numbers: number[] = [];
-  for (let i = 0; i < hash.length; i += 2) {
-    numbers.push(parseInt(hash.slice(i, i + 2), 16));
-  }
-
-  // Ensure the numbers are within the range of the items list
-  const itemIndices = numbers.map((num) => num % items.length);
-
-  // Select a unique set of items based on the indices
-  const selectedItems: {
-    text: Record<Language, string>;
-    icon: React.ReactNode;
-  }[] = [];
-  const usedIndices = new Set<number>();
-
-  for (const idx of itemIndices) {
-    if (!usedIndices.has(idx) && selectedItems.length < numItems) {
-      selectedItems.push(items[idx]);
-      usedIndices.add(idx);
-    }
-  }
-
-  // If there are not enough unique items, fill in with remaining items
-  let i = 0;
-  while (selectedItems.length < numItems) {
-    if (!usedIndices.has(i % items.length)) {
-      selectedItems.push(items[i % items.length]);
-      usedIndices.add(i % items.length);
-    }
-    i++;
-  }
-
-  return selectedItems;
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const magicword = url.searchParams.get("magicword");
   const language = (url.searchParams.get("language") || "sv") as Language;
-  const bingoSeed = magicword || "default";
-  const bingoGrid = generateBingoGrid(bingoSeed);
 
   return json(
     {
-      bingoGrid,
+      magicword,
       language,
     },
     {
@@ -351,13 +112,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     },
   );
 };
-
-// "",
-// "linear-gradient(to bottom, #84fab0, #8fd3f4)",
-// "linear-gradient(to bottom, #d4fc79, #96e6a1)",
-// "linear-gradient(to bottom, #a6c0fe, #f68084)",
-// "linear-gradient(to bottom, #cfd9df, #e2ebf0)",
-// "linear-gradient(to bottom, #a1c4fd, #c2e9fb)",
 
 const themes = {
   mintbreeze: {
@@ -439,13 +193,16 @@ type Theme = keyof typeof themes;
 type State = { theme: Theme | undefined; markeditems: (string | 0)[] };
 type Action = {
   type: string;
-  payload: { value: string | string[] | null; position: number | null };
+  payload: { value: string | string[] | number | null; position: number | null };
 };
+
 function createInitialState(): State {
-  return { theme: undefined, markeditems: new Array(25).fill(0) };
+  return { theme: "tropicalsunrise", markeditems: new Array(25).fill(0) };
 }
 
 function reducer(state: State, action: Action): State {
+  console.log("🚀 ~ reducer ~ state:", state)
+  console.log("🚀 ~ reducer ~ action:", action)
   switch (action.type) {
     case "LOAD_STATE":
       return {
@@ -488,14 +245,15 @@ function reducer(state: State, action: Action): State {
 }
 
 export default function Bingo() {
-  const { bingoGrid, language } = useLoaderData<typeof loader>();
+  const { magicword, language } = useLoaderData<typeof loader>();
+  const bingoGrid = generateBingoGrid(magicword ?? "", 25);
   const [state, dispatch] = useReducer(reducer, null, createInitialState);
   const { reward } = useReward("rewardId", "confetti", {
-    elementCount: 1200,
-    spread: 200,
+    elementCount: 350,
+    spread: 120,
     decay: 0.9,
     angle: 90,
-    lifetime: 600,
+    lifetime: 170,
     startVelocity: 40,
   });
   const [isBingo, setIsBingo] = useState(false);
@@ -565,7 +323,14 @@ export default function Bingo() {
     const stateString = window.localStorage.getItem("game_state");
 
     if (!stateString || stateString === "") {
-      console.info("No saved state found");
+      console.log("No saved state found");
+      window.localStorage.setItem(
+        "game_state",
+        JSON.stringify({
+          theme: "mintbreeze",
+          markeditems: new Array(25).fill(0),
+        }),
+      );
       return;
     }
 
@@ -618,6 +383,14 @@ export default function Bingo() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBingo]);
 
+  const handleToggleItem = (index: number, hash: string) => {
+    const isAlreadyMarked = state.markeditems.includes(hash);
+    dispatch({
+      type: isAlreadyMarked ? "UNMARK_ITEM" : "MARK_ITEM",
+      payload: { value: isAlreadyMarked ? null : hash, position: index },
+    });
+  };
+
   const handleStartOver = () => {
     handleReset();
     navigate("/");
@@ -638,13 +411,7 @@ export default function Bingo() {
     setIsBingo(false);
   };
 
-  if (!state.theme) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center">
-        <Loader size={96} className="animate-spin" color="violet" />
-      </div>
-    );
-  }
+  
 
   return (
     <div
@@ -654,128 +421,36 @@ export default function Bingo() {
       }}
     >
       {isBingo ? (
-        <div
-          role="button"
+        <BingoOverlay
+          show={isBingo}
           onClick={handleStartOver}
-          className="absolute w-full h-full bg-black bg-opacity-70 z-50 overflow-hidden"
-          tabIndex={0}
-          onKeyDown={handleStartOver}
-        >
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 bg-transparent h-0 w-0"
-            id="rewardId"
-          ></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2">
-            <p
-              className={cn(
-                "neon-text text-7xl font-extrabold text-pink-400 opacity-90",
-              )}
-            >
-              BINGO!
-            </p>
-            <p className="text-white font-light text-center drop-shadow-sm">
-              {UiText[language].bingoStartOver}
-            </p>
-          </div>
-        </div>
+          text={UiText[language].bingoStartOver}
+          textColorClass={themes[state.theme as Theme].textcolor}
+        />
       ) : null}
       <div className="h-svh overflow-hidden container flex">
         <div className="m-auto">
-          <h1
-            className={cn(
-              themes[state.theme as Theme].header,
-              `text-center mb-3 md:mb-5 text-lg uppercase md:text-4xl font-bold tracking-wider`,
-              "drop-shadow-lg",
-            )}
-          >
-            Roadtrip Bingo 2000
-          </h1>
-          <div className="relative grid grid-cols-5 gap-2">
-            {bingoGrid.map((item, index) => {
-              return (
-                <div
-                  key={item.text[language]}
-                  className="aspect-square text-center flex flex-col justify-center items-center box-border max-w-24"
-                >
-                  <div
-                    key={item.text[language]}
-                    className={cn(
-                      themes[state.theme as Theme].cardtextcolor,
-                      themes[state.theme as Theme].cardborder,
-                      themes[state.theme as Theme].cardbg,
-                      "box-border overflow-hidden text-wrap aspect-square rounded-md flex text-center items-center justify-center p-3",
-                      state?.markeditems.includes(sha1(item.text[language])) &&
-                        "bg-green-400 border-green-300 border-2 border-opacity-100 bg-opacity-80 box-border",
-                    )}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => {
-                      if (
-                        state?.markeditems.includes(sha1(item.text[language]))
-                      ) {
-                        dispatch({
-                          type: "UNMARK_ITEM",
-                          payload: {
-                            value: sha1(item.text[language]),
-                            position: index,
-                          },
-                        });
-                      } else {
-                        dispatch({
-                          type: "MARK_ITEM",
-                          payload: {
-                            value: sha1(item.text[language]),
-                            position: index,
-                          },
-                        });
-                      }
-                    }}
-                    onKeyDown={() => {}}
-                  >
-                    {items.find((i) => i.text[language] === item.text[language])
-                      ?.icon || <div />}
-                  </div>
-                  <p
-                    className={cn(
-                      themes[state.theme as Theme].textcolor,
-                      "text-[10px] md:text-sm max-w-24 ",
-                      state?.markeditems.includes(sha1(item.text[language])) &&
-                        state.theme &&
-                        themes[state.theme as Theme].textcolor,
-                    )}
-                  >
-                    {item.text[language]}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-          <div className="w-full gap-3 flex">
-            <Button
-              onClick={handleStartOver}
-              variant="link"
-              size="sm"
-              className={cn(
-                themes[state.theme as Theme].textcolor,
-                "w-1/2 mt-3 text-sm",
-              )}
-            >
-              <ChevronLeft className="w-4 h-4" />
-              {UiText[language].newCard}
-            </Button>
-            <Button
-              onClick={handleReset}
-              variant="link"
-              size="sm"
-              className={cn(
-                themes[state.theme as Theme].textcolor,
-                "w-1/2 mt-3 text-sm",
-              )}
-            >
-              <RefreshCcw className="w-4 h-4 mr-2" />
-              {UiText[language].resetCard}
-            </Button>
-          </div>
+          <BingoHeader textColorClass={themes[state.theme as Theme].textcolor} />
+          <BingoGrid
+            grid={bingoGrid}
+            language={language}
+            markedItems={state.markeditems.map(item => item === 0 ? "" : item)}
+            onToggleItem={handleToggleItem}
+            themeClasses={{
+              cardtextcolor: themes[state.theme as Theme].cardtextcolor,
+              cardborder: themes[state.theme as Theme].cardborder,
+              cardbg: themes[state.theme as Theme].cardbg,
+              textcolor: themes[state.theme as Theme].textcolor,
+            }}
+          />
+          <ActionButtons
+            onStartOver={() => {
+              navigate("/");
+            }}
+            onReset={handleReset}
+            textColorClass={themes[state.theme as Theme].textcolor}
+            texts={UiText[language]}
+          />
         </div>
       </div>
       {/* <div className="p-3">

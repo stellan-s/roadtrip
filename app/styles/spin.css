@@ -1,18 +1,3 @@
-.is_bingo {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  animation: spin 5s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotateX(0deg);
-  }
-  100% {
-    transform: rotateX(360deg);
-  }
-}
-
 .neon-text {
   font-family: "Arial", sans-serif;
   text-align: center;
