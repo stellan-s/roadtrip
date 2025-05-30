@@ -1,17 +1,15 @@
 import { BingoCell } from "./BingoCell";
 import { iconMap } from "@/constants/iconMap";
-import { IconKey } from "@/constants/items";
+import { IconKey, Language } from "@/constants/items";
 import { sha1 } from "js-sha1";
 
 export function BingoGrid({
   grid,
-  language,
   markedItems,
   onToggleItem,
   themeClasses,
 }: {
-  grid: { text: Record<"sv" | "en", string>; key: IconKey }[];
-  language: "sv" | "en";
+  grid: { text: string; key: IconKey }[];
   markedItems: string[];
   onToggleItem: (index: number, hash: string) => void;
   themeClasses: {
@@ -22,21 +20,23 @@ export function BingoGrid({
   };
 }) {
   return (
-    <div className="relative grid grid-cols-5 gap-2">
-      {grid.map((item, index) => {
-        const label = item.text[language];
-        const hash = sha1(label);
-        return (
-          <BingoCell
-            key={label}
-            icon={iconMap[item.key]}
-            label={label}
-            isMarked={markedItems.includes(hash)}
-            onToggle={() => onToggleItem(index, hash)}
-            themeClasses={themeClasses}
-          />
-        );
-      })}
+    <div className="w-full p-4 flex items-center justify-center">
+      <div className="grid grid-cols-5 gap-4 items-start middle mx-auto">
+        {grid.map((item, index) => {
+          const label = item.text;
+          const hash = sha1(label);
+          return (
+            <BingoCell
+              key={label}
+              icon={iconMap[item.key]}
+              label={label}
+              isMarked={markedItems.includes(hash)}
+              onToggle={() => onToggleItem(index, hash)}
+              themeClasses={themeClasses}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -21,7 +21,9 @@ export default function App() {
       </head>
       <body
         className="h-dvh overflow-hidden"
-        style={{ background: "linear-gradient(to bottom, #84fab0, #8fd3f4)" }}
+        style={{
+          background: "linear-gradient(to bottom, #12c2e9, #c471ed, #f64f59)",
+        }}
       >
         <Outlet />
         <ScrollRestoration />

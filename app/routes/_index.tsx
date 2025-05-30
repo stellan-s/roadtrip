@@ -46,11 +46,7 @@ export default function Index() {
 
   return (
     <div className="h-svh flex items-center justify-center container">
-      <LanguageSwitcher lang={lang} setLang={setLang} carouselRef={carousel} />
-      <div>
-        <IntroCarousel lang={lang} />
-        <StartForm lang={lang} />
-      </div>
+      <StartForm lang={lang} />
     </div>
   );
 }

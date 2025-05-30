@@ -1,4 +1,3 @@
-
 import { NeonText } from "../shared/NeonText";
 
 export function BingoOverlay({
@@ -17,7 +16,7 @@ export function BingoOverlay({
     <div
       role="button"
       onClick={onClick}
-      className="absolute w-full h-full bg-black bg-opacity-20 z-40 overflow-hidden"
+      className="absolute w-full h-full bg-black bg-opacity-20 z-40 overflow-hidden bg-opacity-80"
       tabIndex={0}
       onKeyDown={onClick}
     >
@@ -27,7 +26,9 @@ export function BingoOverlay({
       ></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2">
         <NeonText>BINGO!</NeonText>
-        <p className={`text-white font-light text-center drop-shadow-sm ${textColorClass}`}>
+        <p
+          className={`text-white font-light text-center drop-shadow-sm ${textColorClass}`}
+        >
           {text}
         </p>
       </div>

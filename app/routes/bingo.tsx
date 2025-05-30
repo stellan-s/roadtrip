@@ -1,3 +1,7 @@
+import { ActionButtons } from "@/components/bingo/ActionButtons";
+import { BingoGrid } from "@/components/bingo/BingoGrid";
+import { BingoHeader } from "@/components/bingo/BingoHeader";
+import { BingoOverlay } from "@/components/bingo/BingoOverlay";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -9,75 +13,29 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { generateBingoGrid } from "@/lib/generateBingoGrid";
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { Link, useLoaderData, useNavigate } from "@remix-run/react";
 import { clsx, type ClassValue } from "clsx";
-import { sha1 } from "js-sha1";
-import {
-  Ambulance,
-  Anchor,
-  Bike,
-  BoomBox,
-  Car,
-  CarFront,
-  Caravan,
-  Castle,
-  Cctv,
-  Check,
-  ChevronLeft,
-  Church,
-  CloudRain,
-  MapPinned,
-  Megaphone,
-  Milestone,
-  Mountain,
-  Plane,
-  RefreshCcw,
-  Settings,
-  Shrub,
-  Siren,
-  Sun,
-  Telescope,
-  Tent,
-  TowerControl,
-  Tractor,
-  TrafficCone,
-  TrainTrack,
-  Truck,
-  Utensils,
-  Waves,
-} from "lucide-react";
-import { useEffect, useReducer, useState } from "react";
-import { FaHatCowboySide } from "react-icons/fa";
-import {
-  FaBridge,
-  FaCarTunnel,
-  FaFerry,
-  FaMotorcycle,
-  FaMountainCity,
-} from "react-icons/fa6";
-import { GiWindTurbine } from "react-icons/gi";
-import {
-  IoCarSportSharp,
-  IoCloudOutline,
-  IoFastFoodOutline,
-} from "react-icons/io5";
-import { LuCoffee } from "react-icons/lu";
-import { MdLocalGasStation } from "react-icons/md";
-import { PiBarnDuotone, PiPoliceCarFill, PiWindmill } from "react-icons/pi";
-import { TbCamper, TbHelicopter, TbRollercoaster } from "react-icons/tb";
+import { Check, Settings } from "lucide-react";
+import { startTransition, useEffect, useReducer, useState } from "react";
 import { useReward } from "react-rewards";
 import { twMerge } from "tailwind-merge";
 import "../styles/spin.css";
-import { BingoHeader } from "@/components/bingo/BingoHeader";
-import { BingoOverlay } from "@/components/bingo/BingoOverlay";
-import { ActionButtons } from "@/components/bingo/ActionButtons";
-import { BingoGrid } from "@/components/bingo/BingoGrid";
-import { generateBingoGrid } from "@/lib/generateBingoGrid";
 
 type Language = "en" | "sv";
 
-const UiText = {
+const DEFAULT_SEED = "a-space-robot-in-a-car";
+
+export const UiText: Record<
+  "en" | "sv" | "fr" | "de" | "es" | "it" | "fi" | "no" | "da",
+  {
+    newCard: string;
+    resetCard: string;
+    themeSelect: string;
+    bingoStartOver: string;
+  }
+> = {
   en: {
     newCard: "New card",
     resetCard: "Reset card",
@@ -90,8 +48,49 @@ const UiText = {
     themeSelect: "Välj tema",
     bingoStartOver: "Klicka för att börja om",
   },
+  fr: {
+    newCard: "Nouvelle carte",
+    resetCard: "Réinitialiser la carte",
+    themeSelect: "Choisir le thème",
+    bingoStartOver: "Cliquez pour recommencer",
+  },
+  de: {
+    newCard: "Neue Karte",
+    resetCard: "Karte zurücksetzen",
+    themeSelect: "Thema auswählen",
+    bingoStartOver: "Klicken, um neu zu starten",
+  },
+  es: {
+    newCard: "Nueva tarjeta",
+    resetCard: "Restablecer tarjeta",
+    themeSelect: "Elegir tema",
+    bingoStartOver: "Haz clic para empezar de nuevo",
+  },
+  it: {
+    newCard: "Nuova carta",
+    resetCard: "Reimposta carta",
+    themeSelect: "Scegli tema",
+    bingoStartOver: "Clicca per ricominciare",
+  },
+  fi: {
+    newCard: "Uusi kortti",
+    resetCard: "Nollaa kortti",
+    themeSelect: "Valitse teema",
+    bingoStartOver: "Napsauta aloittaaksesi alusta",
+  },
+  no: {
+    newCard: "Nytt kort",
+    resetCard: "Tilbakestill kort",
+    themeSelect: "Velg tema",
+    bingoStartOver: "Klikk for å starte på nytt",
+  },
+  da: {
+    newCard: "Nyt kort",
+    resetCard: "Nulstil kort",
+    themeSelect: "Vælg tema",
+    bingoStartOver: "Klik for at starte forfra",
+  },
 };
-
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -99,12 +98,12 @@ export function cn(...inputs: ClassValue[]) {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  const magicword = url.searchParams.get("magicword");
+  const seed = url.searchParams.get("seed") || DEFAULT_SEED;
   const language = (url.searchParams.get("language") || "sv") as Language;
 
   return json(
     {
-      magicword,
+      seed,
       language,
     },
     {
@@ -183,8 +182,8 @@ const themes = {
     header: "text-orange-200",
     cardborder: "border-violet-900 border-2 border-opacity-30",
     cardbg: "bg-violet-300 bg-opacity-40",
-    cardtextcolor: "text-violet-900",
-    textcolor: "text-violet-900",
+    cardtextcolor: "text-yellow-100",
+    textcolor: "text-yellow-100",
   },
 };
 
@@ -193,7 +192,10 @@ type Theme = keyof typeof themes;
 type State = { theme: Theme | undefined; markeditems: (string | 0)[] };
 type Action = {
   type: string;
-  payload: { value: string | string[] | number | null; position: number | null };
+  payload: {
+    value: string | string[] | number | null;
+    position: number | null;
+  };
 };
 
 function createInitialState(): State {
@@ -201,8 +203,8 @@ function createInitialState(): State {
 }
 
 function reducer(state: State, action: Action): State {
-  console.log("🚀 ~ reducer ~ state:", state)
-  console.log("🚀 ~ reducer ~ action:", action)
+  console.log("🚀 ~ reducer ~ state:", state);
+  console.log("🚀 ~ reducer ~ action:", action);
   switch (action.type) {
     case "LOAD_STATE":
       return {
@@ -245,9 +247,13 @@ function reducer(state: State, action: Action): State {
 }
 
 export default function Bingo() {
-  const { magicword, language } = useLoaderData<typeof loader>();
-  const bingoGrid = generateBingoGrid(magicword ?? "", 25);
-  const [state, dispatch] = useReducer(reducer, null, createInitialState);
+  const { seed, language } = useLoaderData<typeof loader>();
+  console.log("🚀 ~ Bingo ~ seed,:", seed);
+  const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
+  console.log("🚀 ~ Bingo ~ state:", state);
+  const bingoGrid = generateBingoGrid(seed ?? "", language, 25);
+  console.log("🚀 ~ Bingo ~ bingoGrid:", bingoGrid);
+
   const { reward } = useReward("rewardId", "confetti", {
     elementCount: 350,
     spread: 120,
@@ -256,6 +262,7 @@ export default function Bingo() {
     lifetime: 170,
     startVelocity: 40,
   });
+
   const [isBingo, setIsBingo] = useState(false);
   const navigate = useNavigate();
 
@@ -411,11 +418,11 @@ export default function Bingo() {
     setIsBingo(false);
   };
 
-  
+  if (!state || !state.theme) return null;
 
   return (
     <div
-      className="bg-green-300 w-full h-screen transition-all duration-1000 ease-in-out relative"
+      className="bg-green-300 w-full h-screen relative"
       style={{
         background: themes[state.theme as Theme].gradient,
       }}
@@ -428,13 +435,16 @@ export default function Bingo() {
           textColorClass={themes[state.theme as Theme].textcolor}
         />
       ) : null}
-      <div className="h-svh overflow-hidden container flex">
-        <div className="m-auto">
-          <BingoHeader textColorClass={themes[state.theme as Theme].textcolor} />
+      <div className="h-svh overflow-hidden container flex items-center justify-center">
+        <div className="m-auto grid gap-3 items-center justify-center w-full">
+          <BingoHeader
+            textColorClass={themes[state.theme as Theme].textcolor}
+          />
           <BingoGrid
             grid={bingoGrid}
-            language={language}
-            markedItems={state.markeditems.map(item => item === 0 ? "" : item)}
+            markedItems={state.markeditems.map((item) =>
+              item === 0 ? "" : item,
+            )}
             onToggleItem={handleToggleItem}
             themeClasses={{
               cardtextcolor: themes[state.theme as Theme].cardtextcolor,
@@ -445,10 +455,11 @@ export default function Bingo() {
           />
           <ActionButtons
             onStartOver={() => {
-              navigate("/");
+              startTransition(() => navigate("/"));
             }}
             onReset={handleReset}
             textColorClass={themes[state.theme as Theme].textcolor}
+            backgroundColorClass={themes[state.theme as Theme].cardbg}
             texts={UiText[language]}
           />
         </div>
@@ -473,10 +484,12 @@ export default function Bingo() {
             </Button>
           </div>
         </DrawerTrigger>
-        <DrawerContent>
+        <DrawerContent className="bg-opacity-50 backdrop-blur-md bg-white">
           <div className="mx-auto w-full max-w-sm">
             <DrawerHeader>
-              <DrawerTitle>{UiText[language].themeSelect}</DrawerTitle>
+              <DrawerTitle className="text-2xl text-center font-bold opacity-70 tracking-wide">
+                {UiText[language].themeSelect}
+              </DrawerTitle>
             </DrawerHeader>
             <ScrollArea className="h-full">
               <div className="p-4 pb-0 grid gap-2">
