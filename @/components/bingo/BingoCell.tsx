@@ -27,7 +27,7 @@ export function BingoCell({
   };
 }) {
   return (
-    <div className="max-w-20 pt-1 pb-2 flex flex-col items-center text-center">
+    <div className="max-w-20 pt-0 pb-0 flex flex-col items-center text-center">
       <div
         className={cn(
           themeClasses.cardtextcolor,

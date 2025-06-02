@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { generateBingoGrid } from "@/lib/generateBingoGrid";
-import { LoaderFunctionArgs, json } from "@remix-run/node";
+import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData, useNavigate } from "@remix-run/react";
 import { clsx, type ClassValue } from "clsx";
 import { Check, Loader, Settings } from "lucide-react";
@@ -483,6 +483,20 @@ function reducer(state: State, action: Action): State {
   }
 }
 
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Roadtrip bingo" },
+    { name: "description", content: "This is Roadtrip Bingo" },
+    {
+      name: "theme-color",
+      content: () => {
+        const theme = themes.tropicalsunrise; // default theme
+        return theme.gradient ? theme.gradient.split(",")[0].trim() : "#ffffff";
+      },
+    },
+  ];
+};
+
 export default function Bingo() {
   const [hasClientData, setHasClientData] = useState(false);
   const { seed, language } = useLoaderData<typeof loader>();
@@ -692,7 +706,7 @@ export default function Bingo() {
             textColorClass={themes[state.theme as Theme].textcolor}
           />
         ) : null}
-        <div className="h-svh overflow-hidden container flex items-center justify-center">
+        <div className="h-svh overflow-y-scroll py-5 container flex items-center justify-center">
           <div className="m-auto grid gap-3 items-center justify-center w-full">
             <BingoHeader
               textColorClass={themes[state.theme as Theme].textcolor}

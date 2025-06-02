@@ -20,7 +20,7 @@ export default function App() {
         <Links />
       </head>
       <body
-        className="h-dvh overflow-hidden"
+        className="h-dvh overflow-y-scroll"
         style={{
           background: "linear-gradient(to bottom, #12c2e9, #c471ed, #f64f59)",
         }}
