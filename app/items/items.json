@@ -18,13 +18,13 @@
     "text": {
       "en": "Roadside diner",
       "sv": "Vägkrog",
-      "fr": "Restaurant routier",
+      "fr": "Resto routier",
       "de": "Straßenimbiss",
-      "es": "Cafetería junto a la carretera",
-      "it": "Ristorante lungo la strada",
+      "es": "Cafetería carretera",
+      "it": "Ristoro stradale",
       "fi": "Tienvarsiravintola",
-      "no": "Spisested ved veikanten",
-      "da": "Spisested ved vejkanten"
+      "no": "Spisested veikant",
+      "da": "Spisested veikant"
     }
   },
   {
@@ -46,10 +46,10 @@
     "text": {
       "en": "Rest area",
       "sv": "Rastplats",
-      "fr": "Aire de repos",
+      "fr": "Aire repos",
       "de": "Rastplatz",
-      "es": "Área de descanso",
-      "it": "Area di sosta",
+      "es": "Área descanso",
+      "it": "Area sosta",
       "fi": "Levähtyspaikka",
       "no": "Rastplass",
       "da": "Rastested"
@@ -90,8 +90,8 @@
       "sv": "Väderkvarn",
       "fr": "Moulin à vent",
       "de": "Windmühle",
-      "es": "Molino de viento",
-      "it": "Mulino a vento",
+      "es": "Molino viento",
+      "it": "Mulino vento",
       "fi": "Tuulimylly",
       "no": "Vindmølle",
       "da": "Vindmølle"
@@ -104,8 +104,8 @@
       "sv": "Vattendrag",
       "fr": "Cours d'eau",
       "de": "Wasserlauf",
-      "es": "Curso de agua",
-      "it": "Corso d'acqua",
+      "es": "Curso agua",
+      "it": "Corso acqua",
       "fi": "Vesistö",
       "no": "Vassdrag",
       "da": "Vandløb"
@@ -144,11 +144,11 @@
     "text": {
       "en": "Wildlife sign",
       "sv": "Viltskylt",
-      "fr": "Panneau de signalisation d'animaux sauvages",
+      "fr": "Panneau faune",
       "de": "Wildwarnschild",
-      "es": "Señal de fauna salvaje",
-      "it": "Cartello animali selvatici",
-      "fi": "Villieläinvaroitusmerkki",
+      "es": "Señal fauna",
+      "it": "Cartello fauna",
+      "fi": "Villieläinvaroitus",
       "no": "Viltskilt",
       "da": "Vildtskilt"
     }
@@ -200,10 +200,10 @@
     "text": {
       "en": "Billboard",
       "sv": "Reklam",
-      "fr": "Panneau publicitaire",
+      "fr": "Pub",
       "de": "Werbetafel",
-      "es": "Cartel publicitario",
-      "it": "Cartello pubblicitario",
+      "es": "Cartel",
+      "it": "Cartello",
       "fi": "Mainostaulu",
       "no": "Reklameskilt",
       "da": "Reklameskilt"
@@ -216,8 +216,8 @@
       "sv": "Motorcykel",
       "fr": "Moto",
       "de": "Motorrad",
-      "es": "Motocicleta",
-      "it": "Motocicletta",
+      "es": "Moto",
+      "it": "Moto",
       "fi": "Moottoripyörä",
       "no": "Motorsykkel",
       "da": "Motorcykel"
@@ -228,10 +228,10 @@
     "text": {
       "en": "Police car",
       "sv": "Polisbil",
-      "fr": "Voiture de police",
+      "fr": "Voiture police",
       "de": "Polizeiauto",
-      "es": "Coche de policía",
-      "it": "Auto della polizia",
+      "es": "Coche policía",
+      "it": "Auto polizia",
       "fi": "Poliisiauto",
       "no": "Politibil",
       "da": "Politibil"
@@ -242,11 +242,11 @@
     "text": {
       "en": "Emergency response",
       "sv": "Utryckning",
-      "fr": "Intervention d'urgence",
+      "fr": "Urgence",
       "de": "Notfalleinsatz",
-      "es": "Respuesta de emergencia",
-      "it": "Intervento di emergenza",
-      "fi": "Hätätilannevastaus",
+      "es": "Intervención",
+      "it": "Intervento",
+      "fi": "Hätätilanne",
       "no": "Utrykning",
       "da": "Udrykning"
     }
@@ -284,7 +284,7 @@
     "text": {
       "en": "Fast food",
       "sv": "Snabbmat",
-      "fr": "Restauration rapide",
+      "fr": "Fast-food",
       "de": "Fast Food",
       "es": "Comida rápida",
       "it": "Fast food",
@@ -298,10 +298,10 @@
     "text": {
       "en": "Viewpoint",
       "sv": "Utsikt",
-      "fr": "Point de vue",
+      "fr": "Point vue",
       "de": "Aussichtspunkt",
       "es": "Mirador",
-      "it": "Punto panoramico",
+      "it": "Belvedere",
       "fi": "Näköalapaikka",
       "no": "Utsiktspunkt",
       "da": "Udsigtspunkt"
@@ -312,10 +312,10 @@
     "text": {
       "en": "Amusement park",
       "sv": "Nöjespark",
-      "fr": "Parc d'attractions",
+      "fr": "Parc",
       "de": "Vergnügungspark",
-      "es": "Parque de atracciones",
-      "it": "Parco divertimenti",
+      "es": "Parque",
+      "it": "Parco",
       "fi": "Huvipuisto",
       "no": "Fornøyelsespark",
       "da": "Forlystelsespark"
@@ -370,8 +370,8 @@
       "sv": "Bensinstation",
       "fr": "Station-service",
       "de": "Tankstelle",
-      "es": "Estación de servicio",
-      "it": "Stazione di servizio",
+      "es": "Gasolinera",
+      "it": "Benzinaio",
       "fi": "Huoltoasema",
       "no": "Bensinstasjon",
       "da": "Tankstation"
@@ -410,10 +410,10 @@
     "text": {
       "en": "Radio advertisement",
       "sv": "Radioreklam",
-      "fr": "Publicité radio",
+      "fr": "Pub radio",
       "de": "Radiowerbung",
-      "es": "Anuncio de radio",
-      "it": "Pubblicità radiofonica",
+      "es": "Anuncio radio",
+      "it": "Pub radio",
       "fi": "Radiomainos",
       "no": "Radioreklame",
       "da": "Radioreklame"
@@ -424,7 +424,7 @@
     "text": {
       "en": "Unique vehicle",
       "sv": "Unikt fordon",
-      "fr": "Véhicule unique",
+      "fr": "Véhic unique",
       "de": "Einzigartiges Fahrzeug",
       "es": "Vehículo único",
       "it": "Veicolo unico",
@@ -466,10 +466,10 @@
     "text": {
       "en": "Landmark",
       "sv": "Sevärdhet",
-      "fr": "Site d'intérêt",
+      "fr": "Site",
       "de": "Sehenswürdigkeit",
-      "es": "Atracción turística",
-      "it": "Attrazione turistica",
+      "es": "Atracción",
+      "it": "Sito",
       "fi": "Nähtävyys",
       "no": "Attraksjon",
       "da": "Seværdighed"
@@ -494,10 +494,10 @@
     "text": {
       "en": "Fluffy cloud",
       "sv": "Fluffigt moln",
-      "fr": "Nuage duveteux",
+      "fr": "Nuage",
       "de": "Flauschige Wolke",
-      "es": "Nube esponjosa",
-      "it": "Nuvola soffice",
+      "es": "Nube",
+      "it": "Nuvola",
       "fi": "Pehmeä pilvi",
       "no": "Luftig sky",
       "da": "Luftig sky"
@@ -522,13 +522,13 @@
     "text": {
       "en": "Changing municipality",
       "sv": "Byter kommun",
-      "fr": "Changement de commune",
+      "fr": "Changement commune",
       "de": "Gemeindewechsel",
-      "es": "Cambio de municipio",
-      "it": "Cambio di comune",
+      "es": "Cambio municipio",
+      "it": "Cambio comune",
       "fi": "Kunnan vaihto",
-      "no": "Endring av kommune",
-      "da": "Skift af kommune"
+      "no": "Endring kommune",
+      "da": "Skift kommune"
     }
   },
   {
@@ -550,7 +550,7 @@
     "text": {
       "en": "Helicopter",
       "sv": "Helikopter",
-      "fr": "Hélicoptère",
+      "fr": "Hélico",
       "de": "Hubschrauber",
       "es": "Helicóptero",
       "it": "Elicottero",
@@ -578,10 +578,10 @@
     "text": {
       "en": "County border",
       "sv": "Korsar länsgräns",
-      "fr": "Frontière du comté",
+      "fr": "Frontière",
       "de": "Kreisgrenze",
-      "es": "Frontera del condado",
-      "it": "Confine di contea",
+      "es": "Frontera condado",
+      "it": "Confine contea",
       "fi": "Läänin raja",
       "no": "Fylkesgrense",
       "da": "Amtsgrænse"
@@ -620,11 +620,11 @@
     "text": {
       "en": "Speed camera",
       "sv": "Fartkamera",
-      "fr": "Radar de vitesse",
+      "fr": "Radar",
       "de": "Geschwindigkeitskamera",
-      "es": "Radar de velocidad",
+      "es": "Radar",
       "it": "Autovelox",
-      "fi": "Nopeusvalvontakamera",
+      "fi": "Nopeuskamera",
       "no": "Fartskamera",
       "da": "Fartkamera"
     }
