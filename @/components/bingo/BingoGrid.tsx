@@ -1,6 +1,6 @@
 import { BingoCell } from "./BingoCell";
 import { iconMap } from "@/constants/iconMap";
-import { IconKey, Language } from "@/constants/items";
+import { IconKey } from "@/constants/items";
 import { sha1 } from "js-sha1";
 
 export function BingoGrid({
@@ -17,10 +17,18 @@ export function BingoGrid({
     cardborder: string;
     cardbg: string;
     textcolor: string;
+    buttonbgcolor: string;
+    buttontext: string;
+    buttonborder: string;
+    buttonhover: string;
+    buttonshadow: string;
+    ismarkedbg: string;
+    ismarkedborder: string;
+    ismarkedtext: string;
   };
 }) {
   return (
-    <div className="w-full p-4 flex items-center justify-center">
+    <div className="w-full p-0 flex items-center justify-center">
       <div className="grid grid-cols-5 gap-4 items-start middle mx-auto">
         {grid.map((item, index) => {
           const label = item.text;

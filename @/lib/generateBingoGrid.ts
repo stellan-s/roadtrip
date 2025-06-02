@@ -1,6 +1,5 @@
 import { sha1 } from "js-sha1";
 import { items, IconKey, Language } from "@/constants/items";
-console.log("🚀 ~ items:", items.length);
 export function generateBingoGrid(
   seed: string,
   language: Language = "en",
@@ -23,7 +22,7 @@ export function generateBingoGrid(
     if (!usedIndices.has(idx) && selectedItems.length < numItems) {
       selectedItems.push({
         text: items[idx].text[language],
-        key: items[idx].key,
+        key: items[idx].key as IconKey,
       });
       usedIndices.add(idx);
     }
@@ -35,7 +34,7 @@ export function generateBingoGrid(
     if (!usedIndices.has(idx)) {
       selectedItems.push({
         text: items[idx].text[language],
-        key: items[idx].key,
+        key: items[idx].key as IconKey,
       });
       usedIndices.add(idx);
     }

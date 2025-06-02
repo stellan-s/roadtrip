@@ -10,6 +10,7 @@ import {
   MapPin,
   Shuffle,
   Sparkles,
+  Square,
   Star,
   Zap,
 } from "lucide-react";
@@ -216,10 +217,10 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
                 <Button
                   type="button"
                   onClick={getRandomWord}
-                  className="absolute right-1 top-1 h-8 w-8 p-0 rounded-lg bg-purple-200/80 hover:bg-purple-400/80 text-blue-800"
+                  className="absolute right-1 top-1 h-8 w-8 p-0 rounded-none bg-purple-200/80 hover:bg-purple-400/80 text-blue-800"
                   title="Get random word"
                 >
-                  <Dices className="h-4 w-4" />
+                  <Sparkles className="h-4 w-4" />
                   <span className="sr-only">Get random word</span>
                 </Button>
               </div>
@@ -283,7 +284,7 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
             </Button>
           </Form>
 
-          <div className="mt-8 text-center">
+          <div className=" mt-3 text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-none">
               <p className="text-gray-600 text-xs font-medium">
                 Each word creates a unique board. Try different words for new
@@ -293,11 +294,16 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
           </div>
 
           {/* Support message */}
-          <div className="mt-6 text-center">
-            <p className="text-gray-500 text-xs flex items-center justify-center gap-1">
-              <Coffee className="w-3 h-3 text-orange-500" />
+          <div className="mt-6 text-center flex flex-col items-center gap-2">
+            <p className="text-gray-500 text-xs inline items-baseline">
+              <Square className="w-3 h-3 text-black fill-black rounded-full inline-block mr-1" />
+              Built with love – and a respect for time, privacy and usefulness –
+              in the spirit of <span className="uppercase">insimply</span>.
+            </p>
+            <p className="text-gray-500 w-2/3 text-xs flex items-center justify-center gap-1">
+              <Coffee className="w-6 h-6 text-violet-500" />
               Enjoying the app? Consider supporting the developer!
-              <Coffee className="w-3 h-3 text-orange-500" />
+              <Coffee className="w-6 h-6 text-violet-500" />
             </p>
           </div>
         </div>

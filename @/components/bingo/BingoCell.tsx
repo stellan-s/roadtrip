@@ -16,6 +16,14 @@ export function BingoCell({
     cardborder: string;
     cardbg: string;
     textcolor: string;
+    buttonbgcolor: string;
+    buttontext: string;
+    buttonborder: string;
+    buttonhover: string;
+    buttonshadow: string;
+    ismarkedbg: string;
+    ismarkedborder: string;
+    ismarkedtext: string;
   };
 }) {
   return (
@@ -25,10 +33,17 @@ export function BingoCell({
           themeClasses.cardtextcolor,
           themeClasses.cardborder,
           themeClasses.cardbg,
+          themeClasses.textcolor,
+          themeClasses.buttonbgcolor,
+          themeClasses.buttontext,
+          themeClasses.buttonborder,
+          themeClasses.buttonhover,
+          themeClasses.buttonshadow,
           "shadow-xl hover:shadow-2xl transition-all duration-300 py-4 transform hover:scale-105 active:scale-95",
           "aspect-square w-full rounded-md flex items-center justify-center box-border overflow-hidden",
-          isMarked &&
-            "bg-green-400 border-green-300 border-2 border-opacity-100 bg-opacity-80",
+          isMarked && themeClasses.ismarkedborder,
+          isMarked && themeClasses.ismarkedbg,
+          isMarked && themeClasses.ismarkedtext,
         )}
         role="button"
         tabIndex={0}
@@ -37,15 +52,33 @@ export function BingoCell({
       >
         {icon}
       </div>
+      <BingoLabel
+        label={label}
+        textColorClass={cn(
+          themeClasses.textcolor,
+          "text-xs text-center mt-1 leading-tight tracking-tight font-mono",
+        )}
+      />
+    </div>
+  );
+
+  interface BingoLabelProps {
+    label: string;
+    textColorClass: string;
+  }
+
+  function BingoLabel({ label, textColorClass }: BingoLabelProps) {
+    return (
       <p
         className={cn(
-          "flex justify-center items-center",
-          themeClasses.textcolor,
-          "text-[10px] md:text-xs text-center w-full mt-1 leading-tight tracking-tight font-mono",
+          "flex justify-center items-center text-xs text-center mt-1 leading-tight tracking-tight font-mono",
+          "break-words max-w-full whitespace-normal hyphens-auto",
+          textColorClass,
         )}
+        lang="auto"
       >
         {label}
       </p>
-    </div>
-  );
+    );
+  }
 }
