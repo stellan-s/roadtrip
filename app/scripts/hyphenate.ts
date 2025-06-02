@@ -10,14 +10,21 @@ import patternsFR from "hyphenation.fr";
 import patternsES from "hyphenation.es";
 import patternsIT from "hyphenation.it";
 import patternsFI from "hyphenation.fi";
-import patternsNO from "hyphenation.nb";
+import patternsNO from "hyphenation.nb-no";
 import patternsDA from "hyphenation.da";
 // … other imports …
 
 const hyphers = {
-  en: new Hypher(EN),
-  sv: new Hypher(SV),
-  // …
+  en: new Hypher(patternsEN),
+  sv: new Hypher(patternsSV),
+  de: new Hypher(patternsDE),
+  fr: new Hypher(patternsFR),
+  es: new Hypher(patternsES),
+  it: new Hypher(patternsIT),
+  fi: new Hypher(patternsFI),
+  no: new Hypher(patternsNO),
+  da: new Hypher(patternsDA),
+  // Add other languages as needed
 } as const;
 
 function softHyphenate(lang: keyof typeof hyphers, str: string): string {
