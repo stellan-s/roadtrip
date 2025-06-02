@@ -30,6 +30,9 @@ const languages = [
   { code: "da", name: "Dansk", flag: "🇩🇰" },
   { code: "de", name: "Deutsch", flag: "🇩🇪" },
   { code: "fr", name: "Français", flag: "🇫🇷" },
+  { code: "es", name: "Español", flag: "🇪🇸" },
+  { code: "it", name: "Italiano", flag: "🇮🇹" },
+  { code: "fi", name: "Suomi", flag: "🇫🇮" },
 ];
 
 const wordSuggestions = [
@@ -167,7 +170,7 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-0 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-0 relative">
       {/* Buy Me a Coffee button - positioned at top right */}
       <div className="mb-7 z-20 w-full flex items-center justify-end px-4">
         <Button
@@ -200,7 +203,7 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
 
       <div className="w-full max-w-md relative z-10">
         {/* Main card with enhanced styling */}
-        <div className="bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-xl p-8 shadow-2xl border border-white/30 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-xl p-8 shadow-2xl border border-white/30 relative">
           <div className="text-center mb-8 relative">
             <div className="inline-flex items-center gap-2 mb-4">
               <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wider">

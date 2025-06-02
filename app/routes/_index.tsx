@@ -45,7 +45,7 @@ export default function Index() {
   }, [lang]);
 
   return (
-    <div className="h-svh flex items-center justify-center container p-2 md:p-6">
+    <div className="h-full flex items-center justify-center container py-6 p-2 md:p-6">
       <StartForm lang={lang} />
     </div>
   );
