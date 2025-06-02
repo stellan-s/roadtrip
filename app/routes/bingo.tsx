@@ -17,11 +17,12 @@ import { generateBingoGrid } from "@/lib/generateBingoGrid";
 import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData, useNavigate } from "@remix-run/react";
 import { clsx, type ClassValue } from "clsx";
-import { Check, Loader, Settings } from "lucide-react";
+import { Check, ChevronsUpDown, Loader, Settings } from "lucide-react";
 import { startTransition, useEffect, useReducer, useState } from "react";
 import { useReward } from "react-rewards";
 import { twMerge } from "tailwind-merge";
 import "../styles/spin.css";
+import { FaUpDown } from "react-icons/fa6";
 
 type Language = "en" | "sv";
 
@@ -770,11 +771,11 @@ export default function Bingo() {
             <div className="mx-auto w-full max-w-sm">
               <DrawerHeader>
                 <DrawerTitle className="text-2xl text-center font-bold opacity-70 tracking-wide">
-                  {UiText[language].themeSelect}
+                  <ChevronsUpDown className="inline mr-2" size={24} />
                 </DrawerTitle>
               </DrawerHeader>
-              <ScrollArea className="h-full">
-                <div className="p-4 pb-0 grid gap-2">
+              <ScrollArea className="h-[320px] w-full">
+                <div className="p-4 pb-0 grid gap-2 h-full">
                   {Object.keys(themes).map((key) => (
                     <Button
                       key={key}
@@ -808,9 +809,10 @@ export default function Bingo() {
                 <DrawerClose asChild>
                   <Button
                     variant="default"
-                    className="py-5 rounded-sm space-x-1 font-bold text-base tracking-widest"
+                    className="py-5 rounded-sm space-x-1 font-thin text-sm"
                   >
-                    <Check size={20} />
+                    <Check size={20} className="inline mr-2" />
+                    {UiText[language].themeSelect}
                   </Button>
                 </DrawerClose>
               </DrawerFooter>
