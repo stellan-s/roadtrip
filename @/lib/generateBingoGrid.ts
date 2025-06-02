@@ -1,5 +1,5 @@
 import { sha1 } from "js-sha1";
-import { items, IconKey, Language } from "@/constants/items";
+import { items, IconKey, Language } from "~/items/items";
 export function generateBingoGrid(
   seed: string,
   language: Language = "en",

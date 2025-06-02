@@ -1,6 +1,6 @@
 import { BingoCell } from "./BingoCell";
 import { iconMap } from "@/constants/iconMap";
-import { IconKey } from "@/constants/items";
+import { IconKey } from "~/items/items";
 import { sha1 } from "js-sha1";
 
 export function BingoGrid({

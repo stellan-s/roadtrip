@@ -9,10 +9,6 @@ declare module "hypher" {
   export = Hypher;
 }
 
-declare module "hyphenation.en-us" {
-  const patterns: any;
-  export default patterns;
-}
 declare module "hyphenation.sv" {
   const patterns: any;
   export default patterns;
@@ -42,6 +38,10 @@ declare module "hyphenation.nb-no" {
   export default patterns;
 }
 declare module "hyphenation.da" {
+  const patterns: any;
+  export default patterns;
+}
+declare module "hyphenation.en-us" {
   const patterns: any;
   export default patterns;
 }

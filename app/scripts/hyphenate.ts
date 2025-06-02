@@ -39,12 +39,14 @@ function softHyphenate(lang: keyof typeof hyphers, str: string): string {
 }
 
 // Read your raw JSON…
-const raw = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../src/items.raw.json"), "utf8"),
-);
+const projectRoot = path.resolve(__dirname, "../..");
+const jsonPath = path.join(projectRoot, "app", "items", "items.json");
+
+const raw = fs.readFileSync(jsonPath, "utf-8");
+const items = JSON.parse(raw);
 
 // Transform…
-const hyphenated = raw.map((item: any) => ({
+const hyphenated = items.map((item: any) => ({
   key: item.key,
   text: Object.fromEntries(
     Object.entries(item.text).map(([lang, txt]) => [
@@ -60,4 +62,4 @@ const out = `export const items = ${JSON.stringify(
   null,
   2,
 )} as const;`;
-fs.writeFileSync(path.resolve(__dirname, "../src/items.ts"), out);
+fs.writeFileSync(path.resolve(__dirname, "../items.ts"), out);
