@@ -143,7 +143,10 @@ export type ThemeName =
   | "lemonadepop"
   | "icydepths"
   | "blushcloud"
-  | "midnightorchid";
+  | "midnightorchid"
+  | "oceanmist"
+  | "forestwhisper"
+  | "crimsonvelvet";
 
 export const themes: Record<ThemeName, ThemeConfig> = {
   mintbreeze: {
