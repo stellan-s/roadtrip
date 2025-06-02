@@ -157,8 +157,7 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
   };
 
   const handleBuyMeCoffee = () => {
-    // Replace with your actual Buy Me a Coffee URL
-    window.open("https://buymeacoffee.com/yourusername", "_blank");
+    window.open("https://buymeacoffee.com/9zc5qq5wcxl", "_blank");
   };
 
   const getRandomWord = () => {
@@ -168,16 +167,34 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-0 relative overflow-hidden">
       {/* Buy Me a Coffee button - positioned at top right */}
-      <div className="mb-7 z-20">
+      <div className="mb-7 z-20 w-full flex items-center justify-end px-4">
         <Button
           onClick={handleBuyMeCoffee}
-          className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-none px-6 py-3 font-semibold transform hover:scale-105 active:scale-95"
+          className="
+          w-full sm:w-auto
+          mx-auto
+          bg-gradient-to-r
+          from-yellow-400
+          to-orange-500
+          hover:from-yellow-500
+          hover:to-orange-600
+          text-white
+          shadow-lg
+          hover:shadow-xl
+          transition-all
+          duration-300
+          rounded-none
+          px-6
+          py-3 
+          font-semibold
+          transform
+          hover:scale-105
+          active:scale-95"
         >
-          <Coffee className="w-5 h-5 mr-2" />
-          <span className="hidden sm:inline">Buy me a coffee</span>
-          <span className="sm:hidden">☕</span>
+          <Coffee className="w-5 h-5 mr-2 hidden sm:inline" />
+          <span className="sm:inline">Buy me a coffee</span>
         </Button>
       </div>
 
