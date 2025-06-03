@@ -530,7 +530,6 @@ export default function Bingo() {
     const stateString = window.localStorage.getItem("game_state");
 
     if (!stateString || stateString === "") {
-      ("No saved state found");
       window.localStorage.setItem(
         "game_state",
         JSON.stringify({
@@ -538,26 +537,27 @@ export default function Bingo() {
           markeditems: new Array(25).fill(0),
         }),
       );
-      return;
-    }
+      theme = "mintbreeze";
+      markeditems = new Array(25).fill(0);
+    } else {
+      try {
+        const parsedState = JSON.parse(stateString);
 
-    try {
-      const parsedState = JSON.parse(stateString);
-
-      if (parsedState && typeof parsedState === "object") {
-        if (parsedState.theme && Array.isArray(parsedState.markeditems)) {
-          theme = parsedState.theme;
-          markeditems = parsedState.markeditems;
+        if (parsedState && typeof parsedState === "object") {
+          if (parsedState.theme && Array.isArray(parsedState.markeditems)) {
+            theme = parsedState.theme;
+            markeditems = parsedState.markeditems;
+          } else {
+            throw new Error("Invalid structure");
+          }
         } else {
-          throw new Error("Invalid structure");
+          throw new Error("Invalid JSON");
         }
-      } else {
-        throw new Error("Invalid JSON");
+      } catch (error) {
+        console.error("Failed to parse state string:", error);
+        theme = "tropicalsunrise";
+        markeditems = new Array(25).fill(0);
       }
-    } catch (error) {
-      console.error("Failed to parse state string:", error);
-      theme = "tropicalsunrise";
-      markeditems = [];
     }
 
     dispatch({
@@ -565,6 +565,8 @@ export default function Bingo() {
       payload: { value: markeditems, position: null },
     });
     dispatch({ type: "SET_THEME", payload: { value: theme, position: null } });
+
+    // ✅ Ensures loading overlay disappears
     setHasClientData(true);
   }, []);
 
