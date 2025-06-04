@@ -56,7 +56,7 @@ export default function Index() {
       <Header seedWord={seedWord} />
       <Tabs
         defaultValue="instant"
-        className="borderw-full flex flex-col gap-7 items-center justify-center"
+        className="borderw-full flex flex-col gap-5 items-center justify-center"
       >
         <TabsList>
           <TabsTrigger value="instant">

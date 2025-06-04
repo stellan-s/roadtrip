@@ -29,7 +29,7 @@ export const Header = ({ seedWord }: { seedWord: string }) => {
   const [showShareDialog, setShowShareDialog] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
 
-  const shareUrl = `https://roadtripbingo.com/play?seed=${encodeURIComponent(seedWord || "adventure")}&lang=${language}&theme=${colorTheme}`;
+  const shareUrl = `https://roadtrip-bingo.netlify.app/bingo?seed=${encodeURIComponent(seedWord || "adventure")}&lang=${language}&theme=${colorTheme}`;
 
   const handleBuyMeCoffee = () => {
     window.open("https://buymeacoffee.com/9zc5qq5wcxl", "_blank");
@@ -53,10 +53,10 @@ export const Header = ({ seedWord }: { seedWord: string }) => {
   return (
     <header className="w-full py-3 px-3 flex justify-between items-center">
       <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center shadow-lg">
+        <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center shadow-lg aspect-square">
           <Car className="h-6 w-6 text-gray-800" />
         </div>
-        <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wider">
+        <h1 className="hidden sm:block text-xl md:text-2xl font-bold bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wider">
           ROADTRIP BINGO 3000
         </h1>
       </div>
@@ -64,7 +64,7 @@ export const Header = ({ seedWord }: { seedWord: string }) => {
         <Button
           onClick={() => setShowShareDialog(true)}
           variant="outline"
-          className="bg-white/20 border-white/30 text-white hover:bg-white/30"
+          className="bg-white/20 border-white/30 text-white hover:bg-white/30 rounded-full  px-4 py-2 shadow-lg flex items-center transition-colors duration-200 hover:shadow-xl"
         >
           <Share2 className="w-4 h-4 mr-2" />
           Share
