@@ -1,12 +1,15 @@
 import { IntroCarousel } from "@/components/landing/IntroCarousel";
 import { LanguageSwitcher } from "@/components/landing/LanguageSwitcher";
-import { StartForm } from "@/components/landing/StartForm";
+import { CustomStartForm } from "@/components/landing/CustomStartForm";
+import { Header } from "@/components/shared/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { MetaFunction } from "@remix-run/node";
 import { Form } from "@remix-run/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Wrench, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { QuickStartForm } from "@/components/landing/QuickStartForm";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,8 +19,8 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
+  const [seedWord, setSeedWord] = useState("");
   const [lang, setLang] = useState<"sv" | "en" | null>(null);
-  const carousel = useRef<HTMLDivElement>(null);
 
   // synchronize initially
   useEffect(() => {
@@ -44,9 +47,42 @@ export default function Index() {
     window.localStorage.setItem("language", JSON.stringify(lang));
   }, [lang]);
 
+  const handleChangeSeedWord = (seed: string) => {
+    setSeedWord(seed.trim().toLowerCase());
+  };
+
   return (
-    <div className="h-full flex items-center justify-center container py-6 p-2 md:p-6">
-      <StartForm lang={lang} />
+    <div className="min-h-screen w-full grid grid-cols-1 items-start justify-center p-2 md:p-6">
+      <Header seedWord={seedWord} />
+      <Tabs
+        defaultValue="instant"
+        className="borderw-full flex flex-col gap-7 items-center justify-center"
+      >
+        <TabsList>
+          <TabsTrigger value="instant">
+            <Zap size={14} className="inline mr-1" />
+            Instant
+          </TabsTrigger>
+          <TabsTrigger value="custom">
+            <Wrench size={14} className="inline mr-1" />
+            Custom
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="instant" className="animate-slide-in">
+          <QuickStartForm
+            handleChangeSeedWord={handleChangeSeedWord}
+            seedWord={seedWord}
+            lang={lang}
+          />
+        </TabsContent>
+        <TabsContent value="custom" className="animate-slide-in">
+          <CustomStartForm
+            handleChangeSeedWord={handleChangeSeedWord}
+            seedWord={seedWord}
+            lang={lang}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

@@ -151,7 +151,7 @@ export type ThemeName =
 
 export const themes: Record<ThemeName, ThemeConfig> = {
   mintbreeze: {
-    gradient: "linear-gradient(to bottom, #84fab0, #8fd3f4)",
+    gradient: "bg-gradient-to-br from-green-200 via-sky-200 to-sky-300",
     header: "text-violet-800",
     cardborder: "border-violet-400 border-2",
     cardbg: "bg-white bg-opacity-90",
@@ -167,7 +167,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-emerald-900",
   },
   peachy: {
-    gradient: "linear-gradient(to bottom, #fad0c4, #ffd1ff)",
+    gradient: "bg-gradient-to-br from-pink-200 via-pink-100 to-fuchsia-100",
     header: "text-violet-800",
     cardborder: "border-violet-300 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -183,7 +183,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-pink-900",
   },
   lavenderbliss: {
-    gradient: "linear-gradient(to bottom, #a18cd1, #fbc2eb)",
+    gradient: "bg-gradient-to-br from-purple-300 via-pink-200 to-pink-100",
     header: "text-violet-900",
     cardborder: "border-violet-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -199,7 +199,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-purple-900",
   },
   pinkpetal: {
-    gradient: "linear-gradient(to bottom, #ff9a9e, #fecfef)",
+    gradient: "bg-gradient-to-br from-rose-200 via-pink-200 to-pink-100",
     header: "text-violet-900",
     cardborder: "border-violet-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -215,7 +215,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-rose-900",
   },
   violetdream: {
-    gradient: "linear-gradient(to bottom, #667eea, #764ba2)",
+    gradient: "bg-gradient-to-br from-indigo-400 via-violet-500 to-purple-700",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -231,7 +231,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-indigo-900",
   },
   tropicalsunrise: {
-    gradient: "linear-gradient(to bottom, #12c2e9, #c471ed, #f64f59)",
+    gradient: "bg-gradient-to-br from-cyan-400 via-purple-300 to-rose-400",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -247,7 +247,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-cyan-900",
   },
   peachblossom: {
-    gradient: "linear-gradient(to bottom, #ff6e7f, #bfe9ff)",
+    gradient: "bg-gradient-to-br from-red-300 via-blue-100 to-blue-300",
     header: "text-indigo-900",
     cardborder: "border-indigo-300 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -263,7 +263,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-blue-900",
   },
   royalblue: {
-    gradient: "linear-gradient(to bottom, #6a11cb, #2575fc)",
+    gradient: "bg-gradient-to-br from-purple-700 via-indigo-500 to-blue-500",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -279,7 +279,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-sky-900",
   },
   sunsetglow: {
-    gradient: "linear-gradient(to bottom, #ff7e5f, #feb47b)",
+    gradient: "bg-gradient-to-br from-orange-400 via-pink-300 to-yellow-300",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-70",
     cardbg: "bg-white bg-opacity-95",
@@ -295,7 +295,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-amber-900",
   },
   sageforest: {
-    gradient: "linear-gradient(to bottom, #c9d6ff, #e2e2e2)",
+    gradient: "bg-gradient-to-br from-indigo-100 via-slate-100 to-gray-200",
     header: "text-emerald-900",
     cardborder: "border-emerald-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -310,9 +310,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedborder: "border-teal-400 border-2 border-opacity-100",
     ismarkedtext: "text-teal-900",
   },
-  // UPDATED THEMES
   lemonadepop: {
-    gradient: "linear-gradient(to bottom, #fceabb, #f8b500)",
+    gradient: "bg-gradient-to-br from-yellow-100 via-yellow-300 to-amber-400",
     header: "text-orange-900",
     cardborder: "border-orange-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -328,7 +327,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-orange-900",
   },
   icydepths: {
-    gradient: "linear-gradient(to bottom, #e0f7fa, #b2ebf2)", // icy cyan/blue
+    gradient: "bg-gradient-to-br from-cyan-100 via-cyan-200 to-sky-200",
     header: "text-cyan-800 opacity-90",
     cardborder: "border-cyan-200 border-2 border-opacity-80",
     cardbg: "bg-cyan-100 bg-opacity-60",
@@ -343,9 +342,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedborder: "border-cyan-400 border-2 border-opacity-100",
     ismarkedtext: "text-cyan-900",
   },
-
   blushcloud: {
-    gradient: "linear-gradient(to bottom, #f5f7fa, #c3cfe2)",
+    gradient: "bg-gradient-to-br from-slate-100 via-indigo-100 to-indigo-200",
     header: "text-indigo-800",
     cardborder: "border-indigo-300 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -361,7 +359,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-indigo-900",
   },
   midnightorchid: {
-    gradient: "linear-gradient(to bottom, #654ea3, #eaafc8)",
+    gradient: "bg-gradient-to-br from-purple-800 via-pink-300 to-pink-100",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -376,9 +374,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedborder: "border-fuchsia-400 border-2 border-opacity-100",
     ismarkedtext: "text-fuchsia-900",
   },
-  // NEW THEMES
   oceanmist: {
-    gradient: "linear-gradient(to bottom, #74b9ff, #0984e3)",
+    gradient: "bg-gradient-to-br from-blue-300 via-blue-400 to-blue-700",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -394,7 +391,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-blue-900",
   },
   forestwhisper: {
-    gradient: "linear-gradient(to bottom, #00b894, #00cec9)",
+    gradient: "bg-gradient-to-br from-emerald-400 via-teal-400 to-cyan-400",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -410,7 +407,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-emerald-900",
   },
   crimsonvelvet: {
-    gradient: "linear-gradient(to bottom, #e17055, #d63031)",
+    gradient: "bg-gradient-to-br from-orange-400 via-red-400 to-red-600",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -424,6 +421,192 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedbg: "bg-red-300 bg-opacity-80",
     ismarkedborder: "border-red-400 border-2 border-opacity-100",
     ismarkedtext: "text-red-900",
+  },
+  // Followed by these new themes
+  hotchocolate: {
+    name: "Hot Chocolate",
+    gradient: "bg-gradient-to-br from-amber-900 via-amber-700 to-orange-800",
+    header: "text-amber-100",
+    cardborder: "border-orange-600 border-2",
+    cardbg: "bg-amber-50 bg-opacity-95",
+    cardtextcolor: "text-amber-900",
+    textcolor: "text-amber-100",
+    buttonbgcolor: "bg-amber-700",
+    buttontext: "text-white",
+    buttonborder: "border border-amber-800",
+    buttonhover: "hover:bg-amber-800",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-orange-300 bg-opacity-90",
+    ismarkedborder: "border-orange-400 border-2 border-opacity-100",
+    ismarkedtext: "text-amber-900",
+    accent: "bg-amber-700",
+  },
+  coffeeandcream: {
+    name: "Coffee & Cream",
+    gradient: "bg-gradient-to-br from-stone-50 via-amber-100 to-stone-300",
+    header: "text-stone-800",
+    cardborder: "border-stone-400 border-2",
+    cardbg: "bg-white bg-opacity-98",
+    cardtextcolor: "text-stone-800",
+    textcolor: "text-stone-800",
+    buttonbgcolor: "bg-amber-600",
+    buttontext: "text-white",
+    buttonborder: "border border-amber-700",
+    buttonhover: "hover:bg-amber-700",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-amber-200 bg-opacity-90",
+    ismarkedborder: "border-amber-400 border-2 border-opacity-100",
+    ismarkedtext: "text-stone-800",
+    accent: "bg-amber-600",
+  },
+  daffodillmeadow: {
+    name: "Daffodil Meadow",
+    gradient: "bg-gradient-to-br from-yellow-300 via-lime-300 to-green-400",
+    header: "text-green-900",
+    cardborder: "border-lime-400 border-2",
+    cardbg: "bg-white bg-opacity-98",
+    cardtextcolor: "text-green-900",
+    textcolor: "text-green-900",
+    buttonbgcolor: "bg-lime-600",
+    buttontext: "text-white",
+    buttonborder: "border border-lime-700",
+    buttonhover: "hover:bg-lime-700",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-yellow-300 bg-opacity-90",
+    ismarkedborder: "border-yellow-400 border-2 border-opacity-100",
+    ismarkedtext: "text-green-900",
+    accent: "bg-lime-600",
+  },
+  lakesidecamping: {
+    name: "Lakeside Camping",
+    gradient: "bg-gradient-to-br from-blue-400 via-teal-400 to-cyan-500",
+    header: "text-blue-900",
+    cardborder: "border-teal-400 border-2",
+    cardbg: "bg-white bg-opacity-98",
+    cardtextcolor: "text-blue-900",
+    textcolor: "text-blue-900",
+    buttonbgcolor: "bg-blue-600",
+    buttontext: "text-white",
+    buttonborder: "border border-blue-700",
+    buttonhover: "hover:bg-blue-700",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-teal-300 bg-opacity-90",
+    ismarkedborder: "border-teal-400 border-2 border-opacity-100",
+    ismarkedtext: "text-blue-900",
+    accent: "bg-blue-600",
+  },
+  snowyslope: {
+    name: "Snowy Slope",
+    gradient: "bg-gradient-to-br from-slate-200 via-blue-100 to-indigo-200",
+    header: "text-slate-800",
+    cardborder: "border-slate-400 border-2",
+    cardbg: "bg-white bg-opacity-98",
+    cardtextcolor: "text-slate-800",
+    textcolor: "text-slate-800",
+    buttonbgcolor: "bg-slate-600",
+    buttontext: "text-white",
+    buttonborder: "border border-slate-700",
+    buttonhover: "hover:bg-slate-700",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-slate-300 bg-opacity-90",
+    ismarkedborder: "border-slate-400 border-2 border-opacity-100",
+    ismarkedtext: "text-slate-900",
+    accent: "bg-slate-600",
+  },
+  rockymountains: {
+    id: "rockymountains",
+    name: "Rocky Mountains",
+    gradient: "bg-gradient-to-br from-stone-500 via-slate-600 to-gray-700",
+    header: "text-white",
+    cardborder: "border-slate-400 border-2",
+    cardbg: "bg-white bg-opacity-98",
+    cardtextcolor: "text-slate-900",
+    textcolor: "text-white",
+    buttonbgcolor: "bg-white",
+    buttontext: "text-slate-800",
+    buttonborder: "border border-slate-300",
+    buttonhover: "hover:bg-slate-100",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-slate-400 bg-opacity-90",
+    ismarkedborder: "border-slate-500 border-2 border-opacity-100",
+    ismarkedtext: "text-slate-900",
+    accent: "bg-stone-600",
+  },
+  sunsetdrive: {
+    id: "sunsetdrive",
+    name: "Sunset Drive",
+    gradient: "bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600",
+    header: "text-white",
+    cardborder: "border-pink-400 border-2",
+    cardbg: "bg-white bg-opacity-98",
+    cardtextcolor: "text-purple-900",
+    textcolor: "text-white",
+    buttonbgcolor: "bg-pink-600",
+    buttontext: "text-white",
+    buttonborder: "border border-pink-700",
+    buttonhover: "hover:bg-pink-700",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-orange-300 bg-opacity-90",
+    ismarkedborder: "border-orange-400 border-2 border-opacity-100",
+    ismarkedtext: "text-purple-900",
+    accent: "bg-pink-600",
+  },
+  forestpath: {
+    id: "forestpath",
+    name: "Forest Path",
+    gradient: "bg-gradient-to-br from-green-600 via-emerald-500 to-teal-600",
+    header: "text-white",
+    cardborder: "border-emerald-400 border-2",
+    cardbg: "bg-white bg-opacity-98",
+    cardtextcolor: "text-green-900",
+    textcolor: "text-white",
+    buttonbgcolor: "bg-emerald-600",
+    buttontext: "text-white",
+    buttonborder: "border border-emerald-700",
+    buttonhover: "hover:bg-emerald-700",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-emerald-300 bg-opacity-90",
+    ismarkedborder: "border-emerald-400 border-2 border-opacity-100",
+    ismarkedtext: "text-green-900",
+    accent: "bg-emerald-600",
+  },
+  oceanbreeze: {
+    id: "oceanbreeze",
+    name: "Ocean Breeze",
+    gradient: "bg-gradient-to-br from-sky-300 via-blue-400 to-indigo-500",
+    header: "text-white",
+    cardborder: "border-blue-400 border-2",
+    cardbg: "bg-white bg-opacity-98",
+    cardtextcolor: "text-blue-900",
+    textcolor: "text-white",
+    buttonbgcolor: "bg-blue-500",
+    buttontext: "text-white",
+    buttonborder: "border border-blue-600",
+    buttonhover: "hover:bg-blue-600",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-sky-300 bg-opacity-90",
+    ismarkedborder: "border-sky-400 border-2 border-opacity-100",
+    ismarkedtext: "text-blue-900",
+    accent: "bg-blue-500",
+  },
+  desertbloom: {
+    id: "desertbloom",
+    name: "Desert Bloom",
+    gradient: "bg-gradient-to-br from-rose-300 via-orange-300 to-red-400",
+    header: "text-red-900",
+    cardborder: "border-orange-400 border-2",
+    cardbg: "bg-white bg-opacity-98",
+    cardtextcolor: "text-red-900",
+    textcolor: "text-red-900",
+    buttonbgcolor: "bg-orange-500",
+    buttontext: "text-white",
+    buttonborder: "border border-orange-600",
+    buttonhover: "hover:bg-orange-600",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-rose-300 bg-opacity-90",
+    ismarkedborder: "border-rose-400 border-2 border-opacity-100",
+    ismarkedtext: "text-red-900",
+    accent: "bg-orange-500",
   },
 };
 
@@ -690,16 +873,11 @@ export default function Bingo() {
         </div>
       ) : null}
       <div
-        className="bg-green-300 w-full h-screen relative z-10 transition-all duration-700 cubic-bezier(0.165, 0.84, 0.44, 1)"
-        style={{
-          background: hasClientData
-            ? themes[state.theme as Theme].gradient
-            : `${themes["tropicalsunrise" as Theme].gradient}`,
-          filter: hasClientData ? "" : "blur(5px) grayscale(60%)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
+        className={cn(
+          "bg-cover bg-center bg-no-repeat",
+          hasClientData ? themes[state.theme as Theme].gradient : "",
+          "w-full h-screen relative z-10 transition-all duration-700 cubic-bezier(0.165, 0.84, 0.44, 1)",
+        )}
       >
         {isBingo ? (
           <BingoOverlay
@@ -709,7 +887,7 @@ export default function Bingo() {
             textColorClass={themes[state.theme as Theme].textcolor}
           />
         ) : null}
-        <div className="h-svh overflow-y-scroll py-5 container flex items-center justify-center">
+        <div className="h-svh overflow-y-auto py-5 container flex items-center justify-center">
           <div className="m-auto grid gap-3 items-center justify-center w-full">
             <BingoHeader
               textColorClass={themes[state.theme as Theme].textcolor}
@@ -796,8 +974,13 @@ export default function Bingo() {
                       }}
                       variant="outline"
                       size="sm"
-                      style={{ background: themes[key as Theme].gradient }}
                       className={cn(
+                        "w-full justify-start",
+                        themes[key as Theme].gradient,
+                        themes[key as Theme].buttontext,
+                        themes[key as Theme].buttonborder,
+                        themes[key as Theme].buttonhover,
+                        themes[key as Theme].buttonshadow,
                         themes[key as Theme].textcolor,
                         "rounded-sm border-none w-full text-left text-xs uppercase tracking-widest font-semibold",
                       )}

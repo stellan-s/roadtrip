@@ -22,18 +22,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useState } from "react";
-
-const languages = [
-  { code: "sv", name: "Svenska", flag: "🇸🇪" },
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "no", name: "Norsk", flag: "🇳🇴" },
-  { code: "da", name: "Dansk", flag: "🇩🇰" },
-  { code: "de", name: "Deutsch", flag: "🇩🇪" },
-  { code: "fr", name: "Français", flag: "🇫🇷" },
-  { code: "es", name: "Español", flag: "🇪🇸" },
-  { code: "it", name: "Italiano", flag: "🇮🇹" },
-  { code: "fi", name: "Suomi", flag: "🇫🇮" },
-];
+import { languageCode, languages } from "@/constants/languages";
 
 const wordSuggestions = [
   // Resa och rörelse
@@ -133,9 +122,16 @@ const wordSuggestions = [
   "season",
 ];
 
-export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
-  const [seedWord, setSeedWord] = useState("");
-  const [language, setLanguage] = useState("sv");
+export function CustomStartForm({
+  lang,
+  handleChangeSeedWord,
+  seedWord = "",
+}: {
+  lang: languageCode | null;
+  handleChangeSeedWord: (seed: string) => void;
+  seedWord?: string;
+}) {
+  const [language, setLanguage] = useState<languageCode>("sv");
   const [isGenerating, setIsGenerating] = useState(false);
   const navigate = useNavigate();
 
@@ -159,57 +155,18 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
     }, 800);
   };
 
-  const handleBuyMeCoffee = () => {
-    window.open("https://buymeacoffee.com/9zc5qq5wcxl", "_blank");
-  };
-
   const getRandomWord = () => {
     const randomWord =
       wordSuggestions[Math.floor(Math.random() * wordSuggestions.length)];
-    setSeedWord(randomWord);
+    handleChangeSeedWord(randomWord);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-0 relative">
-      {/* Buy Me a Coffee button - positioned at top right */}
-      <div className="mb-7 z-20 w-full flex items-center justify-end px-4">
-        <Button
-          onClick={handleBuyMeCoffee}
-          className="
-          w-full sm:w-auto
-          mx-auto
-          bg-gradient-to-r
-          from-yellow-400
-          to-orange-500
-          hover:from-yellow-500
-          hover:to-orange-600
-          text-white
-          shadow-lg
-          hover:shadow-xl
-          transition-all
-          duration-300
-          rounded-none
-          px-6
-          py-3 
-          font-semibold
-          transform
-          hover:scale-105
-          active:scale-95"
-        >
-          <Coffee className="w-5 h-5 mr-2 hidden sm:inline" />
-          <span className="sm:inline">Buy me a coffee</span>
-        </Button>
-      </div>
-
+    <div className="h-full flex flex-col items-center justify-start p-0 relative">
       <div className="w-full max-w-md relative z-10">
         {/* Main card with enhanced styling */}
-        <div className="bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-xl p-8 shadow-2xl border border-white/30 relative">
+        <div className="bg-white rounded-3xl backdrop-blur-xl p-8 shadow-2xl border border-white/30 relative">
           <div className="text-center mb-8 relative">
-            <div className="inline-flex items-center gap-2 mb-4">
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wider">
-                ROADTRIP BINGO 3000
-              </h1>
-            </div>
             <p className="text-gray-600 text-sm md:text-base font-medium">
               Enter any word to generate your unique bingo board
             </p>
@@ -229,7 +186,7 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
                   id="seed"
                   name="seed"
                   value={seedWord}
-                  onChange={(e) => setSeedWord(e.target.value)}
+                  onChange={(e) => handleChangeSeedWord(e.target.value)}
                   placeholder="Enter any word..."
                   className="bg-gradient-to-r from-white to-blue-50/50 border-2 border-gray-200 text-gray-900 placeholder:text-gray-500 pr-12 py-3 rounded-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 group-hover:border-blue-300"
                   required
@@ -286,7 +243,7 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 py-4 rounded-none font-semibold text-lg transform hover:scale-105 active:scale-95"
+              className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 py-4 rounded-full font-semibold text-lg transform hover:scale-105 active:scale-95"
               disabled={!seedWord.trim() || isGenerating}
             >
               {isGenerating ? (
@@ -315,11 +272,11 @@ export function StartForm({ lang }: { lang: "sv" | "en" | null }) {
 
           {/* Support message */}
           <div className="mt-6 text-center flex flex-col items-center gap-2">
-            <p className="text-gray-500 text-xs inline items-baseline">
+            {/* <p className="text-gray-500 text-xs inline items-baseline">
               <Square className="w-3 h-3 text-black fill-black rounded-full inline-block mr-1" />
               Built with love – and a respect for time, privacy and usefulness –
               in the spirit of <span className="uppercase">insimply</span>.
-            </p>
+            </p> */}
             <p className="text-gray-500 w-2/3 text-xs flex items-center justify-center gap-1">
               <Coffee className="w-6 h-6 text-violet-500" />
               Enjoying the app? Consider supporting the developer!
