@@ -12,6 +12,7 @@ import {
   Sparkles,
   Square,
   Star,
+  Wrench,
   Zap,
 } from "lucide-react";
 import {
@@ -166,9 +167,17 @@ export function CustomStartForm({
       <div className="w-full max-w-md relative z-10">
         {/* Main card with enhanced styling */}
         <div className="bg-white rounded-3xl backdrop-blur-xl p-8 shadow-2xl border border-white/30 relative">
-          <div className="text-center mb-8 relative">
-            <p className="text-gray-600 text-sm md:text-base font-medium">
-              Enter any word to generate your unique bingo board
+          <div className="text-center mb-5 relative flex flex-col items-center gap-2">
+            <Wrench className="w-12 h-12 text-purple-600" />
+            <h2 className="text-gray-600 text-lg md:text-2xl font-bold text-clip bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wider">
+              Custom play
+            </h2>
+            <p className="text-gray-500 text-sm text-center gap-1">
+              Create your own bingo board with a unique seed word.
+              <br />
+              <span className="text-gray-400 text-xs">
+                (You can also use the instant play option!)
+              </span>
             </p>
           </div>
 
@@ -188,13 +197,13 @@ export function CustomStartForm({
                   value={seedWord}
                   onChange={(e) => handleChangeSeedWord(e.target.value)}
                   placeholder="Enter any word..."
-                  className="bg-gradient-to-r from-white to-blue-50/50 border-2 border-gray-200 text-gray-900 placeholder:text-gray-500 pr-12 py-3 rounded-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 group-hover:border-blue-300"
+                  className="bg-gradient-to-r from-white to-blue-50/50 border-2 border-gray-200 text-gray-900 placeholder:text-gray-500 pr-12 py-3 rounded-full focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 group-hover:border-blue-300"
                   required
                 />
                 <Button
                   type="button"
                   onClick={getRandomWord}
-                  className="absolute right-1 top-1 h-8 w-8 p-0 rounded-none bg-purple-200/80 hover:bg-purple-400/80 text-blue-800"
+                  className="absolute rounded-full right-1 top-1 h-8 w-8 p-0 bg-purple-200/80 hover:bg-purple-400/80 text-blue-800"
                   title="Get random word"
                 >
                   <Sparkles className="h-4 w-4" />
@@ -220,7 +229,7 @@ export function CustomStartForm({
                   value={language}
                   onValueChange={setLanguage}
                 >
-                  <SelectTrigger className="bg-gradient-to-r from-white to-green-50/50 border-2 border-gray-200 text-gray-900 py-3 rounded-none focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 hover:border-green-300">
+                  <SelectTrigger className="bg-gradient-to-r from-white to-green-50/50 border-2 border-gray-200 text-gray-900 py-3 rounded-full focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 hover:border-green-300">
                     <SelectValue placeholder="Select language" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border-gray-200 rounded-none shadow-xl">
@@ -264,7 +273,10 @@ export function CustomStartForm({
           <div className=" mt-3 text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-none">
               <p className="text-gray-600 text-xs font-medium">
-                Each word creates a unique board. Try different words for new
+                Each word creates a unique board that is easy to share with your
+                friends. Use the random word generator for inspiration or enter
+                your own seed word to create a personalized bingo board for you
+                and your family or friends. Try different words for new
                 challenges!
               </p>
             </div>

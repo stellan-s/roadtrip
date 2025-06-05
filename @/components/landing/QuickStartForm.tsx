@@ -181,16 +181,16 @@ export function QuickStartForm({
       <div className="w-full max-w-md relative z-10">
         {/* Main card with enhanced styling */}
         <div className="bg-white rounded-3xl backdrop-blur-xl p-8 shadow-2xl border border-white/30 relative">
-          <div className="text-center mb-5 relative flex flex-col items-center gap-2">
+          <div className="text-center mb-3 relative flex flex-col items-center gap-2">
             <Zap className="w-12 h-12 text-purple-600" />
             <h2 className="text-gray-600 text-lg md:text-2xl font-bold text-clip bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wider">
               Instant play
             </h2>
-          </div>
-          <Form className="space-y-6" action="/bingo" method="get">
-            <p className="text-gray-500 text-lg flex text-center gap-1">
+            <p className="text-gray-500 text-sm text-center gap-1">
               Jump right in with a randomly generated board
             </p>
+          </div>
+          <Form className="space-y-6" action="/bingo" method="get">
             <div className="space-y-3">
               <div className="relative group">
                 <Input

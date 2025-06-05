@@ -17,8 +17,15 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
+import { QRCodeDisplay } from "./QRCodeSVG";
 
-export const Header = ({ seedWord }: { seedWord: string }) => {
+export const Header = ({
+  seedWord,
+  className,
+}: {
+  seedWord: string;
+  className?: string;
+}) => {
   const [language, setLanguage] = useState("sv");
   const [colorTheme, setColorTheme] = useState("blue");
   const [boardSize, setBoardSize] = useState("5x5");
@@ -36,7 +43,7 @@ export const Header = ({ seedWord }: { seedWord: string }) => {
   };
 
   const shareToSocial = (platform: string) => {
-    const text = `Check out this awesome Roadtrip Bingo board I created! 🚗🎯`;
+    const text = `Check out this awesome Roadtrip Bingo board I'm playing! 🚗🎯`;
     const urls = {
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`,
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
@@ -51,7 +58,9 @@ export const Header = ({ seedWord }: { seedWord: string }) => {
   };
 
   return (
-    <header className="w-full py-3 px-3 flex justify-between items-center">
+    <header
+      className={`w-full py-3 px-3 flex justify-between items-start ${className}`}
+    >
       <div className="flex items-center gap-3">
         <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center shadow-lg aspect-square">
           <Car className="h-6 w-6 text-gray-800" />
@@ -80,7 +89,7 @@ export const Header = ({ seedWord }: { seedWord: string }) => {
       </div>
       {/* Share Dialog */}
       <Dialog open={showShareDialog} onOpenChange={setShowShareDialog}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Share2 className="w-5 h-5" />
@@ -112,7 +121,7 @@ export const Header = ({ seedWord }: { seedWord: string }) => {
               {showQRCode && (
                 <div className="bg-gray-100 p-4 rounded-xl">
                   <div className="w-32 h-32 bg-white mx-auto rounded-lg flex items-center justify-center">
-                    <QrCode className="w-16 h-16 text-gray-400" />
+                    <QRCodeDisplay url={shareUrl} size={128} />
                   </div>
                   <p className="text-xs text-gray-500 mt-2">
                     Scan to open board
@@ -163,7 +172,7 @@ export const Header = ({ seedWord }: { seedWord: string }) => {
             </div>
 
             {/* Export Options */}
-            <div className="space-y-3">
+            {/* <div className="space-y-3">
               <label className="text-sm font-medium">Export Options</label>
               <div className="grid grid-cols-2 gap-3">
                 <Button variant="outline" className="justify-start">
@@ -183,7 +192,7 @@ export const Header = ({ seedWord }: { seedWord: string }) => {
                   Email Link
                 </Button>
               </div>
-            </div>
+            </div> */}
           </div>
         </DialogContent>
       </Dialog>

@@ -52,11 +52,11 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen w-full grid grid-cols-1 items-start justify-center p-2 md:p-6">
+    <div className="min-h-screen w-full flex flex-col items-start justify-center p-2 md:p-6">
       <Header seedWord={seedWord} />
       <Tabs
         defaultValue="instant"
-        className="borderw-full flex flex-col gap-5 items-center justify-center"
+        className="h-full w-full flex flex-col gap-5 items-center justify-start grow"
       >
         <TabsList>
           <TabsTrigger value="instant">
