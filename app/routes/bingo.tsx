@@ -139,6 +139,7 @@ export type ThemeName =
   | "pinkpetal"
   | "violetdream"
   | "tropicalsunrise"
+  | "tropicalsunrise2"
   | "peachblossom"
   | "royalblue"
   | "sunsetglow"
@@ -191,7 +192,7 @@ export type ThemeName =
   | "glacierblue"
   | "spicypaprika"
   | "ilovebroccoli"
-  | "samtheman";
+  | "samsfavorite";
 
 export const themes: Record<ThemeName, ThemeConfig> = {
   deuteranopia: {
@@ -332,6 +333,23 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   },
   tropicalsunrise: {
     name: "Tropical Sunrise",
+    gradient: "bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600",
+    header: "text-white",
+    cardborder: "border-white border-2 border-opacity-60",
+    cardbg: "bg-blue-400 bg-opacity-95",
+    cardtextcolor: "text-slate-900",
+    textcolor: "text-white",
+    buttonbgcolor: "bg-blue-100",
+    buttontext: "text-slate-900",
+    buttonborder: "border border-gray-200",
+    buttonhover: "hover:bg-opacity-60",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-cyan-300 bg-opacity-80",
+    ismarkedborder: "border-cyan-200 border-2 border-opacity-100",
+    ismarkedtext: "text-cyan-900",
+  },
+  tropicalsunrise2: {
+    name: "Tropical Sunrise 2",
     gradient: "bg-gradient-to-br from-cyan-400 via-purple-300 to-rose-400",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
@@ -1233,8 +1251,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedborder: "border-green-500 border-2",
     ismarkedtext: "text-green-900",
   },
-  samtheman: {
-    name: "Sam the Man",
+  samsfavorite: {
+    name: "Sam's Favorite",
     gradient: "bg-gradient-to-br from-blue-900 via-blue-800 to-red-700",
     header: "text-white",
     cardborder: "border-red-700 border-2",
@@ -1627,6 +1645,15 @@ export default function Bingo() {
                         "rounded-sm border-none w-full text-left text-xs uppercase tracking-widest font-semibold",
                       )}
                     >
+                      <Check
+                        className={cn(
+                          state.theme === key
+                            ? `${themes[key as Theme].accent} inline`
+                            : "hidden",
+                          "mr-2",
+                        )}
+                        size={16}
+                      />
                       {themes[key as Theme].name}
                     </Button>
                   ))}
