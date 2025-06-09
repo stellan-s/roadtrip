@@ -29,7 +29,7 @@ export function BingoGrid({
 }) {
   return (
     <div className="w-full overflow-y-auto p-0 flex items-center justify-center">
-      <div className="grid grid-cols-5 gap-2 items-start middle mx-auto">
+      <div className="grid grid-cols-5 gap-2 items-start middle mx-auto p-3">
         {grid.map((item, index) => {
           const label = item.text;
           const hash = sha1(label);
