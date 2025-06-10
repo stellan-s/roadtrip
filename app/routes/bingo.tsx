@@ -192,7 +192,13 @@ export type ThemeName =
   | "glacierblue"
   | "spicypaprika"
   | "ilovebroccoli"
-  | "samtheman";
+  | "samtheman"
+  | "colafloat"
+  | "statenislandferry"
+  | "newyorkcab"
+  | "stockholmarchipelago"
+  | "ulurusunset"
+  | "mauigreenhills";
 
 export const themes: Record<ThemeName, ThemeConfig> = {
   deuteranopia: {
@@ -1267,6 +1273,108 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedbg: "bg-blue-700 bg-opacity-90",
     ismarkedborder: "border-blue-900 border-2",
     ismarkedtext: "text-white",
+  },
+  colafloat: {
+    name: "Cola Float",
+    gradient: "bg-gradient-to-br from-[#402218] via-[#8B4513] to-[#fef1df]", // deep cola to creamy float
+    header: "text-[#301911]", // dark cola brown
+    cardborder: "border-[#ffe5b4] border-2", // light creamy beige
+    cardbg: "bg-white bg-opacity-90",
+    cardtextcolor: "text-[#3b2c2a]",
+    textcolor: "text-[#fddbb0]/90 text-shadow-xl",
+    buttonbgcolor: "bg-[#8b4513]",
+    buttontext: "text-white",
+    buttonborder: "border border-[#5c3317]",
+    buttonhover: "hover:bg-opacity-60",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-[#fddbb0] bg-opacity-90", // float-colored
+    ismarkedborder: "border-[#ffe5b4] border-2",
+    ismarkedtext: "text-[#4b2b20]",
+  },
+  statenislandferry: {
+    name: "Staten Island Ferry",
+    gradient: "bg-gradient-to-br from-[#f97316] via-[#fb923c] to-[#60a5fa]", // orange till blått
+    header: "text-[#1e3a8a]", // djup marinblå
+    cardborder: "border-[#facc15] border-2", // gul nyans från livbåtar/skyltar
+    cardbg: "bg-white bg-opacity-90",
+    cardtextcolor: "text-[#1f2937]",
+    textcolor: "text-[#1f2937]",
+    buttonbgcolor: "bg-[#f97316]",
+    buttontext: "text-white",
+    buttonborder: "border border-[#ea580c]",
+    buttonhover: "hover:bg-opacity-60",
+    buttonshadow: "shadow-md hover:shadow-lg",
+    ismarkedbg: "bg-[#fde68a] bg-opacity-80",
+    ismarkedborder: "border-[#facc15] border-2",
+    ismarkedtext: "text-[#78350f]",
+  },
+  newyorkcab: {
+    name: "New York Cab",
+    gradient: "bg-gradient-to-br from-[#facc15] via-[#fbbf24] to-[#1f2937]", // gul till asfaltgrå
+    header: "text-[#1e1e1e]",
+    cardborder: "border-[#facc15] border-2",
+    cardbg: "bg-white bg-opacity-90",
+    cardtextcolor: "text-[#111827]",
+    textcolor: "text-[#111827]",
+    buttonbgcolor: "bg-[#1f2937]",
+    buttontext: "text-[#facc15]",
+    buttonborder: "border border-[#fbbf24]",
+    buttonhover: "hover:bg-opacity-70",
+    buttonshadow: "shadow-md hover:shadow-lg",
+    ismarkedbg: "bg-[#fde68a] bg-opacity-90",
+    ismarkedborder: "border-[#fbbf24] border-2",
+    ismarkedtext: "text-[#1f2937]",
+  },
+  stockholmarchipelago: {
+    name: "Stockholm Archipelago",
+    gradient: "bg-gradient-to-br from-[#60a5fa] via-[#93c5fd] to-[#a7f3d0]", // blå till grön
+    header: "text-[#0f172a]", // marinblå
+    cardborder: "border-[#cbd5e1] border-2", // skärgårdsgranit
+    cardbg: "bg-white bg-opacity-95",
+    cardtextcolor: "text-[#0f172a]",
+    textcolor: "text-[#0f172a]",
+    buttonbgcolor: "bg-[#2563eb]", // blå som havet
+    buttontext: "text-white",
+    buttonborder: "border border-[#1d4ed8]",
+    buttonhover: "hover:bg-opacity-60",
+    buttonshadow: "shadow-md hover:shadow-lg",
+    ismarkedbg: "bg-[#bbf7d0] bg-opacity-90", // skog/grönskande ö
+    ismarkedborder: "border-[#6ee7b7] border-2",
+    ismarkedtext: "text-[#065f46]",
+  },
+  ulurusunset: {
+    name: "Uluru Sunset",
+    gradient: "bg-gradient-to-br from-[#7c2d12] via-[#ea580c] to-[#fbbf24]", // röd sand till brinnande solnedgång
+    header: "text-[#4b1d06]", // djupt rödbrun
+    cardborder: "border-[#fcd34d] border-2", // solens gula kant
+    cardbg: "bg-white bg-opacity-90",
+    cardtextcolor: "text-[#3f1f0f]",
+    textcolor: "text-[#3f1f0f]",
+    buttonbgcolor: "bg-[#b45309]", // bränd orange
+    buttontext: "text-white",
+    buttonborder: "border border-[#78350f]",
+    buttonhover: "hover:bg-opacity-70",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-[#fde68a] bg-opacity-90", // solvarm markering
+    ismarkedborder: "border-[#fcd34d] border-2",
+    ismarkedtext: "text-[#78350f]",
+  },
+  mauigreenhills: {
+    name: "Maui Green Hills",
+    gradient: "bg-gradient-to-br from-[#166534] via-[#4ade80] to-[#bbf7d0]", // djupgrönt till tropiskt ljusgrönt
+    header: "text-[#064e3b]", // mörkt tropikgrönt
+    cardborder: "border-[#86efac] border-2", // fräsch ljusgrön kant
+    cardbg: "bg-white bg-opacity-90",
+    cardtextcolor: "text-[#052e16]",
+    textcolor: "text-[#052e16]",
+    buttonbgcolor: "bg-[#15803d]",
+    buttontext: "text-white",
+    buttonborder: "border border-[#166534]",
+    buttonhover: "hover:bg-opacity-70",
+    buttonshadow: "shadow-md hover:shadow-lg",
+    ismarkedbg: "bg-[#a7f3d0] bg-opacity-90",
+    ismarkedborder: "border-[#4ade80] border-2",
+    ismarkedtext: "text-[#065f46]",
   },
 };
 
