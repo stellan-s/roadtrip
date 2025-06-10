@@ -192,7 +192,7 @@ export type ThemeName =
   | "glacierblue"
   | "spicypaprika"
   | "ilovebroccoli"
-  | "samsfavorite";
+  | "samtheman";
 
 export const themes: Record<ThemeName, ThemeConfig> = {
   deuteranopia: {
@@ -1251,7 +1251,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedborder: "border-green-500 border-2",
     ismarkedtext: "text-green-900",
   },
-  samsfavorite: {
+  samtheman: {
     name: "Sam's Favorite",
     gradient: "bg-gradient-to-br from-blue-900 via-blue-800 to-red-700",
     header: "text-white",
