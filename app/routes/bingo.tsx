@@ -1258,7 +1258,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-green-900",
   },
   samtheman: {
-    name: "Sam's Favorite",
+    name: "Skane Griffin",
     gradient: "bg-gradient-to-br from-blue-900 via-blue-800 to-red-700",
     header: "text-white",
     cardborder: "border-red-700 border-2",
