@@ -1656,7 +1656,7 @@ export default function Bingo() {
           />
         ) : null}
         <div className="h-svh overflow-y-auto py-5 container flex items-center justify-center">
-          <div className="m-auto grid gap-3 items-center justify-center w-full">
+          <div className="m-auto grid gap-1 items-center justify-center w-full">
             <BingoHeader
               textColorClass={themes[state.theme as Theme].textcolor}
             />
