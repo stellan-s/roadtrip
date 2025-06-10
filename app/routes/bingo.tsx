@@ -198,7 +198,7 @@ export type ThemeName =
   | "newyorkcab"
   | "stockholmarchipelago"
   | "ulurusunset"
-  | "mauigreenhills";
+  | "greenmauihills";
 
 export const themes: Record<ThemeName, ThemeConfig> = {
   deuteranopia: {
@@ -1359,8 +1359,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedborder: "border-[#fcd34d] border-2",
     ismarkedtext: "text-[#78350f]",
   },
-  mauigreenhills: {
-    name: "Maui Green Hills",
+  greenmauihills: {
+    name: "Green Maui Hills",
     gradient: "bg-gradient-to-br from-[#166534] via-[#4ade80] to-[#bbf7d0]", // djupgrönt till tropiskt ljusgrönt
     header: "text-[#064e3b]", // mörkt tropikgrönt
     cardborder: "border-[#86efac] border-2", // fräsch ljusgrön kant
