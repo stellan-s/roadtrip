@@ -614,7 +614,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     accent: "bg-lime-600",
   },
   lakesidecamping: {
-    name: "Lakeside Camping",
+    name: "Sam's Shores",
     gradient: "bg-gradient-to-br from-blue-400 via-teal-400 to-cyan-500",
     header: "text-blue-900",
     cardborder: "border-teal-400 border-2",
