@@ -198,7 +198,12 @@ export type ThemeName =
   | "newyorkcab"
   | "stockholmarchipelago"
   | "ulurusunset"
-  | "greenmauihills";
+  | "greenmauihills"
+  | "lilactwilight"
+  | "greenslimemadness"
+  | "polarhush"
+  | "bluedrift"
+  | "cosmicquest";
 
 export const themes: Record<ThemeName, ThemeConfig> = {
   deuteranopia: {
@@ -1292,7 +1297,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-[#4b2b20]",
   },
   statenislandferry: {
-    name: "Staten Island Ferry",
+    name: "Staten Drift",
     gradient: "bg-gradient-to-br from-[#f97316] via-[#fb923c] to-[#60a5fa]", // orange till blått
     header: "text-[#1e3a8a]", // djup marinblå
     cardborder: "border-[#facc15] border-2", // gul nyans från livbåtar/skyltar
@@ -1309,7 +1314,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-[#78350f]",
   },
   newyorkcab: {
-    name: "New York Cab",
+    name: "N.Y. Dash",
     gradient: "bg-gradient-to-br from-[#facc15] via-[#fbbf24] to-[#1f2937]", // gul till asfaltgrå
     header: "text-[#1e1e1e]",
     cardborder: "border-[#facc15] border-2",
@@ -1326,7 +1331,7 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedtext: "text-[#1f2937]",
   },
   stockholmarchipelago: {
-    name: "Stockholm Archipelago",
+    name: "Skärgårdsblå",
     gradient: "bg-gradient-to-br from-[#60a5fa] via-[#93c5fd] to-[#a7f3d0]", // blå till grön
     header: "text-[#0f172a]", // marinblå
     cardborder: "border-[#cbd5e1] border-2", // skärgårdsgranit
@@ -1375,6 +1380,91 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedbg: "bg-[#a7f3d0] bg-opacity-90",
     ismarkedborder: "border-[#4ade80] border-2",
     ismarkedtext: "text-[#065f46]",
+  },
+  lilactwilight: {
+    name: "Lilac Twilight",
+    gradient: "bg-gradient-to-br from-[#c4b5fd] via-[#a78bfa] to-[#fbcfe8]", // lila till rosa pastell
+    header: "text-[#6b21a8]", // djup lila
+    cardborder: "border-[#d8b4fe] border-2",
+    cardbg: "bg-white bg-opacity-95",
+    cardtextcolor: "text-[#4c1d95]",
+    textcolor: "text-[#4c1d95]",
+    buttonbgcolor: "bg-[#9333ea]",
+    buttontext: "text-white",
+    buttonborder: "border border-[#7e22ce]",
+    buttonhover: "hover:bg-opacity-70",
+    buttonshadow: "shadow-md hover:shadow-lg",
+    ismarkedbg: "bg-[#f5d0fe] bg-opacity-90",
+    ismarkedborder: "border-[#e9d5ff] border-2",
+    ismarkedtext: "text-[#6b21a8]",
+  },
+  greenslimemadness: {
+    name: "Green Slime Madness",
+    gradient: "bg-gradient-to-br from-[#84cc16] via-[#22c55e] to-[#a3e635]", // lysande grönt till giftgrönt
+    header: "text-[#14532d]", // djungelgrönt
+    cardborder: "border-[#bbf7d0] border-2", // mintig slime-kant
+    cardbg: "bg-white bg-opacity-90",
+    cardtextcolor: "text-[#166534]",
+    textcolor: "text-[#166534]",
+    buttonbgcolor: "bg-[#22c55e]", // slime!
+    buttontext: "text-white",
+    buttonborder: "border border-[#15803d]",
+    buttonhover: "hover:bg-opacity-70",
+    buttonshadow: "shadow-xl hover:shadow-2xl",
+    ismarkedbg: "bg-[#bef264] bg-opacity-90",
+    ismarkedborder: "border-[#a3e635] border-2",
+    ismarkedtext: "text-[#365314]",
+  },
+  polarhush: {
+    name: "Polar Hush",
+    gradient: "bg-gradient-to-br from-[#e0f2fe] via-[#bae6fd] to-[#f0f9ff]", // isblå till nästan vit
+    header: "text-[#0c4a6e]", // djup kallblå
+    cardborder: "border-[#7dd3fc] border-2", // isig turkos
+    cardbg: "bg-white bg-opacity-95",
+    cardtextcolor: "text-[#082f49]",
+    textcolor: "text-[#082f49]",
+    buttonbgcolor: "bg-[#0ea5e9]", // klarblå
+    buttontext: "text-white",
+    buttonborder: "border border-[#0369a1]",
+    buttonhover: "hover:bg-opacity-70",
+    buttonshadow: "shadow-sm hover:shadow-md",
+    ismarkedbg: "bg-[#e0f2fe] bg-opacity-90",
+    ismarkedborder: "border-[#7dd3fc] border-2",
+    ismarkedtext: "text-[#0c4a6e]",
+  },
+  bluedrift: {
+    name: "Blue Drift",
+    gradient: "bg-gradient-to-br from-[#0e7490] via-[#22d3ee] to-[#a5f3fc]", // djuphavsblå till turkos
+    header: "text-[#0f172a]", // marinblå
+    cardborder: "border-[#67e8f9] border-2",
+    cardbg: "bg-white bg-opacity-90",
+    cardtextcolor: "text-[#0c4a6e]",
+    textcolor: "text-[#0c4a6e]",
+    buttonbgcolor: "bg-[#22d3ee]",
+    buttontext: "text-[#0f172a]",
+    buttonborder: "border border-[#06b6d4]",
+    buttonhover: "hover:bg-opacity-70",
+    buttonshadow: "shadow-md hover:shadow-lg",
+    ismarkedbg: "bg-[#a5f3fc] bg-opacity-90",
+    ismarkedborder: "border-[#67e8f9] border-2",
+    ismarkedtext: "text-[#0e7490]",
+  },
+  cosmicquest: {
+    name: "Cosmic Quest",
+    gradient: "bg-gradient-to-br from-[#1e1b4b] via-[#7c3aed] to-[#a855f7]", // mörk rymd till lila nebulosa
+    header: "text-[#f0abfc]", // rymdljus
+    cardborder: "border-[#a78bfa] border-2", // lila neon
+    cardbg: "bg-[#0f172a] bg-opacity-90", // nästan svart med skimmer
+    cardtextcolor: "text-[#e0e7ff]", // stjärnljus
+    textcolor: "text-[#e0e7ff]",
+    buttonbgcolor: "bg-[#22c55e]", // aliengrön
+    buttontext: "text-black",
+    buttonborder: "border border-[#16a34a]",
+    buttonhover: "hover:bg-opacity-80",
+    buttonshadow: "shadow-lg hover:shadow-2xl",
+    ismarkedbg: "bg-[#86efac] bg-opacity-80",
+    ismarkedborder: "border-[#4ade80] border-2",
+    ismarkedtext: "text-[#052e16]",
   },
 };
 
@@ -1724,47 +1814,49 @@ export default function Bingo() {
               </DrawerHeader>
               <ScrollArea className="h-[320px] w-full">
                 <div className="p-4 pb-0 grid gap-2 h-full">
-                  {Object.keys(themes).map((key) => (
-                    <Button
-                      key={key}
-                      onClick={() => {
-                        dispatch({
-                          type: "SET_THEME",
-                          payload: { value: key as Theme, position: null },
-                        });
-                        window.localStorage.setItem(
-                          "game_state",
-                          JSON.stringify({
-                            theme: key,
-                            markeditems: state.markeditems,
-                          }),
-                        );
-                      }}
-                      variant="outline"
-                      size="sm"
-                      className={cn(
-                        "w-full justify-start",
-                        themes[key as Theme].gradient,
-                        themes[key as Theme].buttontext,
-                        themes[key as Theme].buttonborder,
-                        themes[key as Theme].buttonhover,
-                        themes[key as Theme].buttonshadow,
-                        themes[key as Theme].textcolor,
-                        "rounded-sm border-none w-full text-left text-xs uppercase tracking-widest font-semibold",
-                      )}
-                    >
-                      <Check
+                  {Object.keys(themes)
+                    .sort()
+                    .map((key) => (
+                      <Button
+                        key={key}
+                        onClick={() => {
+                          dispatch({
+                            type: "SET_THEME",
+                            payload: { value: key as Theme, position: null },
+                          });
+                          window.localStorage.setItem(
+                            "game_state",
+                            JSON.stringify({
+                              theme: key,
+                              markeditems: state.markeditems,
+                            }),
+                          );
+                        }}
+                        variant="outline"
+                        size="sm"
                         className={cn(
-                          state.theme === key
-                            ? `${themes[key as Theme].accent} inline`
-                            : "hidden",
-                          "mr-2",
+                          "w-full justify-start",
+                          themes[key as Theme].gradient,
+                          themes[key as Theme].buttontext,
+                          themes[key as Theme].buttonborder,
+                          themes[key as Theme].buttonhover,
+                          themes[key as Theme].buttonshadow,
+                          themes[key as Theme].textcolor,
+                          "rounded-sm border-none w-full text-left text-xs uppercase tracking-widest font-semibold",
                         )}
-                        size={16}
-                      />
-                      {themes[key as Theme].name}
-                    </Button>
-                  ))}
+                      >
+                        <Check
+                          className={cn(
+                            state.theme === key
+                              ? `${themes[key as Theme].accent} inline`
+                              : "hidden",
+                            "mr-2",
+                          )}
+                          size={16}
+                        />
+                        {themes[key as Theme].name}
+                      </Button>
+                    ))}
                 </div>
               </ScrollArea>
               <DrawerFooter>
