@@ -9,7 +9,6 @@ export function ActionButtons({
   buttonbgcolor = "bg-white/10 hover:bg-white/20",
   buttontext = "text-white",
   buttonborder = "border-white",
-  buttonhover = "hover:bg-white",
   buttonshadow = "shadow-md hover:shadow-lg",
   texts,
 }: {
@@ -20,7 +19,6 @@ export function ActionButtons({
   buttonbgcolor?: string;
   buttontext?: string;
   buttonborder?: string;
-  buttonhover?: string;
   buttonshadow?: string;
   texts: { newCard: string; resetCard: string };
 }) {
@@ -36,7 +34,6 @@ export function ActionButtons({
           ${buttonbgcolor}
           ${buttontext}
           ${buttonborder}
-          ${buttonhover}
           ${buttonshadow}
           sm:max-w-48
           w-full

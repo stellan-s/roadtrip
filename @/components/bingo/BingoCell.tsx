@@ -19,7 +19,6 @@ export function BingoCell({
     buttonbgcolor: string;
     buttontext: string;
     buttonborder: string;
-    buttonhover: string;
     buttonshadow: string;
     ismarkedbg: string;
     ismarkedborder: string;
@@ -37,7 +36,6 @@ export function BingoCell({
           themeClasses.buttonbgcolor,
           themeClasses.buttontext,
           themeClasses.buttonborder,
-          themeClasses.buttonhover,
           themeClasses.buttonshadow,
           "shadow-xl hover:shadow-2xl transition-all duration-300 py-4 transform hover:scale-105 active:scale-95",
           "aspect-square w-full rounded-md flex items-center justify-center box-border overflow-hidden",

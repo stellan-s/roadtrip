@@ -20,7 +20,6 @@ export function BingoGrid({
     buttonbgcolor: string;
     buttontext: string;
     buttonborder: string;
-    buttonhover: string;
     buttonshadow: string;
     ismarkedbg: string;
     ismarkedborder: string;

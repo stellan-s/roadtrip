@@ -30,6 +30,7 @@ import {
   RefreshCcw,
   Wind,
   Ship,
+  Coffee,
 } from "lucide-react";
 import { FaHatCowboySide, FaHelicopter } from "react-icons/fa";
 import { TbCamper, TbRollercoaster, TbHelicopter } from "react-icons/tb";
@@ -53,7 +54,7 @@ export const iconMap = {
   car: <Car size={28} />,
   utensils: <Utensils size={28} />,
   cowboy: <FaHatCowboySide size={28} />,
-  coffee: <MdLocalGasStation size={28} />,
+  coffee: <Coffee size={28} />,
   trafficCone: <TrafficCone size={28} />,
   trainTrack: <Milestone size={28} />,
   windmill: <PiWindmill size={28} />,
