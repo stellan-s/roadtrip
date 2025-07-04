@@ -59,11 +59,11 @@ export default function Index() {
         className="h-full w-full flex flex-col gap-5 items-center justify-start grow"
       >
         <TabsList>
-          <TabsTrigger className="shadow-2xl bg-white" value="instant">
+          <TabsTrigger className="shadow-2xl" value="instant">
             <Zap size={14} className="inline mr-1" />
             Instant
           </TabsTrigger>
-          <TabsTrigger className="shadow-2xl bg-white" value="custom">
+          <TabsTrigger className="shadow-2xl" value="custom">
             <Wrench size={14} className="inline mr-1" />
             Custom
           </TabsTrigger>
