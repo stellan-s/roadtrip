@@ -23,7 +23,7 @@ export function ActionButtons({
   texts: { newCard: string; resetCard: string };
 }) {
   return (
-    <div className="w-full gap-3 mt-1 flex items-center justify-center flex-col sm:flex-row">
+    <div className="w-full px-5 gap-3 mt-1 flex items-center justify-center flex-col sm:flex-row">
       <Button
         key="start-over"
         onClick={onStartOver}

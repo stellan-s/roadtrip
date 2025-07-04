@@ -150,6 +150,7 @@ export type ThemeName =
   | "oceanmist"
   | "forestwhisper"
   | "crimsonvelvet"
+  | "mairose"
   | "hotchocolate"
   | "coffeeandcream"
   | "daffodillmeadow"
@@ -476,6 +477,22 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     ismarkedbg: "bg-indigo-200 bg-opacity-80",
     ismarkedborder: "border-indigo-300 border-2 border-opacity-100",
     ismarkedtext: "text-indigo-900",
+  },
+  mairose: {
+    name: "Mai Rose",
+    gradient: "bg-gradient-to-br from-pink-100 via-rose-100 to-fuchsia-200",
+    header: "text-pink-900",
+    cardborder: "border-pink-400 border-2",
+    cardbg: "bg-white bg-opacity-95",
+    cardtextcolor: "text-pink-900",
+    textcolor: "text-pink-900",
+    buttonbgcolor: "bg-pink-700",
+    buttontext: "text-white",
+    buttonborder: "border border-pink-800",
+    buttonshadow: "shadow-lg hover:shadow-xl",
+    ismarkedbg: "bg-fuchsia-300 bg-opacity-80",
+    ismarkedborder: "border-fuchsia-400 border-2 border-opacity-100",
+    ismarkedtext: "text-fuchsia-900",
   },
   midnightorchid: {
     name: "Midnight Orchid",
@@ -1658,7 +1675,7 @@ export default function Bingo() {
         className={cn(
           "bg-cover bg-center bg-no-repeat",
           hasClientData ? themes[state.theme as Theme].gradient : "",
-          "w-full h-screen relative z-10 transition-all duration-700 cubic-bezier(0.165, 0.84, 0.44, 1)",
+          "w-full flex items-center justify-center h-screen relative z-10 transition-all duration-700 cubic-bezier(0.165, 0.84, 0.44, 1)",
         )}
       >
         {isBingo ? (
@@ -1669,7 +1686,7 @@ export default function Bingo() {
             textColorClass={themes[state.theme as Theme].textcolor}
           />
         ) : null}
-        <div className="h-svh overflow-y-auto py-5 container flex items-center justify-center">
+        <div className="h-svh overflow-y-auto py-5 flex items-center justify-center">
           <div className="m-auto grid gap-1 items-center justify-center w-full">
             <BingoHeader
               textColorClass={themes[state.theme as Theme].textcolor}
@@ -1716,10 +1733,11 @@ export default function Bingo() {
       </div> */}
         <Drawer>
           <DrawerTrigger asChild>
-            <div className="absolute top-1 right-0">
+            <div className="absolute top-1 right-1">
               <Button variant="ghost">
                 <Settings
                   className={cn(
+                    "hover:scale-110 transition-transform duration-200 z-50",
                     themes[state.theme as Theme].textcolor,
                     "w-5 h-5",
                   )}
