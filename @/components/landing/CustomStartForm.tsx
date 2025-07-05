@@ -8,6 +8,7 @@ import {
   Globe,
   Heart,
   MapPin,
+  Palette,
   Shuffle,
   Sparkles,
   Square,
@@ -24,6 +25,9 @@ import {
 } from "../ui/select";
 import { useState } from "react";
 import { languageCode, languages } from "@/constants/languages";
+import { themes } from "@/lib/themes";
+import { DEFAULT_GAME_STATE } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 const wordSuggestions = [
   // Resa och rörelse
@@ -132,6 +136,7 @@ export function CustomStartForm({
   handleChangeSeedWord: (seed: string) => void;
   seedWord?: string;
 }) {
+  const [theme, setTheme] = useState<string>(DEFAULT_GAME_STATE.theme);
   const [language, setLanguage] = useState<languageCode>("sv");
   const [isGenerating, setIsGenerating] = useState(false);
   const navigate = useNavigate();
@@ -249,7 +254,44 @@ export function CustomStartForm({
                 </Select>
               </div>
             </div>
-
+            <div className="space-y-3">
+              <label
+                htmlFor="theme"
+                className="text-gray-700 text-sm font-semibold flex items-center gap-2"
+              >
+                <Palette className="w-4 h-4 text-green-500" />
+                Theme
+              </label>
+              <div className="relative">
+                <Select name="theme" value={theme} onValueChange={setTheme}>
+                  <SelectTrigger className="bg-gradient-to-r from-white to-green-50/50 border-2 border-gray-200 text-gray-900 py-3 rounded-full focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 hover:border-green-300">
+                    <SelectValue placeholder="Select theme" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-gray-200 rounded-none shadow-xl">
+                    {Object.keys(themes).map((key) => {
+                      const theme = themes[key as keyof typeof themes];
+                      return (
+                        <SelectItem
+                          key={key}
+                          value={key}
+                          className="text-gray-900 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-none m-1"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={cn(
+                                "rounded-full h-5 w-5",
+                                theme.gradient,
+                              )}
+                            ></div>
+                            <span className="font-medium">{theme.name}</span>
+                          </div>
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 py-4 rounded-full font-semibold text-lg transform hover:scale-105 active:scale-95"

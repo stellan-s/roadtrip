@@ -15,15 +15,32 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { generateBingoGrid } from "@/lib/generateBingoGrid";
 import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/node";
-import { Link, useLoaderData, useNavigate } from "@remix-run/react";
+import {
+  Link,
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+} from "@remix-run/react";
 import { clsx, type ClassValue } from "clsx";
-import { Check, ChevronsUpDown, Loader, Settings } from "lucide-react";
-import { startTransition, useEffect, useReducer, useState } from "react";
+import { Check, ChevronsUpDown, Loader, Palette, Settings } from "lucide-react";
+import {
+  startTransition,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { useReward } from "react-rewards";
 import { twMerge } from "tailwind-merge";
 import "../styles/spin.css";
 import { FaUpDown } from "react-icons/fa6";
 import { Theme, themes } from "@/lib/themes";
+import {
+  checkBingo,
+  cleanupLegacyStorage,
+  loadGameState,
+  saveGameState,
+} from "@/lib/utils";
 
 type Language = "en" | "sv";
 
@@ -102,11 +119,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const seed = url.searchParams.get("seed") || DEFAULT_SEED;
   const language = (url.searchParams.get("language") || "sv") as Language;
+  const theme = url.searchParams.get("theme") || "tropicalsunrise";
 
   return json(
     {
       seed,
       language,
+      theme,
     },
     {
       status: 200,
@@ -185,9 +204,10 @@ export const meta: MetaFunction = () => {
 
 export default function Bingo() {
   const [hasClientData, setHasClientData] = useState(false);
-  const { seed, language } = useLoaderData<typeof loader>();
+  const { seed, language, theme } = useLoaderData<typeof loader>();
   const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
   const bingoGrid = generateBingoGrid(seed ?? "", language, 25);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { reward } = useReward("rewardId", "confetti", {
     elementCount: 350,
@@ -200,119 +220,181 @@ export default function Bingo() {
 
   const [isBingo, setIsBingo] = useState(false);
   const navigate = useNavigate();
+  const [isInitialized, setIsInitialized] = useState(false);
+  const prevMarkedItemsRef = useRef<number[]>([]);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
+    // Initialization
+    if (!isInitialized) {
+      cleanupLegacyStorage();
+
+      const gameState = loadGameState();
+      saveGameState(gameState);
+
+      dispatch({
+        type: "LOAD_STATE",
+        payload: { value: gameState.markeditems, position: null },
+      });
+      dispatch({
+        type: "SET_THEME",
+        payload: { value: gameState.theme, position: null },
+      });
+
+      setHasClientData(true);
+      setIsInitialized(true);
+      prevMarkedItemsRef.current = gameState.markeditems;
       return;
     }
 
-    let theme, markeditems;
+    // Persistence (only after initialization)
+    if (typeof window === "undefined") return;
+    if (!state?.markeditems) return;
 
-    // legacy cleanup
-    window.localStorage.removeItem("marked-items");
-    window.localStorage.removeItem("theme");
+    // Check if markeditems actually changed
+    if (
+      JSON.stringify(state.markeditems) ===
+      JSON.stringify(prevMarkedItemsRef.current)
+    ) {
+      return;
+    }
 
-    const stateString = window.localStorage.getItem("game_state");
-
-    if (!stateString || stateString === "") {
-      window.localStorage.setItem(
-        "game_state",
-        JSON.stringify({
-          theme: "mintbreeze",
-          markeditems: new Array(25).fill(0),
-        }),
-      );
-      theme = "mintbreeze";
-      markeditems = new Array(25).fill(0);
-    } else {
+    if (!state.markeditems.every((item) => item === 0)) {
       try {
-        const parsedState = JSON.parse(stateString);
-
-        if (parsedState && typeof parsedState === "object") {
-          if (parsedState.theme && Array.isArray(parsedState.markeditems)) {
-            theme = parsedState.theme;
-            markeditems = parsedState.markeditems;
-          } else {
-            throw new Error("Invalid structure");
-          }
-        } else {
-          throw new Error("Invalid JSON");
-        }
+        const currentState = loadGameState();
+        const updatedState = {
+          ...currentState,
+          markeditems: state.markeditems,
+        };
+        saveGameState(updatedState);
       } catch (error) {
-        console.error("Failed to parse state string:", error);
-        theme = "tropicalsunrise";
-        markeditems = new Array(25).fill(0);
+        console.error("Failed to persist game state:", error);
       }
     }
 
-    dispatch({
-      type: "LOAD_STATE",
-      payload: { value: markeditems, position: null },
-    });
-    dispatch({ type: "SET_THEME", payload: { value: theme, position: null } });
+    prevMarkedItemsRef.current = state.markeditems;
+  }, [isInitialized, state?.markeditems]);
 
-    // ✅ Ensures loading overlay disappears
-    setHasClientData(true);
-  }, []);
-
-  // // sync to local storage
+  // Bingo check (separate concern)
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
+    if (!state?.markeditems) return;
 
-    if (state.markeditems.every((item) => item === 0)) {
-      return;
-    }
-
-    const stateString = window.localStorage.getItem("game_state");
-
-    if (!stateString || stateString === "") {
-      window.localStorage.setItem(
-        "game_state",
-        JSON.stringify({
-          theme: "mintbreeze",
-          markeditems: new Array(25).fill(0),
-        }),
-      );
-      return;
-    }
-
-    const { theme } = JSON.parse(stateString);
-
-    const currentState = { theme: theme, markeditems: state.markeditems };
-    window.localStorage.setItem("game_state", JSON.stringify(currentState));
-  }, [state.markeditems]);
-
-  // Check for bingo
-  useEffect(() => {
-    // Check rows
-    for (let i = 0; i < 25; i += 5) {
-      const row = state.markeditems.slice(i, i + 5);
-      if (row.every((item) => item !== 0)) {
-        setIsBingo(true);
-      }
-    }
-    // Check columns
-    for (let i = 0; i < 5; i++) {
-      const col = [];
-      for (let j = 0; j < 5; j++) {
-        col.push(state.markeditems[j * 5 + i]);
-      }
-      if (col.every((item) => item !== 0)) {
-        setIsBingo(true);
-      }
-    }
-    // Check diagonals
-    const diagonal1 = [0, 6, 12, 18, 24];
-    const diagonal2 = [4, 8, 12, 16, 20];
-    if (diagonal1.every((i) => state.markeditems[i] !== 0)) {
-      setIsBingo(true);
-    }
-    if (diagonal2.every((i) => state.markeditems[i] !== 0)) {
+    if (checkBingo(state.markeditems)) {
       setIsBingo(true);
     }
   }, [state?.markeditems]);
+
+  // useEffect(() => {
+  //   if (typeof window === "undefined") {
+  //     return;
+  //   }
+
+  //   let theme, markeditems;
+
+  //   // legacy cleanup
+  //   window.localStorage.removeItem("marked-items");
+  //   window.localStorage.removeItem("theme");
+
+  //   const stateString = window.localStorage.getItem("game_state");
+
+  //   if (!stateString || stateString === "") {
+  //     window.localStorage.setItem(
+  //       "game_state",
+  //       JSON.stringify({
+  //         theme: "mintbreeze",
+  //         markeditems: new Array(25).fill(0),
+  //       }),
+  //     );
+  //     theme = "mintbreeze";
+  //     markeditems = new Array(25).fill(0);
+  //   } else {
+  //     try {
+  //       const parsedState = JSON.parse(stateString);
+
+  //       if (parsedState && typeof parsedState === "object") {
+  //         if (parsedState.theme && Array.isArray(parsedState.markeditems)) {
+  //           theme = parsedState.theme;
+  //           markeditems = parsedState.markeditems;
+  //         } else {
+  //           throw new Error("Invalid structure");
+  //         }
+  //       } else {
+  //         throw new Error("Invalid JSON");
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to parse state string:", error);
+  //       theme = "tropicalsunrise";
+  //       markeditems = new Array(25).fill(0);
+  //     }
+  //   }
+
+  //   dispatch({
+  //     type: "LOAD_STATE",
+  //     payload: { value: markeditems, position: null },
+  //   });
+  //   dispatch({ type: "SET_THEME", payload: { value: theme, position: null } });
+
+  //   // ✅ Ensures loading overlay disappears
+  //   setHasClientData(true);
+  // }, []);
+
+  // // // sync to local storage
+  // useEffect(() => {
+  //   if (typeof window === "undefined") {
+  //     return;
+  //   }
+
+  //   if (state.markeditems.every((item) => item === 0)) {
+  //     return;
+  //   }
+
+  //   const stateString = window.localStorage.getItem("game_state");
+
+  //   if (!stateString || stateString === "") {
+  //     window.localStorage.setItem(
+  //       "game_state",
+  //       JSON.stringify({
+  //         theme: "mintbreeze",
+  //         markeditems: new Array(25).fill(0),
+  //       }),
+  //     );
+  //     return;
+  //   }
+
+  //   const { theme } = JSON.parse(stateString);
+
+  //   const currentState = { theme: theme, markeditems: state.markeditems };
+  //   window.localStorage.setItem("game_state", JSON.stringify(currentState));
+  // }, [state.markeditems]);
+
+  // // Check for bingo
+  // useEffect(() => {
+  //   // Check rows
+  //   for (let i = 0; i < 25; i += 5) {
+  //     const row = state.markeditems.slice(i, i + 5);
+  //     if (row.every((item) => item !== 0)) {
+  //       setIsBingo(true);
+  //     }
+  //   }
+  //   // Check columns
+  //   for (let i = 0; i < 5; i++) {
+  //     const col = [];
+  //     for (let j = 0; j < 5; j++) {
+  //       col.push(state.markeditems[j * 5 + i]);
+  //     }
+  //     if (col.every((item) => item !== 0)) {
+  //       setIsBingo(true);
+  //     }
+  //   }
+  //   // Check diagonals
+  //   const diagonal1 = [0, 6, 12, 18, 24];
+  //   const diagonal2 = [4, 8, 12, 16, 20];
+  //   if (diagonal1.every((i) => state.markeditems[i] !== 0)) {
+  //     setIsBingo(true);
+  //   }
+  //   if (diagonal2.every((i) => state.markeditems[i] !== 0)) {
+  //     setIsBingo(true);
+  //   }
+  // }, [state?.markeditems]);
 
   useEffect(() => {
     if (isBingo) {
@@ -354,7 +436,7 @@ export default function Bingo() {
     setIsBingo(false);
   };
 
-  if (!state || !state.theme) return null;
+  if (!state || !theme) return null;
 
   return (
     <div className="w-full h-screen relative">
@@ -377,7 +459,7 @@ export default function Bingo() {
       <div
         className={cn(
           "bg-cover bg-center bg-no-repeat",
-          hasClientData ? themes[state.theme as Theme].gradient : "",
+          hasClientData ? themes[theme as Theme].gradient : "",
           "w-full flex items-center justify-center h-screen relative z-10 transition-all duration-700 cubic-bezier(0.165, 0.84, 0.44, 1)",
         )}
       >
@@ -386,14 +468,12 @@ export default function Bingo() {
             show={isBingo}
             onClick={handleStartOver}
             text={UiText[language].bingoStartOver}
-            textColorClass={themes[state.theme as Theme].textcolor}
+            textColorClass={themes[theme as Theme].textcolor}
           />
         ) : null}
         <div className="h-svh overflow-y-auto py-5 flex items-center justify-center">
           <div className="m-auto grid gap-1 items-center justify-center w-full">
-            <BingoHeader
-              textColorClass={themes[state.theme as Theme].textcolor}
-            />
+            <BingoHeader textColorClass={themes[theme as Theme].textcolor} />
             <BingoGrid
               grid={bingoGrid}
               markedItems={state.markeditems.map((item) =>
@@ -401,28 +481,28 @@ export default function Bingo() {
               )}
               onToggleItem={handleToggleItem}
               themeClasses={{
-                cardtextcolor: themes[state.theme as Theme].cardtextcolor,
-                cardborder: themes[state.theme as Theme].cardborder,
-                cardbg: themes[state.theme as Theme].cardbg,
-                textcolor: themes[state.theme as Theme].textcolor,
-                buttonbgcolor: themes[state.theme as Theme].buttonbgcolor,
-                buttontext: themes[state.theme as Theme].buttontext,
-                buttonborder: themes[state.theme as Theme].buttonborder,
-                buttonshadow: themes[state.theme as Theme].buttonshadow,
-                ismarkedbg: themes[state.theme as Theme].ismarkedbg,
-                ismarkedborder: themes[state.theme as Theme].ismarkedborder,
-                ismarkedtext: themes[state.theme as Theme].ismarkedtext,
+                cardtextcolor: themes[theme as Theme].cardtextcolor,
+                cardborder: themes[theme as Theme].cardborder,
+                cardbg: themes[theme as Theme].cardbg,
+                textcolor: themes[theme as Theme].textcolor,
+                buttonbgcolor: themes[theme as Theme].buttonbgcolor,
+                buttontext: themes[theme as Theme].buttontext,
+                buttonborder: themes[theme as Theme].buttonborder,
+                buttonshadow: themes[theme as Theme].buttonshadow,
+                ismarkedbg: themes[theme as Theme].ismarkedbg,
+                ismarkedborder: themes[theme as Theme].ismarkedborder,
+                ismarkedtext: themes[theme as Theme].ismarkedtext,
               }}
             />
             <ActionButtons
               onStartOver={handleStartOver}
               onReset={handleReset}
-              textColorClass={themes[state.theme as Theme].textcolor}
-              backgroundColorClass={themes[state.theme as Theme].cardbg}
-              buttonbgcolor={themes[state.theme as Theme].buttonbgcolor}
-              buttontext={themes[state.theme as Theme].buttontext}
-              buttonborder={themes[state.theme as Theme].buttonborder}
-              buttonshadow={themes[state.theme as Theme].buttonshadow}
+              textColorClass={themes[theme as Theme].textcolor}
+              backgroundColorClass={themes[theme as Theme].cardbg}
+              buttonbgcolor={themes[theme as Theme].buttonbgcolor}
+              buttontext={themes[theme as Theme].buttontext}
+              buttonborder={themes[theme as Theme].buttonborder}
+              buttonshadow={themes[theme as Theme].buttonshadow}
               texts={UiText[language]}
             />
           </div>
@@ -438,17 +518,19 @@ export default function Bingo() {
           <DrawerTrigger asChild>
             <div className="absolute top-1 right-1">
               <Button variant="ghost">
-                <Settings
+                <Palette
                   className={cn(
                     "hover:scale-110 transition-transform duration-200 z-50",
-                    themes[state.theme as Theme].textcolor,
+                    themes[theme as Theme].textcolor,
                     "w-5 h-5",
                   )}
                 />
               </Button>
             </div>
           </DrawerTrigger>
-          <DrawerContent className="bg-opacity-50 backdrop-blur-md bg-white">
+          <DrawerContent
+            className={`backdrop-blur-xl ${themes[theme as Theme].gradient}/20`}
+          >
             <div className="mx-auto w-full max-w-sm">
               <DrawerHeader>
                 <DrawerTitle className="text-2xl text-center font-bold opacity-70 tracking-wide">
@@ -463,17 +545,10 @@ export default function Bingo() {
                       <Button
                         key={key}
                         onClick={() => {
-                          dispatch({
-                            type: "SET_THEME",
-                            payload: { value: key as Theme, position: null },
+                          setSearchParams((prev) => {
+                            prev.set("theme", key);
+                            return prev;
                           });
-                          window.localStorage.setItem(
-                            "game_state",
-                            JSON.stringify({
-                              theme: key,
-                              markeditems: state.markeditems,
-                            }),
-                          );
                         }}
                         variant="outline"
                         size="sm"
@@ -489,7 +564,7 @@ export default function Bingo() {
                       >
                         <Check
                           className={cn(
-                            state.theme === key
+                            theme === key
                               ? `${themes[key as Theme].accent} inline`
                               : "hidden",
                             "mr-2",
@@ -505,7 +580,11 @@ export default function Bingo() {
                 <DrawerClose asChild>
                   <Button
                     variant="default"
-                    className="py-5 rounded-sm space-x-1 font-thin text-sm"
+                    className={cn(
+                      themes[theme as Theme].buttonbgcolor,
+                      themes[theme as Theme].buttontext,
+                      "py-5 rounded-sm space-x-1 font-thin text-sm",
+                    )}
                   >
                     <Check size={20} className="inline mr-2" />
                     {UiText[language].themeSelect}
