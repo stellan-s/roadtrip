@@ -16,7 +16,7 @@ export function BingoOverlay({
     <div
       role="button"
       onClick={onClick}
-      className="absolute w-full h-full bg-black z-40 overflow-hidden bg-opacity-80"
+      className="absolute w-full h-svh bg-black z-40 overflow-hidden bg-opacity-80"
       tabIndex={0}
       onKeyDown={onClick}
     >
@@ -24,7 +24,7 @@ export function BingoOverlay({
         className="absolute top-1/2 left-1/2 -translate-x-1/2 bg-transparent h-0 w-0"
         id="rewardId"
       ></div>
-      <div className="animate-pulse duration-400 cubic-bezier(0.165, 0.84, 0.44, 1) -translate-x-1/2 -translate-y-1/2 w-full h-screen flex flex-col items-center justify-center">
+      <div className="animate-pulse duration-400 cubic-bezier(0.165, 0.84, 0.44, 1) w-full h-screen flex flex-col items-center justify-center">
         <NeonText color="purple" size="xl" intensity="high">
           BINGO!
         </NeonText>
