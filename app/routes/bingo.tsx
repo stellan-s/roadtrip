@@ -221,7 +221,7 @@ export default function Bingo() {
   const [isBingo, setIsBingo] = useState(false);
   const navigate = useNavigate();
   const [isInitialized, setIsInitialized] = useState(false);
-  const prevMarkedItemsRef = useRef<number[]>([]);
+  const prevMarkedItemsRef = useRef<(string | 0)[]>([]);
 
   useEffect(() => {
     // Initialization
@@ -278,7 +278,7 @@ export default function Bingo() {
   useEffect(() => {
     if (!state?.markeditems) return;
 
-    if (checkBingo(state.markeditems)) {
+    if (checkBingo(state.markeditems.map((item) => (item === 0 ? 0 : 1)))) {
       setIsBingo(true);
     }
   }, [state?.markeditems]);
@@ -517,7 +517,10 @@ export default function Bingo() {
         <Drawer>
           <DrawerTrigger asChild>
             <div className="absolute top-1 right-1">
-              <Button variant="ghost">
+              <Button
+                variant="ghost"
+                className="hover:scale-105 hover:contrast-125"
+              >
                 <Palette
                   className={cn(
                     "hover:scale-110 transition-transform duration-200 z-50",

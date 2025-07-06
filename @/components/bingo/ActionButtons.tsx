@@ -47,6 +47,7 @@ export function ActionButtons({
           duration-300 py-4
           transform
           hover:scale-105
+          hover:contrast-125
           active:scale-95`}
       >
         {texts.newCard}

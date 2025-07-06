@@ -75,5 +75,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "overrides": {
+    "rollup": "4.15.0"
   }
 }
