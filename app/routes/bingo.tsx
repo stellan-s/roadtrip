@@ -41,6 +41,7 @@ import {
   loadGameState,
   saveGameState,
 } from "@/lib/utils";
+import { DEFAULT_GAME_STATE } from "@/lib/constants";
 
 type Language = "en" | "sv";
 
@@ -137,13 +138,16 @@ type State = { theme: Theme | undefined; markeditems: (string | 0)[] };
 type Action = {
   type: string;
   payload: {
-    value: string | string[] | number | null;
+    value: string | string[] | number | null | (string | 0)[];
     position: number | null;
   };
 };
 
 function createInitialState(): State {
-  return { theme: "tropicalsunrise", markeditems: new Array(25).fill(0) };
+  return {
+    theme: DEFAULT_GAME_STATE.theme as Theme,
+    markeditems: new Array(25).fill(0),
+  };
 }
 
 function reducer(state: State, action: Action): State {
@@ -204,7 +208,7 @@ export const meta: MetaFunction = () => {
 
 export default function Bingo() {
   const [hasClientData, setHasClientData] = useState(false);
-  const { seed, language, theme } = useLoaderData<typeof loader>();
+  const { seed, language } = useLoaderData<typeof loader>();
   const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
   const bingoGrid = generateBingoGrid(seed ?? "", language, 25);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -221,7 +225,6 @@ export default function Bingo() {
   const [isBingo, setIsBingo] = useState(false);
   const navigate = useNavigate();
   const [isInitialized, setIsInitialized] = useState(false);
-  const prevMarkedItemsRef = useRef<(string | 0)[]>([]);
 
   useEffect(() => {
     // Initialization
@@ -242,37 +245,32 @@ export default function Bingo() {
 
       setHasClientData(true);
       setIsInitialized(true);
-      prevMarkedItemsRef.current = gameState.markeditems;
       return;
     }
 
     // Persistence (only after initialization)
     if (typeof window === "undefined") return;
-    if (!state?.markeditems) return;
+    if (!state?.markeditems || !state?.theme) return;
 
-    // Check if markeditems actually changed
-    if (
-      JSON.stringify(state.markeditems) ===
-      JSON.stringify(prevMarkedItemsRef.current)
-    ) {
-      return;
-    }
+    try {
+      const currentState = loadGameState();
+      const markedChanged =
+        JSON.stringify(currentState.markeditems) !==
+        JSON.stringify(state.markeditems);
+      const themeChanged = currentState.theme !== state.theme;
 
-    if (!state.markeditems.every((item) => item === 0)) {
-      try {
-        const currentState = loadGameState();
+      if (markedChanged || themeChanged) {
         const updatedState = {
           ...currentState,
           markeditems: state.markeditems,
+          theme: state.theme,
         };
         saveGameState(updatedState);
-      } catch (error) {
-        console.error("Failed to persist game state:", error);
       }
+    } catch (error) {
+      console.error("Failed to persist game state:", error);
     }
-
-    prevMarkedItemsRef.current = state.markeditems;
-  }, [isInitialized, state?.markeditems]);
+  }, [isInitialized, state?.markeditems, state?.theme]);
 
   // Bingo check (separate concern)
   useEffect(() => {
@@ -436,7 +434,7 @@ export default function Bingo() {
     setIsBingo(false);
   };
 
-  if (!state || !theme) return null;
+  if (!state) return null;
 
   return (
     <div className="w-full h-screen relative">
@@ -459,7 +457,7 @@ export default function Bingo() {
       <div
         className={cn(
           "bg-cover bg-center bg-no-repeat",
-          hasClientData ? themes[theme as Theme].gradient : "",
+          hasClientData ? themes[state.theme as Theme].gradient : "",
           "w-full flex items-center justify-center h-screen relative z-10 transition-all duration-700 cubic-bezier(0.165, 0.84, 0.44, 1)",
         )}
       >
@@ -468,12 +466,12 @@ export default function Bingo() {
             show={isBingo}
             onClick={handleStartOver}
             text={UiText[language].bingoStartOver}
-            textColorClass={themes[theme as Theme].textcolor}
+            textColorClass={themes[state.theme as Theme].textcolor}
           />
         ) : null}
         <div className="h-svh overflow-y-auto py-5 flex items-center justify-center">
           <div className="m-auto grid gap-1 items-center justify-center w-full">
-            <BingoHeader textColorClass={themes[theme as Theme].textcolor} />
+            <BingoHeader textColorClass={themes[state.theme as Theme].textcolor} />
             <BingoGrid
               grid={bingoGrid}
               markedItems={state.markeditems.map((item) =>
@@ -481,28 +479,28 @@ export default function Bingo() {
               )}
               onToggleItem={handleToggleItem}
               themeClasses={{
-                cardtextcolor: themes[theme as Theme].cardtextcolor,
-                cardborder: themes[theme as Theme].cardborder,
-                cardbg: themes[theme as Theme].cardbg,
-                textcolor: themes[theme as Theme].textcolor,
-                buttonbgcolor: themes[theme as Theme].buttonbgcolor,
-                buttontext: themes[theme as Theme].buttontext,
-                buttonborder: themes[theme as Theme].buttonborder,
-                buttonshadow: themes[theme as Theme].buttonshadow,
-                ismarkedbg: themes[theme as Theme].ismarkedbg,
-                ismarkedborder: themes[theme as Theme].ismarkedborder,
-                ismarkedtext: themes[theme as Theme].ismarkedtext,
+                cardtextcolor: themes[state.theme as Theme].cardtextcolor,
+                cardborder: themes[state.theme as Theme].cardborder,
+                cardbg: themes[state.theme as Theme].cardbg,
+                textcolor: themes[state.theme as Theme].textcolor,
+                buttonbgcolor: themes[state.theme as Theme].buttonbgcolor,
+                buttontext: themes[state.theme as Theme].buttontext,
+                buttonborder: themes[state.theme as Theme].buttonborder,
+                buttonshadow: themes[state.theme as Theme].buttonshadow,
+                ismarkedbg: themes[state.theme as Theme].ismarkedbg,
+                ismarkedborder: themes[state.theme as Theme].ismarkedborder,
+                ismarkedtext: themes[state.theme as Theme].ismarkedtext,
               }}
             />
             <ActionButtons
               onStartOver={handleStartOver}
               onReset={handleReset}
-              textColorClass={themes[theme as Theme].textcolor}
-              backgroundColorClass={themes[theme as Theme].cardbg}
-              buttonbgcolor={themes[theme as Theme].buttonbgcolor}
-              buttontext={themes[theme as Theme].buttontext}
-              buttonborder={themes[theme as Theme].buttonborder}
-              buttonshadow={themes[theme as Theme].buttonshadow}
+              textColorClass={themes[state.theme as Theme].textcolor}
+              backgroundColorClass={themes[state.theme as Theme].cardbg}
+              buttonbgcolor={themes[state.theme as Theme].buttonbgcolor}
+              buttontext={themes[state.theme as Theme].buttontext}
+              buttonborder={themes[state.theme as Theme].buttonborder}
+              buttonshadow={themes[state.theme as Theme].buttonshadow}
               texts={UiText[language]}
             />
           </div>
@@ -524,7 +522,7 @@ export default function Bingo() {
                 <Palette
                   className={cn(
                     "hover:scale-110 transition-transform duration-200 z-50",
-                    themes[theme as Theme].textcolor,
+                    themes[state.theme as Theme].textcolor,
                     "w-5 h-5",
                   )}
                 />
@@ -532,7 +530,7 @@ export default function Bingo() {
             </div>
           </DrawerTrigger>
           <DrawerContent
-            className={`backdrop-blur-xl ${themes[theme as Theme].gradient}/20`}
+            className={`backdrop-blur-xl ${themes[state.theme as Theme].gradient}/20`}
           >
             <div className="mx-auto w-full max-w-sm">
               <DrawerHeader>
@@ -552,6 +550,10 @@ export default function Bingo() {
                             prev.set("theme", key);
                             return prev;
                           });
+                          dispatch({
+                            type: "SET_THEME",
+                            payload: { value: key, position: null },
+                          });
                         }}
                         variant="outline"
                         size="sm"
@@ -567,7 +569,7 @@ export default function Bingo() {
                       >
                         <Check
                           className={cn(
-                            theme === key
+                            state.theme === key
                               ? `${themes[key as Theme].accent} inline`
                               : "hidden",
                             "mr-2",
@@ -584,8 +586,8 @@ export default function Bingo() {
                   <Button
                     variant="default"
                     className={cn(
-                      themes[theme as Theme].buttonbgcolor,
-                      themes[theme as Theme].buttontext,
+                      themes[state.theme as Theme].buttonbgcolor,
+                      themes[state.theme as Theme].buttontext,
                       "py-5 rounded-sm space-x-1 font-thin text-sm",
                     )}
                   >

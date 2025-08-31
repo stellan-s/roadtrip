@@ -1,12 +1,18 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { BINGO_PATTERNS, DEFAULT_GAME_STATE } from "./constants";
+import type { ThemeName } from "./themes";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-const isValidGameState = (state: any): state is typeof DEFAULT_GAME_STATE => {
+export type GameState = {
+  theme: ThemeName | string;
+  markeditems: (string | 0)[];
+};
+
+const isValidGameState = (state: any): state is GameState => {
   return (
     state &&
     typeof state === "object" &&
@@ -38,13 +44,13 @@ export const cleanupLegacyStorage = () => {
   }
 };
 
-export const loadGameState = () => {
+export const loadGameState = (): GameState => {
   if (typeof window === "undefined") return DEFAULT_GAME_STATE;
 
   const stateString = window.localStorage.getItem("game_state");
 
   if (!stateString) {
-    return DEFAULT_GAME_STATE;
+    return DEFAULT_GAME_STATE as unknown as GameState;
   }
 
   try {
@@ -53,15 +59,15 @@ export const loadGameState = () => {
       return parsedState;
     } else {
       console.warn("Invalid game state structure, using defaults");
-      return DEFAULT_GAME_STATE;
+      return DEFAULT_GAME_STATE as unknown as GameState;
     }
   } catch (error) {
     console.error("Failed to parse game state:", error);
-    return DEFAULT_GAME_STATE;
+    return DEFAULT_GAME_STATE as unknown as GameState;
   }
 };
 
-export const saveGameState = (gameState: typeof DEFAULT_GAME_STATE) => {
+export const saveGameState = (gameState: GameState) => {
   if (typeof window === "undefined") return;
 
   try {
