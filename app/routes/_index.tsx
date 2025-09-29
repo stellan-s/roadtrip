@@ -1,14 +1,10 @@
-import { IntroCarousel } from "@/components/landing/IntroCarousel";
-import { LanguageSwitcher } from "@/components/landing/LanguageSwitcher";
 import { CustomStartForm } from "@/components/landing/CustomStartForm";
 import { Header } from "@/components/shared/Header";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { MetaFunction } from "@remix-run/node";
-import { Form } from "@remix-run/react";
-import { ArrowRight, Wrench, Zap } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Wrench, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
 import { QuickStartForm } from "@/components/landing/QuickStartForm";
 
 export const meta: MetaFunction = () => {
@@ -52,37 +48,38 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-start justify-center p-2 md:p-6">
-      <Header seedWord={seedWord} />
-      <Tabs
-        defaultValue="instant"
-        className="h-full w-full flex flex-col gap-5 items-center justify-start grow"
-      >
-        <TabsList>
-          <TabsTrigger className="shadow-2xl" value="instant">
-            <Zap size={14} className="inline mr-1" />
-            Instant
-          </TabsTrigger>
-          <TabsTrigger className="shadow-2xl" value="custom">
-            <Wrench size={14} className="inline mr-1" />
-            Custom
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="instant" className="animate-slide-in">
-          <QuickStartForm
-            handleChangeSeedWord={handleChangeSeedWord}
-            seedWord={seedWord}
-            lang={lang}
-          />
-        </TabsContent>
-        <TabsContent value="custom" className="animate-slide-in">
-          <CustomStartForm
-            handleChangeSeedWord={handleChangeSeedWord}
-            seedWord={seedWord}
-            lang={lang}
-          />
-        </TabsContent>
-      </Tabs>
-    </div>
+    <ErrorBoundary>
+      <div className="min-h-screen w-full flex flex-col items-start justify-center p-2 md:p-6">
+        <Header seedWord={seedWord} />
+        <Tabs
+          defaultValue="instant"
+          className="h-full w-full flex flex-col gap-5 items-center justify-start grow"
+        >
+          <TabsList>
+            <TabsTrigger className="shadow-2xl" value="instant">
+              <Zap size={14} className="inline mr-1" />
+              Instant
+            </TabsTrigger>
+            <TabsTrigger className="shadow-2xl" value="custom">
+              <Wrench size={14} className="inline mr-1" />
+              Custom
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="instant" className="animate-slide-in">
+            <QuickStartForm
+              handleChangeSeedWord={handleChangeSeedWord}
+              seedWord={seedWord}
+              lang={lang}
+            />
+          </TabsContent>
+          <TabsContent value="custom" className="animate-slide-in">
+            <CustomStartForm
+              handleChangeSeedWord={handleChangeSeedWord}
+              seedWord={seedWord}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
+    </ErrorBoundary>
   );
 }

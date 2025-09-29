@@ -2,6 +2,7 @@ import { ActionButtons } from "@/components/bingo/ActionButtons";
 import { BingoGrid } from "@/components/bingo/BingoGrid";
 import { BingoHeader } from "@/components/bingo/BingoHeader";
 import { BingoOverlay } from "@/components/bingo/BingoOverlay";
+import { ErrorBoundary as ErrorBoundaryComponent } from "@/components/shared/ErrorBoundary";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -472,26 +473,37 @@ export default function Bingo() {
         <div className="h-svh overflow-y-auto py-5 flex items-center justify-center">
           <div className="m-auto grid gap-1 items-center justify-center w-full">
             <BingoHeader textColorClass={themes[state.theme as Theme].textcolor} />
-            <BingoGrid
-              grid={bingoGrid}
-              markedItems={state.markeditems.map((item) =>
-                item === 0 ? "" : item,
-              )}
-              onToggleItem={handleToggleItem}
-              themeClasses={{
-                cardtextcolor: themes[state.theme as Theme].cardtextcolor,
-                cardborder: themes[state.theme as Theme].cardborder,
-                cardbg: themes[state.theme as Theme].cardbg,
-                textcolor: themes[state.theme as Theme].textcolor,
-                buttonbgcolor: themes[state.theme as Theme].buttonbgcolor,
-                buttontext: themes[state.theme as Theme].buttontext,
-                buttonborder: themes[state.theme as Theme].buttonborder,
-                buttonshadow: themes[state.theme as Theme].buttonshadow,
-                ismarkedbg: themes[state.theme as Theme].ismarkedbg,
-                ismarkedborder: themes[state.theme as Theme].ismarkedborder,
-                ismarkedtext: themes[state.theme as Theme].ismarkedtext,
-              }}
-            />
+            <ErrorBoundaryComponent
+              fallback={
+                <div className="p-8 bg-red-50 rounded-lg text-center">
+                  <p className="text-red-800 mb-4">Failed to load the bingo grid</p>
+                  <Button onClick={() => window.location.reload()}>
+                    Reload Game
+                  </Button>
+                </div>
+              }
+            >
+              <BingoGrid
+                grid={bingoGrid}
+                markedItems={state.markeditems.map((item) =>
+                  item === 0 ? "" : item,
+                )}
+                onToggleItem={handleToggleItem}
+                themeClasses={{
+                  cardtextcolor: themes[state.theme as Theme].cardtextcolor,
+                  cardborder: themes[state.theme as Theme].cardborder,
+                  cardbg: themes[state.theme as Theme].cardbg,
+                  textcolor: themes[state.theme as Theme].textcolor,
+                  buttonbgcolor: themes[state.theme as Theme].buttonbgcolor,
+                  buttontext: themes[state.theme as Theme].buttontext,
+                  buttonborder: themes[state.theme as Theme].buttonborder,
+                  buttonshadow: themes[state.theme as Theme].buttonshadow,
+                  ismarkedbg: themes[state.theme as Theme].ismarkedbg,
+                  ismarkedborder: themes[state.theme as Theme].ismarkedborder,
+                  ismarkedtext: themes[state.theme as Theme].ismarkedtext,
+                }}
+              />
+            </ErrorBoundaryComponent>
             <ActionButtons
               onStartOver={handleStartOver}
               onReset={handleReset}

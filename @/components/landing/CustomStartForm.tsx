@@ -1,20 +1,14 @@
-import { Form, useNavigate } from "@remix-run/react";
+import { Form } from "@remix-run/react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
   ArrowRight,
   Coffee,
-  Dices,
   Globe,
-  Heart,
   MapPin,
   Palette,
-  Shuffle,
   Sparkles,
-  Square,
-  Star,
   Wrench,
-  Zap,
 } from "lucide-react";
 import {
   Select,
@@ -128,38 +122,15 @@ const wordSuggestions = [
 ];
 
 export function CustomStartForm({
-  lang,
   handleChangeSeedWord,
   seedWord = "",
 }: {
-  lang: languageCode | null;
   handleChangeSeedWord: (seed: string) => void;
   seedWord?: string;
 }) {
   const [theme, setTheme] = useState<string>(DEFAULT_GAME_STATE.theme);
   const [language, setLanguage] = useState<languageCode>("sv");
-  const [isGenerating, setIsGenerating] = useState(false);
-  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!seedWord.trim()) return;
-
-    setIsGenerating(true);
-
-    // Simulate generating the board
-    setTimeout(() => {
-      // In a real implementation, you would:
-      // 1. Pass the seed word to your algorithm
-      // 2. Generate the board
-      // 3. Navigate to the board page with the generated data
-
-      // For now, we'll just navigate to a dummy URL
-      navigate(`/bingo?seed=${encodeURIComponent(seedWord)}&lang=${language}&theme=${theme}`, {
-        replace: true,
-      });
-    }, 800);
-  };
 
   const getRandomWord = () => {
     const randomWord =
@@ -295,20 +266,12 @@ export function CustomStartForm({
             <Button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 py-4 rounded-full font-semibold text-lg transform hover:scale-105 active:scale-95"
-              disabled={!seedWord.trim() || isGenerating}
+              disabled={!seedWord.trim()}
             >
-              {isGenerating ? (
-                <span className="flex items-center gap-3">
-                  <div className="h-5 w-5 rounded-none border-2 border-white border-t-transparent animate-spin" />
-                  <span>Generating Magic...</span>
-                  <Sparkles className="w-5 h-5 animate-pulse" />
-                </span>
-              ) : (
-                <span className="flex items-center gap-3">
-                  <span>Get your board</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              )}
+              <span className="flex items-center gap-3">
+                <span>Get your board</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </span>
             </Button>
           </Form>
 

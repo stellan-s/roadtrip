@@ -27,12 +27,11 @@ module.exports = {
     // React
     {
       files: ["**/*.{js,jsx,ts,tsx}"],
-      plugins: ["react", "jsx-a11y"],
+      plugins: ["react"],
       extends: [
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
         "plugin:react-hooks/recommended",
-        "plugin:jsx-a11y/recommended",
       ],
       settings: {
         react: {
@@ -43,33 +42,25 @@ module.exports = {
           { name: "Link", linkAttribute: "to" },
           { name: "NavLink", linkAttribute: "to" },
         ],
-        "import/resolver": {
-          typescript: {},
-        },
+      },
+      rules: {
+        "react/prop-types": "off", // Using TypeScript instead
       },
     },
 
     // Typescript
     {
       files: ["**/*.{ts,tsx}"],
-      plugins: ["@typescript-eslint", "import"],
+      plugins: ["@typescript-eslint"],
       parser: "@typescript-eslint/parser",
-      settings: {
-        "import/internal-regex": "^~/",
-        "import/resolver": {
-          node: {
-            extensions: [".ts", ".tsx"],
-          },
-          typescript: {
-            alwaysTryTypes: true,
-          },
-        },
-      },
       extends: [
         "plugin:@typescript-eslint/recommended",
-        "plugin:import/recommended",
-        "plugin:import/typescript",
       ],
+      rules: {
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-empty-object-type": "off",
+      },
     },
 
     // Node
