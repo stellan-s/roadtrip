@@ -208,7 +208,7 @@ export const meta: MetaFunction = () => {
 
 export default function Bingo() {
   const [hasClientData, setHasClientData] = useState(false);
-  const { seed, language } = useLoaderData<typeof loader>();
+  const { seed, language, theme } = useLoaderData<typeof loader>();
   const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
   const bingoGrid = generateBingoGrid(seed ?? "", language, 25);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -240,7 +240,7 @@ export default function Bingo() {
       });
       dispatch({
         type: "SET_THEME",
-        payload: { value: gameState.theme, position: null },
+        payload: { value: theme, position: null },
       });
 
       setHasClientData(true);
@@ -270,7 +270,7 @@ export default function Bingo() {
     } catch (error) {
       console.error("Failed to persist game state:", error);
     }
-  }, [isInitialized, state?.markeditems, state?.theme]);
+  }, [isInitialized, state?.markeditems, state?.theme, theme]);
 
   // Bingo check (separate concern)
   useEffect(() => {

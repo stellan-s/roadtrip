@@ -155,7 +155,7 @@ export function CustomStartForm({
       // 3. Navigate to the board page with the generated data
 
       // For now, we'll just navigate to a dummy URL
-      navigate(`/bingo?seed=${encodeURIComponent(seedWord)}&lang=${language}`, {
+      navigate(`/bingo?seed=${encodeURIComponent(seedWord)}&lang=${language}&theme=${theme}`, {
         replace: true,
       });
     }, 800);
