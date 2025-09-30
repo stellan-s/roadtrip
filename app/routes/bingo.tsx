@@ -4,6 +4,7 @@ import { BingoHeader } from "@/components/bingo/BingoHeader";
 import { BingoOverlay } from "@/components/bingo/BingoOverlay";
 import { ErrorBoundary as ErrorBoundaryComponent } from "@/components/shared/ErrorBoundary";
 import { Button } from "@/components/ui/button";
+import { analytics } from "@/lib/analytics";
 import {
   Drawer,
   DrawerClose,
@@ -244,6 +245,19 @@ export default function Bingo() {
         payload: { value: theme, position: null },
       });
 
+      // Track page view and game start
+      analytics.pageView('bingo_game', {
+        seed: seed?.slice(0, 10), // Only first 10 chars for privacy
+        language,
+        theme
+      });
+
+      analytics.gameStart({
+        language,
+        theme,
+        seedLength: seed?.length
+      });
+
       setHasClientData(true);
       setIsInitialized(true);
       return;
@@ -398,9 +412,16 @@ export default function Bingo() {
   useEffect(() => {
     if (isBingo) {
       reward();
+
+      // Track game completion
+      analytics.gameComplete({
+        language,
+        theme,
+        markedCount: state.markeditems.filter(item => item !== 0).length
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBingo]);
+  }, [isBingo, language, theme, state?.markeditems]);
 
   const handleToggleItem = (index: number, hash: string) => {
     const isAlreadyMarked = state.markeditems.includes(hash);
@@ -558,6 +579,12 @@ export default function Bingo() {
                       <Button
                         key={key}
                         onClick={() => {
+                          // Track theme change
+                          analytics.themeChange(key, {
+                            context: 'game_drawer',
+                            previousTheme: state.theme
+                          });
+
                           setSearchParams((prev) => {
                             prev.set("theme", key);
                             return prev;

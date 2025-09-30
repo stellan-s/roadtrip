@@ -20,6 +20,7 @@ import { languageCode } from "@/constants/languages";
 import { themes } from "@/lib/themes";
 import { DEFAULT_GAME_STATE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { analytics } from "@/lib/analytics";
 
 const languages = [
   { code: "sv", name: "Svenska", flag: "🇸🇪" },
@@ -167,7 +168,19 @@ export function QuickStartForm({
               Jump right in with a randomly generated board
             </p>
           </div>
-          <Form className="space-y-6" action="/bingo" method="get">
+          <Form
+            className="space-y-6"
+            action="/bingo"
+            method="get"
+            onSubmit={() => {
+              analytics.click('generate_board', {
+                formType: 'quick',
+                language,
+                theme,
+                seedWordLength: seedWord.length
+              });
+            }}
+          >
             <div className="space-y-3">
               <div className="relative group">
                 <Input
@@ -223,7 +236,17 @@ export function QuickStartForm({
                 Theme
               </label>
               <div className="relative">
-                <Select name="theme" value={theme} onValueChange={setTheme}>
+                <Select
+                  name="theme"
+                  value={theme}
+                  onValueChange={(newTheme) => {
+                    analytics.themeChange(newTheme, {
+                      context: 'form_selection',
+                      previousTheme: theme
+                    });
+                    setTheme(newTheme);
+                  }}
+                >
                   <SelectTrigger className="bg-gradient-to-r from-white to-green-50/50 border-2 border-gray-200 text-gray-900 py-3 rounded-full focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 hover:border-green-300">
                     <SelectValue placeholder="Select theme" />
                   </SelectTrigger>

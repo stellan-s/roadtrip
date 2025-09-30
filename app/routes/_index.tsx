@@ -6,6 +6,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { Wrench, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import { QuickStartForm } from "@/components/landing/QuickStartForm";
+import { analytics } from "@/lib/analytics";
 
 export const meta: MetaFunction = () => {
   return [
@@ -33,6 +34,11 @@ export default function Index() {
 
     const language = JSON.parse(itemString);
     setLang(language);
+
+    // Track page view
+    analytics.pageView('landing_page', {
+      initialLanguage: language
+    });
   }, []);
 
   // synchronize on change

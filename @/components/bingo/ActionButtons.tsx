@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, RefreshCcw } from "lucide-react";
+import { analytics } from "@/lib/analytics";
 
 export function ActionButtons({
   onStartOver,
@@ -26,7 +27,10 @@ export function ActionButtons({
     <div className="w-full px-5 gap-3 mt-1 flex items-center justify-center flex-col sm:flex-row">
       <Button
         key="start-over"
-        onClick={onStartOver}
+        onClick={() => {
+          analytics.click('start_over');
+          onStartOver();
+        }}
         variant="outline"
         size="sm"
         className={`
