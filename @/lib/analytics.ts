@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
-const ANALYTICS_ENDPOINT = 'https://jqpaorlkzjoubggzwpqx.supabase.co/functions/v1/analytics'
+const ANALYTICS_ENDPOINT = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analytics`
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 const APP_NAME = 'roadtrip-bingo'
 
 // Generate or get session ID
@@ -37,27 +38,37 @@ interface TrackEventParams {
 export async function trackEvent({ eventType, eventName, properties = {} }: TrackEventParams) {
   if (typeof window === 'undefined') return
 
+  const payload = {
+    app: APP_NAME,
+    sessionId: getSessionId(),
+    userId: getUserId(),
+    eventType,
+    eventName,
+    properties,
+    pathname: window.location.pathname,
+    searchParams: Object.fromEntries(new URLSearchParams(window.location.search)),
+    referrer: document.referrer || undefined,
+  };
+
+  console.log('📊 Analytics Event:', eventName, payload);
+
   try {
     const response = await fetch(ANALYTICS_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
       },
-      body: JSON.stringify({
-        app: APP_NAME,
-        sessionId: getSessionId(),
-        userId: getUserId(),
-        eventType,
-        eventName,
-        properties,
-        pathname: window.location.pathname,
-        searchParams: Object.fromEntries(new URLSearchParams(window.location.search)),
-        referrer: document.referrer || undefined,
-      }),
+      body: JSON.stringify(payload),
     })
 
+    console.log('📊 Analytics Response Status:', response.status);
+
     if (!response.ok) {
-      console.warn('Analytics tracking failed:', response.statusText)
+      const errorText = await response.text();
+      console.warn('Analytics tracking failed:', response.status, response.statusText, errorText);
+    } else {
+      console.log('📊 Analytics Success:', eventName);
     }
   } catch (error) {
     console.warn('Analytics tracking error:', error)
