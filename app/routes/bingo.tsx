@@ -23,29 +23,25 @@ import {
   useNavigate,
   useSearchParams,
 } from "@remix-run/react";
-import { clsx, type ClassValue } from "clsx";
-import { Check, ChevronsUpDown, Loader, Palette, Settings } from "lucide-react";
+import { Check, ChevronsUpDown, Loader, Palette } from "lucide-react";
 import {
   startTransition,
   useEffect,
   useReducer,
-  useRef,
   useState,
 } from "react";
 import { useReward } from "react-rewards";
-import { twMerge } from "tailwind-merge";
 import "../styles/spin.css";
-import { FaUpDown } from "react-icons/fa6";
 import { Theme, themes } from "@/lib/themes";
 import {
+  cn,
   checkBingo,
   cleanupLegacyStorage,
   loadGameState,
   saveGameState,
 } from "@/lib/utils";
+import { languageCode } from "@/constants/languages";
 import { DEFAULT_GAME_STATE } from "@/lib/constants";
-
-type Language = "en" | "sv";
 
 const DEFAULT_SEED = "a-space-robot-in-a-car";
 
@@ -114,14 +110,10 @@ export const UiText: Record<
   },
 };
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const seed = url.searchParams.get("seed") || DEFAULT_SEED;
-  const language = (url.searchParams.get("language") || "sv") as Language;
+  const language = (url.searchParams.get("language") || "sv") as languageCode;
   const theme = url.searchParams.get("theme") || "tropicalsunrise";
 
   return json(
@@ -210,10 +202,11 @@ export const meta: MetaFunction = () => {
 
 export default function Bingo() {
   const [hasClientData, setHasClientData] = useState(false);
-  const { seed, language, theme } = useLoaderData<typeof loader>();
+  const { seed, language: rawLanguage, theme } = useLoaderData<typeof loader>();
+  const language = rawLanguage as languageCode;
   const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
   const bingoGrid = generateBingoGrid(seed ?? "", language, 25);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const { reward } = useReward("rewardId", "confetti", {
     elementCount: 350,
@@ -295,119 +288,6 @@ export default function Bingo() {
       setIsBingo(true);
     }
   }, [state?.markeditems]);
-
-  // useEffect(() => {
-  //   if (typeof window === "undefined") {
-  //     return;
-  //   }
-
-  //   let theme, markeditems;
-
-  //   // legacy cleanup
-  //   window.localStorage.removeItem("marked-items");
-  //   window.localStorage.removeItem("theme");
-
-  //   const stateString = window.localStorage.getItem("game_state");
-
-  //   if (!stateString || stateString === "") {
-  //     window.localStorage.setItem(
-  //       "game_state",
-  //       JSON.stringify({
-  //         theme: "mintbreeze",
-  //         markeditems: new Array(25).fill(0),
-  //       }),
-  //     );
-  //     theme = "mintbreeze";
-  //     markeditems = new Array(25).fill(0);
-  //   } else {
-  //     try {
-  //       const parsedState = JSON.parse(stateString);
-
-  //       if (parsedState && typeof parsedState === "object") {
-  //         if (parsedState.theme && Array.isArray(parsedState.markeditems)) {
-  //           theme = parsedState.theme;
-  //           markeditems = parsedState.markeditems;
-  //         } else {
-  //           throw new Error("Invalid structure");
-  //         }
-  //       } else {
-  //         throw new Error("Invalid JSON");
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to parse state string:", error);
-  //       theme = "tropicalsunrise";
-  //       markeditems = new Array(25).fill(0);
-  //     }
-  //   }
-
-  //   dispatch({
-  //     type: "LOAD_STATE",
-  //     payload: { value: markeditems, position: null },
-  //   });
-  //   dispatch({ type: "SET_THEME", payload: { value: theme, position: null } });
-
-  //   // ✅ Ensures loading overlay disappears
-  //   setHasClientData(true);
-  // }, []);
-
-  // // // sync to local storage
-  // useEffect(() => {
-  //   if (typeof window === "undefined") {
-  //     return;
-  //   }
-
-  //   if (state.markeditems.every((item) => item === 0)) {
-  //     return;
-  //   }
-
-  //   const stateString = window.localStorage.getItem("game_state");
-
-  //   if (!stateString || stateString === "") {
-  //     window.localStorage.setItem(
-  //       "game_state",
-  //       JSON.stringify({
-  //         theme: "mintbreeze",
-  //         markeditems: new Array(25).fill(0),
-  //       }),
-  //     );
-  //     return;
-  //   }
-
-  //   const { theme } = JSON.parse(stateString);
-
-  //   const currentState = { theme: theme, markeditems: state.markeditems };
-  //   window.localStorage.setItem("game_state", JSON.stringify(currentState));
-  // }, [state.markeditems]);
-
-  // // Check for bingo
-  // useEffect(() => {
-  //   // Check rows
-  //   for (let i = 0; i < 25; i += 5) {
-  //     const row = state.markeditems.slice(i, i + 5);
-  //     if (row.every((item) => item !== 0)) {
-  //       setIsBingo(true);
-  //     }
-  //   }
-  //   // Check columns
-  //   for (let i = 0; i < 5; i++) {
-  //     const col = [];
-  //     for (let j = 0; j < 5; j++) {
-  //       col.push(state.markeditems[j * 5 + i]);
-  //     }
-  //     if (col.every((item) => item !== 0)) {
-  //       setIsBingo(true);
-  //     }
-  //   }
-  //   // Check diagonals
-  //   const diagonal1 = [0, 6, 12, 18, 24];
-  //   const diagonal2 = [4, 8, 12, 16, 20];
-  //   if (diagonal1.every((i) => state.markeditems[i] !== 0)) {
-  //     setIsBingo(true);
-  //   }
-  //   if (diagonal2.every((i) => state.markeditems[i] !== 0)) {
-  //     setIsBingo(true);
-  //   }
-  // }, [state?.markeditems]);
 
   useEffect(() => {
     if (isBingo) {
@@ -527,9 +407,7 @@ export default function Bingo() {
             </ErrorBoundaryComponent>
             <ActionButtons
               onStartOver={handleStartOver}
-              onReset={handleReset}
               textColorClass={themes[state.theme as Theme].textcolor}
-              backgroundColorClass={themes[state.theme as Theme].cardbg}
               buttonbgcolor={themes[state.theme as Theme].buttonbgcolor}
               buttontext={themes[state.theme as Theme].buttontext}
               buttonborder={themes[state.theme as Theme].buttonborder}
@@ -538,13 +416,6 @@ export default function Bingo() {
             />
           </div>
         </div>
-        {/* <div className="p-3">
-        <div className="font-mono rounded-md bg-gray-900 text-green-400 font-medium w-full flex flex-col text-xs p-3 gap-1">
-          <code>{JSON.stringify(gradient, null, 2)}</code>
-          <code>{JSON.stringify(bgColorClass, null, 2)}</code>
-          <code>{JSON.stringify(textColorClasses, null, 2)}</code>
-        </div>
-      </div> */}
         <Drawer>
           <DrawerTrigger asChild>
             <div className="absolute top-1 right-1">

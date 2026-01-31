@@ -1,12 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, RefreshCcw } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 
 export function ActionButtons({
   onStartOver,
-  onReset,
   textColorClass,
-  backgroundColorClass,
   buttonbgcolor = "bg-white/10 hover:bg-white/20",
   buttontext = "text-white",
   buttonborder = "border-white",
@@ -14,14 +11,12 @@ export function ActionButtons({
   texts,
 }: {
   onStartOver: () => void;
-  onReset: () => void;
   textColorClass: string;
-  backgroundColorClass: string;
   buttonbgcolor?: string;
   buttontext?: string;
   buttonborder?: string;
   buttonshadow?: string;
-  texts: { newCard: string; resetCard: string };
+  texts: { newCard: string };
 }) {
   return (
     <div className="w-full px-5 gap-3 mt-1 flex items-center justify-center flex-col sm:flex-row">

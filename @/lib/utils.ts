@@ -50,7 +50,7 @@ export const loadGameState = (): GameState => {
   const stateString = window.localStorage.getItem("game_state");
 
   if (!stateString) {
-    return DEFAULT_GAME_STATE as unknown as GameState;
+    return { theme: DEFAULT_GAME_STATE.theme, markeditems: Array(25).fill(0) };
   }
 
   try {
@@ -59,11 +59,11 @@ export const loadGameState = (): GameState => {
       return parsedState;
     } else {
       console.warn("Invalid game state structure, using defaults");
-      return DEFAULT_GAME_STATE as unknown as GameState;
+      return { theme: DEFAULT_GAME_STATE.theme, markeditems: Array(25).fill(0) };
     }
   } catch (error) {
     console.error("Failed to parse game state:", error);
-    return DEFAULT_GAME_STATE as unknown as GameState;
+    return { theme: DEFAULT_GAME_STATE.theme, markeditems: Array(25).fill(0) };
   }
 };
 

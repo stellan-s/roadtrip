@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
 
-const ANALYTICS_ENDPOINT = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analytics`
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
+const ANALYTICS_ENDPOINT = SUPABASE_URL ? `${SUPABASE_URL}/functions/v1/analytics` : null
 const APP_NAME = 'roadtrip-bingo'
 
 // Generate or get session ID
@@ -36,7 +37,7 @@ interface TrackEventParams {
 }
 
 export async function trackEvent({ eventType, eventName, properties = {} }: TrackEventParams) {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined' || !ANALYTICS_ENDPOINT || !SUPABASE_ANON_KEY) return
 
   const payload = {
     app: APP_NAME,
@@ -50,8 +51,6 @@ export async function trackEvent({ eventType, eventName, properties = {} }: Trac
     referrer: document.referrer || undefined,
   };
 
-  console.log('📊 Analytics Event:', eventName, payload);
-
   try {
     const response = await fetch(ANALYTICS_ENDPOINT, {
       method: 'POST',
@@ -62,13 +61,8 @@ export async function trackEvent({ eventType, eventName, properties = {} }: Trac
       body: JSON.stringify(payload),
     })
 
-    console.log('📊 Analytics Response Status:', response.status);
-
     if (!response.ok) {
-      const errorText = await response.text();
-      console.warn('Analytics tracking failed:', response.status, response.statusText, errorText);
-    } else {
-      console.log('📊 Analytics Success:', eventName);
+      console.warn('Analytics tracking failed:', response.status, response.statusText);
     }
   } catch (error) {
     console.warn('Analytics tracking error:', error)

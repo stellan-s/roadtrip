@@ -16,121 +16,12 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useEffect, useState } from "react";
-import { languageCode } from "@/constants/languages";
+import { languageCode, languages } from "@/constants/languages";
+import { wordSuggestions } from "@/constants/wordSuggestions";
 import { themes } from "@/lib/themes";
 import { DEFAULT_GAME_STATE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { analytics } from "@/lib/analytics";
-
-const languages = [
-  { code: "sv", name: "Svenska", flag: "🇸🇪" },
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "no", name: "Norsk", flag: "🇳🇴" },
-  { code: "da", name: "Dansk", flag: "🇩🇰" },
-  { code: "de", name: "Deutsch", flag: "🇩🇪" },
-  { code: "fr", name: "Français", flag: "🇫🇷" },
-  { code: "es", name: "Español", flag: "🇪🇸" },
-  { code: "it", name: "Italiano", flag: "🇮🇹" },
-  { code: "fi", name: "Suomi", flag: "🇫🇮" },
-];
-
-const wordSuggestions = [
-  // Resa och rörelse
-  "adventure",
-  "journey",
-  "highway",
-  "roadtrip",
-  "detour",
-  "miles",
-  "route",
-  "drive",
-  "cruise",
-  "wander",
-  "travel",
-  "map",
-  "expedition",
-
-  // Natur och vyer
-  "mountain",
-  "valley",
-  "river",
-  "ocean",
-  "desert",
-  "forest",
-  "meadow",
-  "canyon",
-  "cliff",
-  "prairie",
-  "waterfall",
-  "lake",
-  "tundra",
-  "savanna",
-
-  // Tid på dagen
-  "sunset",
-  "sunrise",
-  "twilight",
-  "noon",
-  "midnight",
-  "dawn",
-  "dusk",
-
-  // Platser och miljö
-  "village",
-  "town",
-  "skyline",
-  "roadside",
-  "gasstation",
-  "reststop",
-  "motel",
-  "truckstop",
-  "campground",
-  "ferry",
-  "crossroad",
-  "border",
-
-  // Känsla och upplevelse
-  "freedom",
-  "silence",
-  "motion",
-  "explore",
-  "escape",
-  "peace",
-  "solitude",
-  "curiosity",
-  "wonder",
-  "thrill",
-
-  // Landmärken och sevärdheter
-  "landmark",
-  "monument",
-  "statue",
-  "bridge",
-  "tower",
-  "castle",
-  "ruins",
-  "beacon",
-
-  // Tematiska variationer
-  "scenic",
-  "remote",
-  "dusty",
-  "windy",
-  "gravel",
-  "zigzag",
-  "panorama",
-  "backroad",
-  "offroad",
-
-  // Semester och fritid
-  "vacation",
-  "weekend",
-  "getaway",
-  "picnic",
-  "festival",
-  "holiday",
-  "season",
-];
 
 export function QuickStartForm({
   lang,
@@ -205,7 +96,7 @@ export function QuickStartForm({
                 <Select
                   name="language"
                   value={language}
-                  onValueChange={setLanguage}
+                  onValueChange={(val) => setLanguage(val as languageCode)}
                 >
                   <SelectTrigger className="bg-gradient-to-r from-white to-green-50/50 border-2 border-gray-200 text-gray-900 py-3 rounded-full focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 hover:border-green-300">
                     <SelectValue placeholder="Select language" />
