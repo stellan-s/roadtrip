@@ -1,114 +1,85 @@
 # Roadtrip Bingo
 
-## Overview
+Shareable roadtrip bingo — generate a unique board from any seed word, play in 9 languages across 91 themes. Built with Remix.
 
-Roadtrip Bingo is a web application designed to make road trips more fun and engaging. It features interactive bingo grids, customizable themes, and a user-friendly interface. The app is built using modern web technologies including React, TypeScript, Tailwind CSS, and Vite.
+## How it works
+
+Every seed word produces a deterministic bingo board via SHA-1 hashing. Type the same word on any device and you get the exact same grid — so friends on the same road trip can share a board without syncing anything.
 
 ## Features
 
-- **Interactive Bingo Grids**: Play bingo with dynamically generated grids.
-- **Customizable Themes**: Personalize the look and feel of the app.
-- **Responsive Design**: Optimized for both desktop and mobile devices.
-- **Multilingual Support**: Switch between languages easily.
+- **Seed-based boards** — any word or phrase generates a unique, reproducible 5×5 grid
+- **9 languages** — Swedish, English, French, German, Spanish, Italian, Finnish, Norwegian, Danish, with build-time hyphenation for all of them
+- **91 themes** — from nature gradients to cosmic palettes, including color-blind accessible options (deuteranopia, tritanopia, achromatopsia)
+- **Persistent state** — marks survive page reloads via localStorage
+- **Confetti on bingo** — because why not
 
-## Project Structure
-
-The project is organized as follows:
+## Project structure
 
 ```
+app/
+  routes/           # Remix file-based routes
+    _index.tsx      # Landing page (instant + custom start)
+    bingo.tsx       # Game screen and state management
+  items/
+    items.json      # Source game items with translations
+    items.ts        # Generated — hyphenated text (do not edit)
+  scripts/
+    hyphenate.ts    # Build-time hyphenation processor
+  content/i18n/     # Internationalized content (FAQ, etc.)
+
 @/
   components/
-    bingo/
-      ActionButtons.tsx
-      BingoCell.tsx
-      BingoGrid.tsx
-      BingoHeader.tsx
-      BingoOverlay.tsx
-    landing/
-      IntroCarousel.tsx
-      LanguageSwitcher.tsx
-      StartForm.tsx
-    shared/
-      ErrorFallback.tsx
-      NeonText.tsx
-    ui/
-      button.tsx
-      drawer.tsx
-      input.tsx
-      scroll-area.tsx
-      select.tsx
-  constants/
-    iconMap.tsx
-    items.ts
+    bingo/          # Game UI (grid, cells, overlay, action buttons)
+    landing/        # Start forms and language switcher
+    shared/         # Header, error boundary, QR code
+    ui/             # Radix UI base components
+  constants/        # Languages, icons, word suggestions
   lib/
-    generateBingoGrid.ts
-    utils.ts
-  app/
-    root.tsx
-    tailwind.css
-    themes.txt
-  routes/
-    _index.tsx
-    bingo.tsx
-  styles/
-    fontface.css
-    spin.css
+    generateBingoGrid.ts  # Deterministic grid generation
+    themes.ts             # 91 theme definitions
+    analytics.ts          # Event tracking (Supabase edge function)
+    utils.ts              # Game state, bingo detection, localStorage helpers
+    constants.ts          # Bingo patterns, default state
 ```
 
-## Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone <repository-url>
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd roadtrip
-   ```
-
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-## Development
-
-To start the development server:
+## Getting started
 
 ```bash
+git clone <repository-url>
+cd roadtrip
+npm install
 npm run dev
 ```
 
-## Build
+## Available commands
 
-To create a production build:
+| Command | Description |
+|---|---|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build (includes hyphenation pre-processing) |
+| `npm run typecheck` | TypeScript type checking |
+| `npm run lint` | Run ESLint |
+| `npm start` | Serve production build via Netlify |
+
+## Analytics
+
+Event tracking is opt-in via environment variables. If not configured, analytics silently does nothing.
 
 ```bash
-npm run build
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-## Deployment
+## Tech stack
 
-The project is configured for deployment on Netlify. Ensure the `netlify.toml` file is correctly set up for your environment.
-
-## Technologies Used
-
-- **React**: For building the user interface.
-- **TypeScript**: For type-safe JavaScript.
-- **Tailwind CSS**: For styling.
-- **Vite**: For fast builds and development.
+- [Remix](https://remix.run/) — full-stack React framework
+- [Vite](https://vitejs.dev/) — build tool
+- [TypeScript](https://www.typescriptlanguage.org/)
+- [Tailwind CSS v4](https://tailwindcss.com/) — styling
+- [Radix UI](https://www.radix-ui.com/) — accessible primitives
+- [Netlify](https://www.netlify.com/) — deployment
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
-
-## Contact
-
-For any inquiries or support, please contact [your-email@example.com].
+MIT
