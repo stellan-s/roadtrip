@@ -11,7 +11,7 @@ import { analytics } from "@/lib/analytics";
 export const meta: MetaFunction = () => {
   return [
     { title: "Roadtrip bingo" },
-    { name: "description", content: "This is Roadtrip Bingo" },
+    { name: "description", content: "Free shareable roadtrip bingo. Enter a seed word to generate a unique board your whole car can play. 9 languages, 91 themes, no account needed." },
   ];
 };
 
