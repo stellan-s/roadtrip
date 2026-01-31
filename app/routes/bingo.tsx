@@ -195,13 +195,16 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     { title },
     { name: "description", content: description },
+    { property: "og:site_name", content: "Roadtrip Bingo" },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:url", content: url },
     { property: "og:type", content: "website" },
-    { property: "twitter:card", content: "summary" },
+    { property: "og:image", content: "https://roadtrip-bingo.netlify.app/og-image.png" },
+    { property: "twitter:card", content: "summary_large_image" },
     { property: "twitter:title", content: title },
     { property: "twitter:description", content: description },
+    { property: "twitter:image", content: "https://roadtrip-bingo.netlify.app/og-image.png" },
   ];
 };
 

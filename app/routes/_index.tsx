@@ -1,25 +1,33 @@
 import { CustomStartForm } from "@/components/landing/CustomStartForm";
 import { Header } from "@/components/shared/Header";
 import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
-import type { MetaFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { useEffect, useState } from "react";
 import { analytics } from "@/lib/analytics";
+
+const BASE_URL = "https://roadtrip-bingo.netlify.app";
+
+export const links: LinksFunction = () => [
+  { rel: "canonical", href: BASE_URL },
+];
 
 export const meta: MetaFunction = () => {
   const title = "Roadtrip Bingo";
   const description = "Free shareable roadtrip bingo. Enter a seed word to generate a unique board your whole car can play. 9 languages, 91 themes, no account needed.";
-  const url = "https://roadtrip-bingo.netlify.app";
 
   return [
     { title },
     { name: "description", content: description },
+    { property: "og:site_name", content: title },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
-    { property: "og:url", content: url },
+    { property: "og:url", content: BASE_URL },
     { property: "og:type", content: "website" },
-    { property: "twitter:card", content: "summary" },
+    { property: "og:image", content: `${BASE_URL}/og-image.png` },
+    { property: "twitter:card", content: "summary_large_image" },
     { property: "twitter:title", content: title },
     { property: "twitter:description", content: description },
+    { property: "twitter:image", content: `${BASE_URL}/og-image.png` },
   ];
 };
 
