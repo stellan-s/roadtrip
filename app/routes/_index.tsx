@@ -1,11 +1,8 @@
 import { CustomStartForm } from "@/components/landing/CustomStartForm";
 import { Header } from "@/components/shared/Header";
 import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { MetaFunction } from "@remix-run/node";
-import { Wrench, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
-import { QuickStartForm } from "@/components/landing/QuickStartForm";
 import { analytics } from "@/lib/analytics";
 
 export const meta: MetaFunction = () => {
@@ -66,36 +63,21 @@ export default function Index() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen w-full flex flex-col items-start justify-center p-2 md:p-6">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center p-2 md:p-6">
         <Header seedWord={seedWord} />
-        <Tabs
-          defaultValue="instant"
-          className="h-full w-full flex flex-col gap-5 items-center justify-start grow"
-        >
-          <TabsList>
-            <TabsTrigger className="shadow-2xl" value="instant">
-              <Zap size={14} className="inline mr-1" />
-              Instant
-            </TabsTrigger>
-            <TabsTrigger className="shadow-2xl" value="custom">
-              <Wrench size={14} className="inline mr-1" />
-              Custom
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="instant" className="animate-slide-in">
-            <QuickStartForm
-              handleChangeSeedWord={handleChangeSeedWord}
-              seedWord={seedWord}
-              lang={lang}
-            />
-          </TabsContent>
-          <TabsContent value="custom" className="animate-slide-in">
-            <CustomStartForm
-              handleChangeSeedWord={handleChangeSeedWord}
-              seedWord={seedWord}
-            />
-          </TabsContent>
-        </Tabs>
+        <div className="w-full max-w-md mx-auto text-center py-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight drop-shadow">
+            Play bingo together on any road trip
+          </h2>
+          <p className="text-white/70 text-sm mt-1">
+            Pick a seed word → everyone gets the same board
+          </p>
+        </div>
+        <CustomStartForm
+          handleChangeSeedWord={handleChangeSeedWord}
+          seedWord={seedWord}
+          lang={lang}
+        />
       </div>
     </ErrorBoundary>
   );

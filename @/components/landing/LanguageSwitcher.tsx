@@ -1,7 +1,11 @@
 import { Button } from "../ui/button";
 
-export function LanguageSwitcher({ lang, setLang, carouselRef }: {
-  lang: "sv" | "en" | null;
+export function LanguageSwitcher({
+  lang,
+  setLang,
+  carouselRef,
+}: {
+  lang: "sv" | "en" | null;
   setLang: (lang: "sv" | "en") => void;
   carouselRef: React.RefObject<HTMLDivElement>;
 }) {

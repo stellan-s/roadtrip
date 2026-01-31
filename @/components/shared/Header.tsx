@@ -32,7 +32,7 @@ export const Header = ({
           <Car className="h-6 w-6 text-gray-800" />
         </div>
         <h1 className="hidden sm:block text-xl md:text-2xl font-bold bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wider">
-          ROADTRIP BINGO 3000
+          Roadtrip Bingo
         </h1>
       </div>
       <div className="flex items-center gap-3">

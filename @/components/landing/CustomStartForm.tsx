@@ -3,12 +3,10 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
   ArrowRight,
-  Coffee,
   Globe,
   MapPin,
   Palette,
   Sparkles,
-  Wrench,
 } from "lucide-react";
 import {
   Select,
@@ -28,12 +26,14 @@ import { analytics } from "@/lib/analytics";
 export function CustomStartForm({
   handleChangeSeedWord,
   seedWord = "",
+  lang,
 }: {
   handleChangeSeedWord: (seed: string) => void;
   seedWord?: string;
+  lang?: languageCode | null;
 }) {
   const [theme, setTheme] = useState<string>(DEFAULT_GAME_STATE.theme);
-  const [language, setLanguage] = useState<languageCode>("sv");
+  const [language, setLanguage] = useState<languageCode>(lang || "sv");
 
 
   const getRandomWord = () => {
@@ -47,20 +47,6 @@ export function CustomStartForm({
       <div className="w-full max-w-md relative z-10">
         {/* Main card with enhanced styling */}
         <div className="bg-white rounded-3xl backdrop-blur-xl p-8 shadow-2xl border border-white/30 relative">
-          <div className="text-center mb-5 relative flex flex-col items-center gap-2">
-            <Wrench className="w-12 h-12 text-purple-600" />
-            <h2 className="text-gray-600 text-lg md:text-2xl font-bold text-clip bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wider">
-              Custom play
-            </h2>
-            <p className="text-gray-500 text-sm text-center gap-1">
-              Create your own bingo board with a unique seed word.
-              <br />
-              <span className="text-gray-400 text-xs">
-                (You can also use the instant play option!)
-              </span>
-            </p>
-          </div>
-
           <Form
             className="space-y-6"
             action="/bingo"
@@ -201,31 +187,6 @@ export function CustomStartForm({
             </Button>
           </Form>
 
-          <div className=" mt-3 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-none">
-              <p className="text-gray-600 text-xs font-medium">
-                Each word creates a unique board that is easy to share with your
-                friends. Use the random word generator for inspiration or enter
-                your own seed word to create a personalized bingo board for you
-                and your family or friends. Try different words for new
-                challenges!
-              </p>
-            </div>
-          </div>
-
-          {/* Support message */}
-          <div className="mt-6 text-center flex flex-col items-center gap-2">
-            {/* <p className="text-gray-500 text-xs inline items-baseline">
-              <Square className="w-3 h-3 text-black fill-black rounded-full inline-block mr-1" />
-              Built with love – and a respect for time, privacy and usefulness –
-              in the spirit of <span className="uppercase">insimply</span>.
-            </p> */}
-            <p className="text-gray-500 w-2/3 text-xs flex items-center justify-center gap-1">
-              <Coffee className="w-6 h-6 text-violet-500" />
-              Enjoying the app? Consider supporting the developer!
-              <Coffee className="w-6 h-6 text-violet-500" />
-            </p>
-          </div>
         </div>
       </div>
     </div>

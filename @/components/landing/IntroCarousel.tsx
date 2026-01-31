@@ -14,7 +14,7 @@ export function IntroCarousel({ lang }: { lang: "sv" | "en" | null }) {
       >
         <div className="text-center px-2 sm:px-10">
           <h6 className="text-center uppercase mb-3 font-bold tracking-wider">
-            Roadtrip Bingo 3000
+            Roadtrip Bingo
           </h6>
           <h1 className="font-bold text-5xl tracking-tighter mb-3 px-1">
             Skriv in ett ord för att skapa din bricka
@@ -26,13 +26,13 @@ export function IntroCarousel({ lang }: { lang: "sv" | "en" | null }) {
         </div>
         <div className="text-center px-2 sm:p-10">
           <h6 className="text-center uppercase mb-3 font-bold tracking-wider">
-            Roadtrip Bingo 3000
+            Roadtrip Bingo
           </h6>
           <h1 className="font-bold text-5xl tracking-tighter mb-3 px-1">
             Enter a word to create your bingo card
           </h1>
           <p className="text-md px-5">
-            Any word, it doesn't matter which. Use the same word if you
+            Any word, it doesn&apos;t matter which. Use the same word if you
             want to return to an identical bingo card
           </p>
         </div>
