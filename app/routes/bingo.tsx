@@ -23,7 +23,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "@remix-run/react";
-import { Check, ChevronsUpDown, Loader, Palette } from "lucide-react";
+import { Check, ChevronsUpDown, Loader, Palette, Share2 } from "lucide-react";
 import {
   startTransition,
   useEffect,
@@ -186,17 +186,22 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const seed = data?.seed || "adventure";
+  const title = `Roadtrip Bingo — ${seed}`;
+  const description = `Play roadtrip bingo with the "${seed}" board. Share this link and everyone gets the same cards.`;
+  const url = `https://roadtrip-bingo.netlify.app/bingo?seed=${encodeURIComponent(seed)}`;
+
   return [
-    { title: "Roadtrip bingo" },
-    { name: "description", content: "This is Roadtrip Bingo" },
-    {
-      name: "theme-color",
-      content: () => {
-        const theme = themes.tropicalsunrise; // default theme
-        return theme.gradient ? theme.gradient.split(",")[0].trim() : "#ffffff";
-      },
-    },
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:url", content: url },
+    { property: "og:type", content: "website" },
+    { property: "twitter:card", content: "summary" },
+    { property: "twitter:title", content: title },
+    { property: "twitter:description", content: description },
   ];
 };
 
@@ -218,8 +223,15 @@ export default function Bingo() {
   });
 
   const [isBingo, setIsBingo] = useState(false);
+  const [copied, setCopied] = useState(false);
   const navigate = useNavigate();
   const [isInitialized, setIsInitialized] = useState(false);
+
+  const handleShare = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
 
   useEffect(() => {
     // Initialization
@@ -416,9 +428,33 @@ export default function Bingo() {
             />
           </div>
         </div>
+        <div className="absolute top-1 right-1 flex gap-1">
+          <Button
+            onClick={handleShare}
+            variant="ghost"
+            className="hover:scale-105 hover:contrast-125"
+          >
+            {copied ? (
+              <Check
+                className={cn(
+                  "w-5 h-5",
+                  themes[state.theme as Theme].textcolor,
+                )}
+              />
+            ) : (
+              <Share2
+                className={cn(
+                  "hover:scale-110 transition-transform duration-200",
+                  themes[state.theme as Theme].textcolor,
+                  "w-5 h-5",
+                )}
+              />
+            )}
+          </Button>
+        </div>
         <Drawer>
           <DrawerTrigger asChild>
-            <div className="absolute top-1 right-1">
+            <div className="absolute top-1 right-10">
               <Button
                 variant="ghost"
                 className="hover:scale-105 hover:contrast-125"

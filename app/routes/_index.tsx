@@ -9,9 +9,20 @@ import { QuickStartForm } from "@/components/landing/QuickStartForm";
 import { analytics } from "@/lib/analytics";
 
 export const meta: MetaFunction = () => {
+  const title = "Roadtrip Bingo";
+  const description = "Free shareable roadtrip bingo. Enter a seed word to generate a unique board your whole car can play. 9 languages, 91 themes, no account needed.";
+  const url = "https://roadtrip-bingo.netlify.app";
+
   return [
-    { title: "Roadtrip bingo" },
-    { name: "description", content: "Free shareable roadtrip bingo. Enter a seed word to generate a unique board your whole car can play. 9 languages, 91 themes, no account needed." },
+    { title },
+    { name: "description", content: description },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:url", content: url },
+    { property: "og:type", content: "website" },
+    { property: "twitter:card", content: "summary" },
+    { property: "twitter:title", content: title },
+    { property: "twitter:description", content: description },
   ];
 };
 
