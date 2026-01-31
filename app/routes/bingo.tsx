@@ -380,7 +380,6 @@ export default function Bingo() {
             show={isBingo}
             onClick={handleStartOver}
             text={UiText[language].bingoStartOver}
-            textColorClass={themes[state.theme as Theme].textcolor}
           />
         ) : null}
         <div className="h-svh overflow-y-auto py-5 flex items-center justify-center">

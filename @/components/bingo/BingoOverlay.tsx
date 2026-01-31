@@ -4,33 +4,31 @@ export function BingoOverlay({
   show,
   onClick,
   text,
-  textColorClass,
 }: {
   show: boolean;
   onClick: () => void;
   text: string;
-  textColorClass: string;
 }) {
   if (!show) return null;
   return (
     <div
       role="button"
       onClick={onClick}
-      className="absolute w-full h-svh bg-black z-40 overflow-hidden bg-opacity-80"
+      className="absolute w-full h-svh bg-black/80 z-40 overflow-hidden"
       tabIndex={0}
       onKeyDown={onClick}
     >
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 bg-transparent h-0 w-0"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 h-0 w-0"
         id="rewardId"
-      ></div>
-      <div className="animate-pulse duration-400 cubic-bezier(0.165, 0.84, 0.44, 1) w-full h-screen flex flex-col items-center justify-center">
-        <NeonText color="purple" size="xl" intensity="high">
-          BINGO!
-        </NeonText>
-        <p
-          className={`text-white font-light text-center drop-shadow-sm ${textColorClass}`}
-        >
+      />
+      <div className="w-full h-screen flex flex-col items-center justify-center gap-8">
+        <div className="animate-celebrate-in">
+          <NeonText color="purple" size="xl" intensity="high">
+            BINGO!
+          </NeonText>
+        </div>
+        <p className="animate-celebrate-in-delayed text-white/80 text-base font-light text-center px-6 py-3 rounded-full border border-white/30 bg-white/10 hover:bg-white/20 transition-colors">
           {text}
         </p>
       </div>
