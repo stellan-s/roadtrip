@@ -30,12 +30,23 @@ export const meta: MetaFunction = () => {
     { property: "twitter:title", content: title },
     { property: "twitter:description", content: description },
     { property: "twitter:image", content: `${BASE_URL}/og-image.png` },
+    { name: "theme-color", content: "#12c2e9" },
   ];
 };
 
 export default function Index() {
   const [seedWord, setSeedWord] = useState("");
   const [lang, setLang] = useState<"sv" | "en" | null>(null);
+
+  // Reset meta/body background to landing defaults (in case navigating back from bingo)
+  useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", "#12c2e9");
+    document.documentElement.style.backgroundColor = "#12c2e9";
+    document.body.style.backgroundColor = "#12c2e9";
+    document.body.style.backgroundImage =
+      "linear-gradient(to bottom, #12c2e9, #c471ed, #f64f59)";
+  }, []);
 
   // synchronize initially
   useEffect(() => {

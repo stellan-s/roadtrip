@@ -195,9 +195,12 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const title = `Roadtrip Bingo — ${seed}`;
   const description = `Play roadtrip bingo with the "${seed}" board. Share this link and everyone gets the same cards.`;
   const url = `https://roadtrip-bingo.netlify.app/bingo?seed=${encodeURIComponent(seed)}`;
+  const themeName = (data?.theme || "tropicalsunrise") as Theme;
+  const themeConfig = themes[themeName];
 
   return [
     { title },
+    { name: "theme-color", content: themeConfig?.fromColor || "#12c2e9" },
     { name: "description", content: description },
     { property: "og:site_name", content: "Roadtrip Bingo" },
     { property: "og:title", content: title },
@@ -318,6 +321,18 @@ export default function Bingo() {
       setIsBingo(true);
     }
   }, [state?.markeditems]);
+
+  // Sync meta theme-color and body background to active theme
+  useEffect(() => {
+    if (!isInitialized || !state?.theme) return;
+    const t = themes[state.theme as Theme];
+    if (!t) return;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", t.fromColor);
+    document.documentElement.style.backgroundColor = t.fromColor;
+    document.body.style.backgroundColor = t.toColor;
+    document.body.style.backgroundImage = `linear-gradient(to bottom, ${t.fromColor}, ${t.toColor})`;
+  }, [state?.theme, isInitialized]);
 
   useEffect(() => {
     if (isBingo) {

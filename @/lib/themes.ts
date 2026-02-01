@@ -1,6 +1,8 @@
 export type ThemeConfig = {
   name: string;
   gradient: string;
+  fromColor: string;
+  toColor: string;
   header: string;
   cardborder: string;
   cardbg: string;
@@ -94,6 +96,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   deuteranopia: {
     name: "Deuteranopia Friendly (Color Safe)",
     gradient: "bg-gradient-to-br from-yellow-200 via-blue-200 to-blue-300",
+    fromColor: "#fef08a",
+    toColor: "#93c5fd",
     header: "text-blue-900",
     cardborder: "border-blue-500 border-2",
     cardbg: "bg-white bg-opacity-90",
@@ -110,6 +114,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   tritanopia: {
     name: "Tritanopia Friendly (Color Safe)",
     gradient: "bg-gradient-to-br from-pink-200 via-green-200 to-green-300",
+    fromColor: "#fbcfe8",
+    toColor: "#86efac",
     header: "text-green-900",
     cardborder: "border-green-500 border-2",
     cardbg: "bg-white bg-opacity-90",
@@ -126,6 +132,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   achromatopsia: {
     name: "Achromatopsia (Color Safe)",
     gradient: "bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400",
+    fromColor: "#e5e7eb",
+    toColor: "#9ca3af",
     header: "text-black",
     cardborder: "border-gray-600 border-2",
     cardbg: "bg-white bg-opacity-90",
@@ -142,6 +150,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   mintbreeze: {
     name: "Mint Breeze",
     gradient: "bg-gradient-to-br from-green-200 via-sky-200 to-sky-300",
+    fromColor: "#bbf7d0",
+    toColor: "#7dd3fc",
     header: "text-violet-800",
     cardborder: "border-violet-400 border-2",
     cardbg: "bg-white bg-opacity-90",
@@ -158,6 +168,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   peachy: {
     name: "Peachy",
     gradient: "bg-gradient-to-br from-pink-200 via-pink-100 to-fuchsia-100",
+    fromColor: "#fbcfe8",
+    toColor: "#fae8ff",
     header: "text-violet-800",
     cardborder: "border-violet-300 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -174,6 +186,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   lavenderbliss: {
     name: "Lavender Bliss",
     gradient: "bg-gradient-to-br from-purple-300 via-pink-200 to-pink-100",
+    fromColor: "#d8b4fe",
+    toColor: "#fce7f3",
     header: "text-violet-900",
     cardborder: "border-violet-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -190,6 +204,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   pinkpetal: {
     name: "Pink Petal",
     gradient: "bg-gradient-to-br from-rose-200 via-pink-200 to-pink-100",
+    fromColor: "#fecdd3",
+    toColor: "#fce7f3",
     header: "text-violet-900",
     cardborder: "border-violet-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -206,6 +222,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   violetdream: {
     name: "Violet Dream",
     gradient: "bg-gradient-to-br from-indigo-400 via-violet-500 to-purple-700",
+    fromColor: "#818cf8",
+    toColor: "#7e22ce",
     header: "text-white",
     cardborder: "border-white/60 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -222,6 +240,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   tropicalsunrise: {
     name: "Tropical Sunrise",
     gradient: "bg-gradient-to-b from-blue-600 via-purple-600 to-pink-600",
+    fromColor: "#2563eb",
+    toColor: "#db2777",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-blue-400 bg-opacity-95",
@@ -238,6 +258,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   tropicalsunrise2: {
     name: "Tropical Sunrise 2",
     gradient: "bg-gradient-to-br from-cyan-400 via-purple-300 to-rose-400",
+    fromColor: "#22d3ee",
+    toColor: "#fb7185",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -254,6 +276,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   peachblossom: {
     name: "Peach Blossom",
     gradient: "bg-gradient-to-br from-red-300 via-blue-100 to-blue-300",
+    fromColor: "#fca5a5",
+    toColor: "#93c5fd",
     header: "text-indigo-900",
     cardborder: "border-indigo-300 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -270,6 +294,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   royalblue: {
     name: "Royal Blue",
     gradient: "bg-gradient-to-br from-purple-700 via-indigo-500 to-blue-500",
+    fromColor: "#7e22ce",
+    toColor: "#3b82f6",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -286,6 +312,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   sunsetglow: {
     name: "Sunset Glow",
     gradient: "bg-gradient-to-br from-orange-400 via-pink-300 to-yellow-300",
+    fromColor: "#fb923c",
+    toColor: "#fde047",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-70",
     cardbg: "bg-white bg-opacity-95",
@@ -302,6 +330,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   sageforest: {
     name: "Sage Forest",
     gradient: "bg-gradient-to-br from-indigo-100 via-slate-100 to-gray-200",
+    fromColor: "#e0e7ff",
+    toColor: "#e5e7eb",
     header: "text-emerald-900",
     cardborder: "border-emerald-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -318,6 +348,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   lemonadepop: {
     name: "Lemonade Pop",
     gradient: "bg-gradient-to-br from-yellow-100 via-yellow-300 to-amber-400",
+    fromColor: "#fef9c3",
+    toColor: "#fbbf24",
     header: "text-orange-900",
     cardborder: "border-orange-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -334,6 +366,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   icydepths: {
     name: "Icy Depths",
     gradient: "bg-gradient-to-br from-cyan-100 via-cyan-200 to-sky-200",
+    fromColor: "#cffafe",
+    toColor: "#bae6fd",
     header: "text-cyan-800 opacity-90",
     cardborder: "border-cyan-200 border-2 border-opacity-80",
     cardbg: "bg-cyan-100 bg-opacity-60",
@@ -350,6 +384,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   blushcloud: {
     name: "Blush Cloud",
     gradient: "bg-gradient-to-br from-slate-100 via-indigo-100 to-indigo-200",
+    fromColor: "#f1f5f9",
+    toColor: "#c7d2fe",
     header: "text-indigo-800",
     cardborder: "border-indigo-300 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -366,6 +402,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   mairose: {
     name: "Mai Rose",
     gradient: "bg-gradient-to-br from-pink-100 via-rose-100 to-fuchsia-200",
+    fromColor: "#fce7f3",
+    toColor: "#f5d0fe",
     header: "text-pink-900",
     cardborder: "border-pink-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -382,6 +420,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   midnightorchid: {
     name: "Midnight Orchid",
     gradient: "bg-gradient-to-br from-purple-800 via-pink-300 to-pink-100",
+    fromColor: "#6b21a8",
+    toColor: "#fce7f3",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -398,6 +438,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   oceanmist: {
     name: "Ocean Mist",
     gradient: "bg-gradient-to-br from-blue-300 via-blue-400 to-blue-700",
+    fromColor: "#93c5fd",
+    toColor: "#1d4ed8",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -414,6 +456,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   forestwhisper: {
     name: "Forest Whisper",
     gradient: "bg-gradient-to-br from-emerald-400 via-teal-400 to-cyan-400",
+    fromColor: "#34d399",
+    toColor: "#22d3ee",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -430,6 +474,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   crimsonvelvet: {
     name: "Crimson Velvet",
     gradient: "bg-gradient-to-br from-orange-400 via-red-400 to-red-600",
+    fromColor: "#fb923c",
+    toColor: "#dc2626",
     header: "text-white",
     cardborder: "border-white border-2 border-opacity-60",
     cardbg: "bg-white bg-opacity-95",
@@ -447,6 +493,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   hotchocolate: {
     name: "Hot Chocolate",
     gradient: "bg-gradient-to-br from-amber-900 via-amber-700 to-orange-800",
+    fromColor: "#78350f",
+    toColor: "#9a3412",
     header: "text-amber-100",
     cardborder: "border-orange-600 border-2",
     cardbg: "bg-amber-50 bg-opacity-95",
@@ -464,6 +512,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   coffeeandcream: {
     name: "Coffee & Cream",
     gradient: "bg-gradient-to-br from-stone-50 via-amber-100 to-stone-300",
+    fromColor: "#faf9f8",
+    toColor: "#d6d3d1",
     header: "text-stone-800",
     cardborder: "border-stone-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -481,6 +531,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   daffodillmeadow: {
     name: "Daffodil Meadow",
     gradient: "bg-gradient-to-br from-yellow-300 via-lime-300 to-green-400",
+    fromColor: "#fde047",
+    toColor: "#4ade80",
     header: "text-green-900",
     cardborder: "border-lime-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -498,6 +550,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   lakesidecamping: {
     name: "Sam's Shores",
     gradient: "bg-gradient-to-br from-blue-400 via-teal-400 to-cyan-500",
+    fromColor: "#60a5fa",
+    toColor: "#06b6d4",
     header: "text-blue-900",
     cardborder: "border-teal-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -515,6 +569,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   snowyslopes: {
     name: "Snowy Slopes",
     gradient: "bg-gradient-to-br from-slate-200 via-blue-100 to-indigo-200",
+    fromColor: "#e2e8f0",
+    toColor: "#c7d2fe",
     header: "text-slate-800",
     cardborder: "border-slate-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -532,6 +588,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   rockymountains: {
     name: "Rocky Mountains",
     gradient: "bg-gradient-to-br from-stone-500 via-slate-600 to-gray-700",
+    fromColor: "#78716c",
+    toColor: "#374151",
     header: "text-white",
     cardborder: "border-slate-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -549,6 +607,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   sunsetdrive: {
     name: "Sunset Drive",
     gradient: "bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600",
+    fromColor: "#fb923c",
+    toColor: "#9333ea",
     header: "text-white",
     cardborder: "border-pink-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -566,6 +626,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   forestpath: {
     name: "Forest Path",
     gradient: "bg-gradient-to-br from-green-600 via-emerald-500 to-teal-600",
+    fromColor: "#16a34a",
+    toColor: "#0d9488",
     header: "text-white",
     cardborder: "border-emerald-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -583,6 +645,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   oceanbreeze: {
     name: "Ocean Breeze",
     gradient: "bg-gradient-to-br from-sky-300 via-blue-400 to-indigo-500",
+    fromColor: "#7dd3fc",
+    toColor: "#6366f1",
     header: "text-white",
     cardborder: "border-blue-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -600,6 +664,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   desertbloom: {
     name: "Desert Bloom",
     gradient: "bg-gradient-to-br from-rose-300 via-orange-300 to-red-400",
+    fromColor: "#fda4af",
+    toColor: "#f87171",
     header: "text-red-900",
     cardborder: "border-orange-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -617,6 +683,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   autumnleaves: {
     name: "Autumn Leaves",
     gradient: "bg-gradient-to-br from-yellow-500 via-orange-500 to-red-500",
+    fromColor: "#eab308",
+    toColor: "#ef4444",
     header: "text-white",
     cardborder: "border-orange-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -634,6 +702,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   winterwonderland: {
     name: "Winter Wonderland",
     gradient: "bg-gradient-to-br from-sky-200 via-blue-200 to-indigo-300",
+    fromColor: "#bae6fd",
+    toColor: "#a5b4fc",
     header: "text-white",
     cardborder: "border-blue-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -651,6 +721,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   springbloom: {
     name: "Spring Bloom",
     gradient: "bg-gradient-to-br from-green-300 via-lime-300 to-yellow-400",
+    fromColor: "#86efac",
+    toColor: "#facc15",
     header: "text-white",
     cardborder: "border-lime-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -668,6 +740,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   summervibes: {
     name: "Summer Vibes",
     gradient: "bg-gradient-to-br from-yellow-400 via-orange-400 to-red-500",
+    fromColor: "#facc15",
+    toColor: "#ef4444",
     header: "text-white",
     cardborder: "border-orange-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -685,6 +759,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   starlitnight: {
     name: "Starlit Night",
     gradient: "bg-gradient-to-br from-indigo-800 via-purple-700 to-pink-600",
+    fromColor: "#3730a3",
+    toColor: "#db2777",
     header: "text-white",
     cardborder: "border-purple-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -702,6 +778,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   moonlitpath: {
     name: "Moonlit Path",
     gradient: "bg-gradient-to-br from-blue-800 via-blue-600 to-blue-500",
+    fromColor: "#1e40af",
+    toColor: "#3b82f6",
     header: "text-white",
     cardborder: "border-blue-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -719,6 +797,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   goldenhour: {
     name: "Golden Hour",
     gradient: "bg-gradient-to-br from-yellow-500 via-orange-400 to-red-300",
+    fromColor: "#eab308",
+    toColor: "#fca5a5",
     header: "text-white",
     cardborder: "border-orange-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -736,6 +816,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   twilightglow: {
     name: "Twilight Glow",
     gradient: "bg-gradient-to-br from-purple-600 via-pink-500 to-red-400",
+    fromColor: "#9333ea",
+    toColor: "#f87171",
     header: "text-white",
     cardborder: "border-pink-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -753,6 +835,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   crystalclear: {
     name: "Crystal Clear",
     gradient: "bg-gradient-to-br from-cyan-300 via-sky-300 to-blue-400",
+    fromColor: "#67e8f9",
+    toColor: "#60a5fa",
     header: "text-white",
     cardborder: "border-sky-400 border-2",
     cardbg: "bg-white bg-opacity-98",
@@ -770,6 +854,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   sunnyday: {
     name: "Sunny Day",
     gradient: "bg-gradient-to-br from-yellow-200 via-yellow-400 to-orange-300",
+    fromColor: "#fef08a",
+    toColor: "#fdba74",
     header: "text-yellow-900",
     cardborder: "border-yellow-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -788,6 +874,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     name: "Rainbow Dreams",
     gradient:
       "bg-gradient-to-br from-red-500 via-orange-400 via-yellow-300 via-green-400 via-blue-500 via-indigo-500 to-purple-600",
+    fromColor: "#ef4444",
+    toColor: "#9333ea",
     header: "text-white",
     cardborder: "border-indigo-400 border-2 shadow-sm shadow-pink-300/50",
     cardbg: "bg-white bg-opacity-95",
@@ -808,6 +896,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   sunsetbeach: {
     name: "Sunset Beach",
     gradient: "bg-gradient-to-br from-orange-300 via-pink-400 to-purple-500",
+    fromColor: "#fdba74",
+    toColor: "#a855f7",
     header: "text-orange-900",
     cardborder: "border-orange-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -825,6 +915,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   desertdunes: {
     name: "Desert Dunes",
     gradient: "bg-gradient-to-br from-yellow-300 via-orange-200 to-stone-400",
+    fromColor: "#fde047",
+    toColor: "#a8a29e",
     header: "text-stone-900",
     cardborder: "border-yellow-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -842,6 +934,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   tropicalparadise: {
     name: "Tropical Paradise",
     gradient: "bg-gradient-to-br from-green-300 via-cyan-300 to-blue-400",
+    fromColor: "#86efac",
+    toColor: "#60a5fa",
     header: "text-green-900",
     cardborder: "border-green-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -859,6 +953,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   timewarp: {
     name: "Time Warp",
     gradient: "bg-gradient-to-br from-purple-900 via-blue-700 to-pink-500",
+    fromColor: "#581c87",
+    toColor: "#ec4899",
     header: "text-white",
     cardborder: "border-purple-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -876,6 +972,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   galacticadventure: {
     name: "Galactic Adventure",
     gradient: "bg-gradient-to-br from-blue-900 via-indigo-800 to-purple-700",
+    fromColor: "#1e3a8a",
+    toColor: "#7e22ce",
     header: "text-white",
     cardborder: "border-indigo-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -893,6 +991,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   cosmicjourney: {
     name: "Cosmic Journey",
     gradient: "bg-gradient-to-br from-blue-900 via-purple-800 to-pink-700",
+    fromColor: "#1e3a8a",
+    toColor: "#be185d",
     header: "text-white",
     cardborder: "border-purple-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -910,6 +1010,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   futuristiccity: {
     name: "Futuristic City",
     gradient: "bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500",
+    fromColor: "#3b82f6",
+    toColor: "#ec4899",
     header: "text-white",
     cardborder: "border-purple-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -927,6 +1029,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   neonlights: {
     name: "Neon Lights",
     gradient: "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500",
+    fromColor: "#ec4899",
+    toColor: "#6366f1",
     header: "text-white",
     cardborder: "border-purple-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -945,6 +1049,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     name: "Cosmic Rainbow",
     gradient:
       "bg-gradient-to-br from-violet-600 via-fuchsia-500 via-pink-400 via-orange-400 via-yellow-400 via-lime-400 to-cyan-400",
+    fromColor: "#7c3aed",
+    toColor: "#22d3ee",
     header: "text-white",
     cardborder: "border-fuchsia-400 border-2 shadow-sm shadow-cyan-300/40",
     cardbg: "bg-slate-900 bg-opacity-85",
@@ -967,6 +1073,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     name: "Tropical Rainbow",
     gradient:
       "bg-gradient-to-br from-emerald-400 via-teal-400 via-cyan-400 via-blue-400 via-purple-400 via-pink-400 to-rose-400",
+    fromColor: "#34d399",
+    toColor: "#fb7185",
     header: "text-white",
     cardborder: "border-teal-300 border-2 shadow-sm shadow-pink-300/40",
     cardbg: "bg-white bg-opacity-92",
@@ -987,6 +1095,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
     name: "Sunset Rainbow",
     gradient:
       "bg-gradient-to-br from-red-400 via-orange-400 via-amber-300 via-yellow-300 via-lime-400 via-green-400 to-teal-500",
+    fromColor: "#f87171",
+    toColor: "#14b8a6",
     header: "text-white",
     cardborder: "border-orange-400 border-2 shadow-sm shadow-yellow-300/50",
     cardbg: "bg-amber-50 bg-opacity-95",
@@ -1006,6 +1116,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   monochrome: {
     name: "Monochrome",
     gradient: "bg-gradient-to-br from-white via-gray-100 to-gray-300",
+    fromColor: "#ffffff",
+    toColor: "#d1d5db",
     header: "text-gray-900",
     cardborder: "border-gray-500 border-2",
     cardbg: "bg-white bg-opacity-90",
@@ -1022,6 +1134,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   blackwhite: {
     name: "Black & White",
     gradient: "bg-gradient-to-br from-white via-gray-100 to-gray-300", // ljus bakgrund
+    fromColor: "#ffffff",
+    toColor: "#d1d5db",
     header: "text-black",
     cardborder: "border-black border-opacity-50 border-2",
     cardbg: "bg-white bg-opacity-100",
@@ -1039,6 +1153,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   cherryhaze: {
     name: "Cherry Haze",
     gradient: "bg-gradient-to-br from-rose-100 via-pink-200 to-fuchsia-300",
+    fromColor: "#ffe4e6",
+    toColor: "#f0abfc",
     header: "text-fuchsia-900",
     cardborder: "border-pink-300 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -1055,6 +1171,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   glacierblue: {
     name: "Glacier Blue",
     gradient: "bg-gradient-to-br from-sky-100 via-blue-200 to-cyan-300",
+    fromColor: "#e0f2fe",
+    toColor: "#67e8f9",
     header: "text-blue-900",
     cardborder: "border-blue-300 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -1071,6 +1189,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   spicypaprika: {
     name: "Spicy Paprika",
     gradient: "bg-gradient-to-br from-orange-300 via-red-400 to-amber-500",
+    fromColor: "#fdba74",
+    toColor: "#f59e0b",
     header: "text-red-900",
     cardborder: "border-orange-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -1087,6 +1207,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   ilovebroccoli: {
     name: "I Love Broccoli",
     gradient: "bg-gradient-to-br from-lime-200 via-emerald-300 to-green-500",
+    fromColor: "#bef264",
+    toColor: "#22c55e",
     header: "text-green-900",
     cardborder: "border-lime-400 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -1103,6 +1225,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   samtheman: {
     name: "Skane Griffin",
     gradient: "bg-gradient-to-br from-blue-900 via-blue-800 to-red-700",
+    fromColor: "#1e3a8a",
+    toColor: "#b91c1c",
     header: "text-white",
     cardborder: "border-red-700 border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -1119,6 +1243,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   colafloat: {
     name: "Cola Float",
     gradient: "bg-gradient-to-br from-[#402218] via-[#8B4513] to-[#fef1df]", // deep cola to creamy float
+    fromColor: "#402218",
+    toColor: "#fef1df",
     header: "text-[#301911]", // dark cola brown
     cardborder: "border-[#ffe5b4] border-2", // light creamy beige
     cardbg: "bg-white bg-opacity-90",
@@ -1135,6 +1261,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   statenislandferry: {
     name: "Staten Drift",
     gradient: "bg-gradient-to-br from-[#f97316] via-[#fb923c] to-[#60a5fa]", // orange till blått
+    fromColor: "#f97316",
+    toColor: "#60a5fa",
     header: "text-[#1e3a8a]", // djup marinblå
     cardborder: "border-[#facc15] border-2", // gul nyans från livbåtar/skyltar
     cardbg: "bg-white bg-opacity-90",
@@ -1151,6 +1279,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   newyorkcab: {
     name: "N.Y. Dash",
     gradient: "bg-gradient-to-br from-[#facc15] via-[#fbbf24] to-[#1f2937]", // gul till asfaltgrå
+    fromColor: "#facc15",
+    toColor: "#1f2937",
     header: "text-[#1e1e1e]",
     cardborder: "border-[#facc15] border-2",
     cardbg: "bg-white bg-opacity-90",
@@ -1167,6 +1297,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   stockholmarchipelago: {
     name: "Skärgårdsblå",
     gradient: "bg-gradient-to-br from-[#60a5fa] via-[#93c5fd] to-[#a7f3d0]", // blå till grön
+    fromColor: "#60a5fa",
+    toColor: "#a7f3d0",
     header: "text-[#0f172a]", // marinblå
     cardborder: "border-[#cbd5e1] border-2", // skärgårdsgranit
     cardbg: "bg-white bg-opacity-95",
@@ -1183,6 +1315,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   ulurusunset: {
     name: "Uluru Sunset",
     gradient: "bg-gradient-to-br from-[#7c2d12] via-[#ea580c] to-[#fbbf24]", // röd sand till brinnande solnedgång
+    fromColor: "#7c2d12",
+    toColor: "#fbbf24",
     header: "text-[#4b1d06]", // djupt rödbrun
     cardborder: "border-[#fcd34d] border-2", // solens gula kant
     cardbg: "bg-white bg-opacity-90",
@@ -1199,6 +1333,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   greenmauihills: {
     name: "Green Maui Hills",
     gradient: "bg-gradient-to-br from-[#166534] via-[#4ade80] to-[#bbf7d0]", // djupgrönt till tropiskt ljusgrönt
+    fromColor: "#166534",
+    toColor: "#bbf7d0",
     header: "text-[#064e3b]", // mörkt tropikgrönt
     cardborder: "border-[#86efac] border-2", // fräsch ljusgrön kant
     cardbg: "bg-white bg-opacity-90",
@@ -1215,6 +1351,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   lilactwilight: {
     name: "Lilac Twilight",
     gradient: "bg-gradient-to-br from-[#c4b5fd] via-[#a78bfa] to-[#fbcfe8]", // lila till rosa pastell
+    fromColor: "#c4b5fd",
+    toColor: "#fbcfe8",
     header: "text-[#6b21a8]", // djup lila
     cardborder: "border-[#d8b4fe] border-2",
     cardbg: "bg-white bg-opacity-95",
@@ -1231,6 +1369,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   greenslimemadness: {
     name: "Green Slime Madness",
     gradient: "bg-gradient-to-br from-[#84cc16] via-[#22c55e] to-[#a3e635]", // lysande grönt till giftgrönt
+    fromColor: "#84cc16",
+    toColor: "#a3e635",
     header: "text-[#14532d]", // djungelgrönt
     cardborder: "border-[#bbf7d0] border-2", // mintig slime-kant
     cardbg: "bg-white bg-opacity-90",
@@ -1247,6 +1387,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   polarhush: {
     name: "Polar Hush",
     gradient: "bg-gradient-to-br from-[#e0f2fe] via-[#bae6fd] to-[#f0f9ff]", // isblå till nästan vit
+    fromColor: "#e0f2fe",
+    toColor: "#f0f9ff",
     header: "text-[#0c4a6e]", // djup kallblå
     cardborder: "border-[#7dd3fc] border-2", // isig turkos
     cardbg: "bg-white bg-opacity-95",
@@ -1263,6 +1405,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   bluedrift: {
     name: "Blue Drift",
     gradient: "bg-gradient-to-br from-[#0e7490] via-[#22d3ee] to-[#a5f3fc]", // djuphavsblå till turkos
+    fromColor: "#0e7490",
+    toColor: "#a5f3fc",
     header: "text-[#0f172a]", // marinblå
     cardborder: "border-[#67e8f9] border-2",
     cardbg: "bg-white bg-opacity-90",
@@ -1279,6 +1423,8 @@ export const themes: Record<ThemeName, ThemeConfig> = {
   cosmicquest: {
     name: "Cosmic Quest",
     gradient: "bg-gradient-to-br from-[#1e1b4b] via-[#7c3aed] to-[#a855f7]", // mörk rymd till lila nebulosa
+    fromColor: "#1e1b4b",
+    toColor: "#a855f7",
     header: "text-[#f0abfc]", // rymdljus
     cardborder: "border-[#a78bfa] border-2", // lila neon
     cardbg: "bg-[#0f172a] bg-opacity-90", // nästan svart med skimmer
