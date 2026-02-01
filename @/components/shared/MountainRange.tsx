@@ -7,29 +7,53 @@ export function MountainRange({ opacity = 1 }: { opacity?: number }) {
         style={{ aspectRatio: "1440 / 320" }}
         preserveAspectRatio="none"
       >
-        {/* Distant mountains — faceted low-poly silhouette */}
+        {/* Distant mountains — faceted silhouette with asymmetric peaks */}
         <path
-          d="M0,200 L70,165 L130,110 L180,30 L220,90 L260,155 L340,125 L400,65 L450,15 L500,70 L550,130 L620,100 L680,55 L730,25 L780,80 L830,140 L910,105 L970,45 L1030,5 L1080,60 L1140,125 L1210,90 L1270,40 L1320,70 L1370,120 L1440,160 L1440,320 L0,320 Z"
+          d="M0,200 L55,175 L115,130 L168,82 L188,35 L222,88 L278,152
+             L335,158 L382,118 L422,62 L450,25 L465,8 L482,38 L535,118
+             L588,150 L640,122 L688,68 L728,28 L758,65 L815,142 L862,158
+             L925,115 L968,52 L1002,15 L1038,58 L1098,142 L1155,158
+             L1220,112 L1262,52 L1298,38 L1340,105 L1398,155 L1440,168
+             L1440,320 L0,320 Z"
           fill="white"
-          opacity={0.15 * opacity}
+          opacity={0.14 * opacity}
         />
-        {/* Snow caps on the three tallest peaks */}
+
+        {/* Snow caps — jagged irregular bases on three tallest peaks */}
         <path
-          d="M1030,5 L1003,23 L1046,23 Z M450,15 L432,33 L466,33 Z M730,25 L702,42 L745,42 Z"
+          d="M465,8 L448,34 L454,28 L460,34 L468,27 L476,34 Z"
           fill="white"
           opacity={0.5 * opacity}
         />
-        {/* Middle mountains */}
         <path
-          d="M0,245 L80,215 L150,240 L230,180 L290,220 L370,165 L440,200 L510,150 L570,185 L650,145 L720,180 L800,140 L870,175 L950,148 L1020,185 L1100,155 L1170,195 L1250,160 L1340,200 L1440,225 L1440,320 L0,320 Z"
+          d="M728,28 L706,56 L715,48 L724,56 L735,48 L748,56 Z"
           fill="white"
-          opacity={0.25 * opacity}
+          opacity={0.5 * opacity}
         />
-        {/* Foreground hills */}
         <path
-          d="M0,278 L200,265 L380,280 L560,262 L720,275 L900,258 L1080,272 L1260,260 L1440,270 L1440,320 L0,320 Z"
+          d="M1002,15 L979,44 L988,36 L997,44 L1010,36 L1024,44 Z"
           fill="white"
-          opacity={0.35 * opacity}
+          opacity={0.5 * opacity}
+        />
+
+        {/* Middle mountains — broader, gentler peaks */}
+        <path
+          d="M0,250 L62,238 L128,254 L195,220 L258,244 L328,195 L382,232
+             L448,190 L512,228 L578,196 L645,234 L712,190 L778,226
+             L848,182 L918,222 L990,190 L1062,228 L1135,192 L1208,232
+             L1282,212 L1365,228 L1440,242
+             L1440,320 L0,320 Z"
+          fill="white"
+          opacity={0.22 * opacity}
+        />
+
+        {/* Foreground hills — smooth rolling bezier curves */}
+        <path
+          d="M0,275 C85,266 185,282 328,270 C438,260 528,278 668,267
+             C790,256 912,275 1055,264 C1172,254 1302,271 1440,266
+             L1440,320 L0,320 Z"
+          fill="white"
+          opacity={0.38 * opacity}
         />
       </svg>
     </div>
