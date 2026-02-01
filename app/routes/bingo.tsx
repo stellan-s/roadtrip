@@ -403,7 +403,7 @@ export default function Bingo() {
           />
         ) : null}
         <MountainRange opacity={0.7} />
-        <div className="h-svh overflow-y-auto py-5 flex items-center justify-center">
+        <div className="relative z-10 h-svh overflow-y-auto py-5 flex items-center justify-center">
           <div className="m-auto grid gap-1 items-center justify-center w-full">
             <BingoHeader textColorClass={themes[state.theme as Theme].textcolor} />
             <ErrorBoundaryComponent
