@@ -11,6 +11,7 @@ import styles from "./tailwind.css?url";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
   { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+  { rel: "manifest", href: "/manifest.json" },
 ];
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#12c2e9" />
         <Meta />
         <Links />
       </head>
@@ -31,6 +33,11 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}`,
+          }}
+        />
       </body>
     </html>
   );
