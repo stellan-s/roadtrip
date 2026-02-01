@@ -1,8 +1,9 @@
-import { Form } from "@remix-run/react";
+import { Form, useNavigate } from "@remix-run/react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
   ArrowRight,
+  ChevronDown,
   Globe,
   MapPin,
   Palette,
@@ -32,9 +33,10 @@ export function CustomStartForm({
   seedWord?: string;
   lang?: languageCode | null;
 }) {
+  const navigate = useNavigate();
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [theme, setTheme] = useState<string>(DEFAULT_GAME_STATE.theme);
   const [language, setLanguage] = useState<languageCode>(lang || "sv");
-
 
   const getRandomWord = () => {
     const randomWord =
@@ -42,25 +44,71 @@ export function CustomStartForm({
     handleChangeSeedWord(randomWord);
   };
 
+  const handleQuickStart = () => {
+    const seed =
+      wordSuggestions[Math.floor(Math.random() * wordSuggestions.length)];
+    const params = new URLSearchParams({ seed, language, theme });
+    const url = `/bingo?${params}`;
+
+    navigator.clipboard
+      .writeText(`${window.location.origin}${url}`)
+      .catch(() => {});
+
+    analytics.click("generate_board", {
+      formType: "quick",
+      language,
+      theme,
+    });
+
+    navigate(url);
+  };
+
   return (
-    <div className="h-full flex flex-col items-center justify-start p-0 relative">
-      <div className="w-full max-w-md relative z-10">
-        {/* Main card with enhanced styling */}
-        <div className="bg-white rounded-3xl backdrop-blur-xl p-8 shadow-2xl border border-white/30 relative">
+    <div className="w-full max-w-md flex flex-col items-center gap-4">
+      {/* Primary CTA */}
+      <Button
+        type="button"
+        onClick={handleQuickStart}
+        className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 py-4 rounded-full font-semibold text-lg transform hover:scale-105 active:scale-95"
+      >
+        <span className="flex items-center gap-3">
+          <span>Start a shared bingo</span>
+          <ArrowRight className="w-5 h-5" />
+        </span>
+      </Button>
+
+      {/* Advanced options toggle */}
+      <button
+        type="button"
+        onClick={() => setShowAdvanced(!showAdvanced)}
+        className="text-white/60 hover:text-white/90 text-sm transition-colors duration-200 flex items-center gap-1"
+      >
+        Advanced options
+        <ChevronDown
+          className={cn(
+            "w-3.5 h-3.5 transition-transform duration-200",
+            showAdvanced && "rotate-180",
+          )}
+        />
+      </button>
+
+      {/* Advanced options panel */}
+      {showAdvanced && (
+        <div className="w-full bg-white rounded-3xl backdrop-blur-xl p-6 shadow-2xl border border-white/30">
           <Form
-            className="space-y-6"
+            className="space-y-4"
             action="/bingo"
             method="get"
             onSubmit={() => {
-              analytics.click('generate_board', {
-                formType: 'custom',
+              analytics.click("generate_board", {
+                formType: "custom",
                 language,
                 theme,
-                seedWordLength: seedWord.length
+                seedWordLength: seedWord.length,
               });
             }}
           >
-            <div className="space-y-3">
+            <div className="space-y-2">
               <label
                 htmlFor="seed"
                 className="text-gray-700 text-sm font-semibold flex items-center gap-2"
@@ -88,12 +136,9 @@ export function CustomStartForm({
                   <span className="sr-only">Get random word</span>
                 </Button>
               </div>
-              <p className="text-gray-500 text-xs flex items-center gap-1">
-                This word will be used to generate your unique bingo board
-              </p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
               <label
                 htmlFor="language"
                 className="text-gray-700 text-sm font-semibold flex items-center gap-2"
@@ -101,33 +146,32 @@ export function CustomStartForm({
                 <Globe className="w-4 h-4 text-green-500" />
                 Language
               </label>
-              <div className="relative">
-                <Select
-                  name="language"
-                  value={language}
-                  onValueChange={(val) => setLanguage(val as languageCode)}
-                >
-                  <SelectTrigger className="bg-gradient-to-r from-white to-green-50/50 border-2 border-gray-200 text-gray-900 py-3 rounded-full focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 hover:border-green-300">
-                    <SelectValue placeholder="Select language" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-gray-200 rounded-none shadow-xl">
-                    {languages.map((lang) => (
-                      <SelectItem
-                        key={lang.code}
-                        value={lang.code}
-                        className="text-gray-900 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-none m-1"
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="text-lg">{lang.flag}</span>
-                          <span className="font-medium">{lang.name}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <Select
+                name="language"
+                value={language}
+                onValueChange={(val) => setLanguage(val as languageCode)}
+              >
+                <SelectTrigger className="bg-gradient-to-r from-white to-green-50/50 border-2 border-gray-200 text-gray-900 py-3 rounded-full focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 hover:border-green-300">
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-gray-200 rounded-none shadow-xl">
+                  {languages.map((lang) => (
+                    <SelectItem
+                      key={lang.code}
+                      value={lang.code}
+                      className="text-gray-900 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-none m-1"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-lg">{lang.flag}</span>
+                        <span className="font-medium">{lang.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            <div className="space-y-3">
+
+            <div className="space-y-2">
               <label
                 htmlFor="theme"
                 className="text-gray-700 text-sm font-semibold flex items-center gap-2"
@@ -135,60 +179,58 @@ export function CustomStartForm({
                 <Palette className="w-4 h-4 text-green-500" />
                 Theme
               </label>
-              <div className="relative">
-                <Select
-                  name="theme"
-                  value={theme}
-                  onValueChange={(newTheme) => {
-                    analytics.themeChange(newTheme, {
-                      context: 'form_selection',
-                      previousTheme: theme
-                    });
-                    setTheme(newTheme);
-                  }}
-                >
-                  <SelectTrigger className="bg-gradient-to-r from-white to-green-50/50 border-2 border-gray-200 text-gray-900 py-3 rounded-full focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 hover:border-green-300">
-                    <SelectValue placeholder="Select theme" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white border-gray-200 rounded-none shadow-xl">
-                    {Object.keys(themes).map((key) => {
-                      const theme = themes[key as keyof typeof themes];
-                      return (
-                        <SelectItem
-                          key={key}
-                          value={key}
-                          className="text-gray-900 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-none m-1"
-                        >
-                          <div className="flex items-center gap-3">
-                            <div
-                              className={cn(
-                                "rounded-full h-5 w-5",
-                                theme.gradient,
-                              )}
-                            ></div>
-                            <span className="font-medium">{theme.name}</span>
-                          </div>
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectContent>
-                </Select>
-              </div>
+              <Select
+                name="theme"
+                value={theme}
+                onValueChange={(newTheme) => {
+                  analytics.themeChange(newTheme, {
+                    context: "form_selection",
+                    previousTheme: theme,
+                  });
+                  setTheme(newTheme);
+                }}
+              >
+                <SelectTrigger className="bg-gradient-to-r from-white to-green-50/50 border-2 border-gray-200 text-gray-900 py-3 rounded-full focus:border-green-500 focus:ring-4 focus:ring-green-500/20 transition-all duration-200 hover:border-green-300">
+                  <SelectValue placeholder="Select theme" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-gray-200 rounded-none shadow-xl">
+                  {Object.keys(themes).map((key) => {
+                    const theme = themes[key as keyof typeof themes];
+                    return (
+                      <SelectItem
+                        key={key}
+                        value={key}
+                        className="text-gray-900 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 rounded-none m-1"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={cn(
+                              "rounded-full h-5 w-5",
+                              theme.gradient,
+                            )}
+                          ></div>
+                          <span className="font-medium">{theme.name}</span>
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
             </div>
+
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 py-4 rounded-full font-semibold text-lg transform hover:scale-105 active:scale-95"
+              className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 py-3 rounded-full font-semibold"
               disabled={!seedWord.trim()}
             >
-              <span className="flex items-center gap-3">
+              <span className="flex items-center gap-2">
                 <span>Get your board</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4" />
               </span>
             </Button>
           </Form>
-
         </div>
-      </div>
+      )}
     </div>
   );
 }

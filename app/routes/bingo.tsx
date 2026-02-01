@@ -3,6 +3,7 @@ import { BingoGrid } from "@/components/bingo/BingoGrid";
 import { BingoHeader } from "@/components/bingo/BingoHeader";
 import { BingoOverlay } from "@/components/bingo/BingoOverlay";
 import { ErrorBoundary as ErrorBoundaryComponent } from "@/components/shared/ErrorBoundary";
+import { MountainRange } from "@/components/shared/MountainRange";
 import { Button } from "@/components/ui/button";
 import { analytics } from "@/lib/analytics";
 import {
@@ -25,6 +26,7 @@ import {
 } from "@remix-run/react";
 import { Check, ChevronsUpDown, Loader, Palette, Share2 } from "lucide-react";
 import {
+  ReactNode,
   startTransition,
   useEffect,
   useReducer,
@@ -36,10 +38,12 @@ import { Theme, themes } from "@/lib/themes";
 import {
   cn,
   checkBingo,
+  findWinningPattern,
   cleanupLegacyStorage,
   loadGameState,
   saveGameState,
 } from "@/lib/utils";
+import { iconMap } from "@/constants/iconMap";
 import { languageCode } from "@/constants/languages";
 import { DEFAULT_GAME_STATE } from "@/lib/constants";
 
@@ -226,6 +230,7 @@ export default function Bingo() {
   });
 
   const [isBingo, setIsBingo] = useState(false);
+  const [winningTiles, setWinningTiles] = useState<{ icon: ReactNode; label: string }[]>([]);
   const [copied, setCopied] = useState(false);
   const navigate = useNavigate();
   const [isInitialized, setIsInitialized] = useState(false);
@@ -299,7 +304,17 @@ export default function Bingo() {
   useEffect(() => {
     if (!state?.markeditems) return;
 
-    if (checkBingo(state.markeditems.map((item) => (item === 0 ? 0 : 1)))) {
+    const binaryMarked = state.markeditems.map((item) => (item === 0 ? 0 : 1));
+    if (checkBingo(binaryMarked)) {
+      const pattern = findWinningPattern(binaryMarked);
+      if (pattern) {
+        setWinningTiles(
+          pattern.map((i) => ({
+            icon: iconMap[bingoGrid[i].key],
+            label: bingoGrid[i].text,
+          })),
+        );
+      }
       setIsBingo(true);
     }
   }, [state?.markeditems]);
@@ -328,6 +343,7 @@ export default function Bingo() {
 
   const handleStartOver = () => {
     handleReset();
+    setWinningTiles([]);
     setTimeout(() => {
       startTransition(() => {
         navigate(`/`);
@@ -383,8 +399,10 @@ export default function Bingo() {
             show={isBingo}
             onClick={handleStartOver}
             text={UiText[language].bingoStartOver}
+            winningTiles={winningTiles}
           />
         ) : null}
+        <MountainRange opacity={0.7} />
         <div className="h-svh overflow-y-auto py-5 flex items-center justify-center">
           <div className="m-auto grid gap-1 items-center justify-center w-full">
             <BingoHeader textColorClass={themes[state.theme as Theme].textcolor} />

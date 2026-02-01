@@ -33,6 +33,20 @@ export const checkBingo = (markedItems: number[]): boolean => {
   ].some(checkPattern);
 };
 
+export const findWinningPattern = (markedItems: number[]): readonly number[] | null => {
+  const allPatterns = [
+    ...BINGO_PATTERNS.rows,
+    ...BINGO_PATTERNS.cols,
+    ...BINGO_PATTERNS.diagonals,
+  ];
+
+  return (
+    allPatterns.find((pattern) =>
+      pattern.every((index) => markedItems[index] !== 0),
+    ) ?? null
+  );
+};
+
 export const cleanupLegacyStorage = () => {
   if (typeof window === "undefined") return;
 

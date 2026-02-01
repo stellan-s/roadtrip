@@ -21,6 +21,22 @@
   animation: celebrateIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s forwards;
 }
 
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+@keyframes flipTile {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
 .neon-text {
   font-family: "Arial", sans-serif;
   text-align: center;
