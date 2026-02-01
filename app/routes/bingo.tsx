@@ -195,12 +195,9 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const title = `Roadtrip Bingo — ${seed}`;
   const description = `Play roadtrip bingo with the "${seed}" board. Share this link and everyone gets the same cards.`;
   const url = `https://roadtrip-bingo.netlify.app/bingo?seed=${encodeURIComponent(seed)}`;
-  const themeName = (data?.theme || "tropicalsunrise") as Theme;
-  const themeConfig = themes[themeName];
 
   return [
     { title },
-    { name: "theme-color", content: themeConfig?.fromColor || "#12c2e9" },
     { name: "description", content: description },
     { property: "og:site_name", content: "Roadtrip Bingo" },
     { property: "og:title", content: title },
@@ -327,10 +324,21 @@ export default function Bingo() {
     if (!isInitialized || !state?.theme) return;
     const t = themes[state.theme as Theme];
     if (!t) return;
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", t.fromColor);
+
+    // Manage theme-color via a dedicated element so Remix's <Meta /> reconciliation
+    // doesn't overwrite it on every re-render
+    let metaEl = document.getElementById("dynamic-theme-color") as HTMLMetaElement | null;
+    if (!metaEl) {
+      metaEl = document.createElement("meta");
+      metaEl.id = "dynamic-theme-color";
+      metaEl.name = "theme-color";
+      document.head.appendChild(metaEl);
+    }
+    metaEl.content = t.fromColor;
+
+    // html background shows in the bottom safe area (home indicator on iOS)
     document.documentElement.style.backgroundColor = t.toColor;
-    document.body.style.backgroundColor = t.toColor;
+    document.body.style.backgroundColor = t.fromColor;
     document.body.style.backgroundImage = `linear-gradient(to bottom, ${t.fromColor}, ${t.toColor})`;
   }, [state?.theme, isInitialized]);
 
