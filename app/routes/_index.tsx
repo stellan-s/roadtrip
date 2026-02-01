@@ -30,7 +30,6 @@ export const meta: MetaFunction = () => {
     { property: "twitter:title", content: title },
     { property: "twitter:description", content: description },
     { property: "twitter:image", content: `${BASE_URL}/og-image.png` },
-    { name: "theme-color", content: "#12c2e9" },
   ];
 };
 
@@ -40,9 +39,17 @@ export default function Index() {
 
   // Reset meta/body background to landing defaults (in case navigating back from bingo)
   useEffect(() => {
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", "#12c2e9");
-    document.documentElement.style.backgroundColor = "#12c2e9";
+    let metaEl = document.getElementById("dynamic-theme-color") as HTMLMetaElement | null;
+    if (!metaEl) {
+      metaEl = document.createElement("meta");
+      metaEl.id = "dynamic-theme-color";
+      metaEl.name = "theme-color";
+      document.head.appendChild(metaEl);
+    }
+    metaEl.content = "#12c2e9";
+
+    // html background shows in the bottom safe area (home indicator on iOS)
+    document.documentElement.style.backgroundColor = "#f64f59";
     document.body.style.backgroundColor = "#12c2e9";
     document.body.style.backgroundImage =
       "linear-gradient(to bottom, #12c2e9, #c471ed, #f64f59)";
