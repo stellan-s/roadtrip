@@ -329,7 +329,7 @@ export default function Bingo() {
     if (!t) return;
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", t.fromColor);
-    document.documentElement.style.backgroundColor = t.fromColor;
+    document.documentElement.style.backgroundColor = t.toColor;
     document.body.style.backgroundColor = t.toColor;
     document.body.style.backgroundImage = `linear-gradient(to bottom, ${t.fromColor}, ${t.toColor})`;
   }, [state?.theme, isInitialized]);
