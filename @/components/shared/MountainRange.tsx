@@ -119,8 +119,8 @@ export function MountainRange({
 
       {/* Foreground foothills */}
       <path
-        d="M0,302 C88,288 190,302 320,294 C458,286 566,308 700,296
-           C842,284 956,306 1100,294 C1224,284 1334,304 1440,296
+        d="M0,314 C88,300 190,314 320,306 C458,298 566,320 700,308
+           C842,296 956,318 1100,306 C1224,296 1334,316 1440,308
            L1440,360 L0,360 Z"
         fill={inkColor}
         opacity={0.18 * opacity}
@@ -160,7 +160,7 @@ export function MountainRange({
            L1398,298 L1404,321 L1410,309 L1416,320 L1422,305 L1428,319 L1434,293 L1440,318
            L1440,360 L0,360 Z"
         fill={inkColor}
-        transform="matrix(1 0 0 0.62 0 136.8)"
+        transform="matrix(1 0 0 0.62 0 144)"
         opacity={0.18 * opacity}
       />
     </>
@@ -170,7 +170,7 @@ export function MountainRange({
     <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none flex justify-center">
       <svg
         viewBox="0 120 1440 240"
-        className="h-60 min-w-[180vw] w-auto max-w-none flex-shrink-0 sm:hidden"
+        className="h-60 min-w-[180vw] w-auto max-w-none flex-shrink-0 lg:hidden"
         preserveAspectRatio="xMidYMid slice"
         role="presentation"
         aria-hidden="true"
@@ -179,7 +179,7 @@ export function MountainRange({
       </svg>
       <svg
         viewBox="0 120 1440 240"
-        className="hidden h-60 w-full flex-shrink-0 sm:block sm:h-80"
+        className="hidden h-60 w-full flex-shrink-0 lg:block lg:h-80"
         preserveAspectRatio="none"
         role="presentation"
         aria-hidden="true"
