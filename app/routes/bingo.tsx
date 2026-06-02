@@ -29,6 +29,7 @@ import {
   ReactNode,
   startTransition,
   useEffect,
+  useMemo,
   useReducer,
   useState,
 } from "react";
@@ -217,7 +218,10 @@ export default function Bingo() {
   const { seed, language: rawLanguage, theme } = useLoaderData<typeof loader>();
   const language = rawLanguage as languageCode;
   const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
-  const bingoGrid = generateBingoGrid(seed ?? "", language, 25);
+  const bingoGrid = useMemo(
+    () => generateBingoGrid(seed ?? "", language, 25),
+    [seed, language],
+  );
   const [, setSearchParams] = useSearchParams();
 
   const { reward } = useReward("rewardId", "confetti", {
@@ -298,7 +302,7 @@ export default function Bingo() {
     } catch (error) {
       console.error("Failed to persist game state:", error);
     }
-  }, [isInitialized, state?.markeditems, state?.theme, theme]);
+  }, [isInitialized, language, seed, state?.markeditems, state?.theme, theme]);
 
   // Bingo check (separate concern)
   useEffect(() => {
@@ -316,8 +320,12 @@ export default function Bingo() {
         );
       }
       setIsBingo(true);
+      return;
     }
-  }, [state?.markeditems]);
+
+    setWinningTiles([]);
+    setIsBingo(false);
+  }, [bingoGrid, state?.markeditems]);
 
   // Sync meta theme-color and body background to active theme
   useEffect(() => {
@@ -391,6 +399,7 @@ export default function Bingo() {
   };
 
   if (!state) return null;
+  const activeTheme = themes[state.theme as Theme];
 
   return (
     <div className="w-full h-screen relative">
@@ -425,7 +434,12 @@ export default function Bingo() {
             winningTiles={winningTiles}
           />
         ) : null}
-        <MountainRange opacity={0.7} />
+        <MountainRange
+          opacity={0.7}
+          fromColor={activeTheme.fromColor}
+          toColor={activeTheme.toColor}
+          ink="dark"
+        />
         <div className="relative z-10 h-svh overflow-y-auto py-5 flex items-center justify-center">
           <div className="m-auto grid gap-1 items-center justify-center w-full">
             <BingoHeader textColorClass={themes[state.theme as Theme].textcolor} />

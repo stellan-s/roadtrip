@@ -8,6 +8,9 @@ import { useEffect, useState } from "react";
 import { analytics } from "@/lib/analytics";
 
 const BASE_URL = "https://roadtrip-bingo.netlify.app";
+const LANDING_FROM_COLOR = "#12c2e9";
+const LANDING_MID_COLOR = "#c471ed";
+const LANDING_TO_COLOR = "#f64f59";
 
 export const links: LinksFunction = () => [
   { rel: "canonical", href: BASE_URL },
@@ -46,13 +49,13 @@ export default function Index() {
       metaEl.name = "theme-color";
       document.head.appendChild(metaEl);
     }
-    metaEl.content = "#12c2e9";
+    metaEl.content = LANDING_FROM_COLOR;
 
     // html background shows in the bottom safe area (home indicator on iOS)
-    document.documentElement.style.backgroundColor = "#f64f59";
-    document.body.style.backgroundColor = "#12c2e9";
+    document.documentElement.style.backgroundColor = LANDING_TO_COLOR;
+    document.body.style.backgroundColor = LANDING_FROM_COLOR;
     document.body.style.backgroundImage =
-      "linear-gradient(to bottom, #12c2e9, #c471ed, #f64f59)";
+      `linear-gradient(to bottom, ${LANDING_FROM_COLOR}, ${LANDING_MID_COLOR}, ${LANDING_TO_COLOR})`;
   }, []);
 
   // synchronize initially
@@ -92,7 +95,11 @@ export default function Index() {
   return (
     <ErrorBoundary>
       <div className="min-h-screen w-full relative">
-        <MountainRange />
+        <MountainRange
+          fromColor={LANDING_FROM_COLOR}
+          toColor={LANDING_TO_COLOR}
+          ink="dark"
+        />
 
         {/* Header — absolute so it doesn't offset the vertical centering */}
         <div className="absolute top-0 left-0 right-0 z-20 px-2 md:px-6 pt-1">

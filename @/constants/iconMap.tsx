@@ -22,18 +22,14 @@ import {
   CarFront,
   TowerControl,
   CloudRain,
-  Caravan,
   Cctv,
   Telescope,
   Caravan as Van,
-  Check,
-  RefreshCcw,
-  Wind,
   Ship,
   Coffee,
 } from "lucide-react";
 import { FaHatCowboySide, FaHelicopter } from "react-icons/fa";
-import { TbCamper, TbRollercoaster, TbHelicopter } from "react-icons/tb";
+import { TbCamper, TbRollercoaster } from "react-icons/tb";
 import {
   IoFastFoodOutline,
   IoCarSportSharp,
@@ -44,7 +40,6 @@ import { PiBarnDuotone, PiPoliceCarFill, PiWindmill } from "react-icons/pi";
 import {
   FaBridge,
   FaCarTunnel,
-  FaFerry,
   FaMotorcycle,
   FaMountainCity,
 } from "react-icons/fa6";

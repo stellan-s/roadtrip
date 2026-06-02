@@ -12,13 +12,16 @@ export type GameState = {
   markeditems: (string | 0)[];
 };
 
-const isValidGameState = (state: any): state is GameState => {
+const isValidGameState = (state: unknown): state is GameState => {
+  if (!state || typeof state !== "object") {
+    return false;
+  }
+
+  const candidate = state as { theme?: unknown; markeditems?: unknown };
   return (
-    state &&
-    typeof state === "object" &&
-    typeof state.theme === "string" &&
-    Array.isArray(state.markeditems) &&
-    state.markeditems.length === 25
+    typeof candidate.theme === "string" &&
+    Array.isArray(candidate.markeditems) &&
+    candidate.markeditems.length === 25
   );
 };
 

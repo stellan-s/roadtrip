@@ -33,18 +33,19 @@ export const Header = ({
         className={`w-full py-3 px-3 flex justify-between items-start ${className}`}
       >
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
-            <svg viewBox="0 0 24 24" className="h-5 w-5">
-              <rect x="2" y="2" width="20" height="20" rx="2.5" fill="none" stroke="white" strokeWidth="1.5" opacity="0.8" />
-              <line x1="2" y1="8.67" x2="22" y2="8.67" stroke="white" strokeWidth="1" opacity="0.5" />
-              <line x1="2" y1="15.33" x2="22" y2="15.33" stroke="white" strokeWidth="1" opacity="0.5" />
-              <line x1="8.67" y1="2" x2="8.67" y2="22" stroke="white" strokeWidth="1" opacity="0.5" />
-              <line x1="15.33" y1="2" x2="15.33" y2="22" stroke="white" strokeWidth="1" opacity="0.5" />
-              <circle cx="5.33" cy="5.33" r="2" fill="white" />
-              <circle cx="12" cy="12" r="2" fill="white" />
-              <circle cx="18.67" cy="18.67" r="2" fill="white" />
-            </svg>
-          </div>
+          <svg
+            viewBox="0 0 36 24"
+            className="h-7 w-10.5 md:h-8 md:w-12 shrink-0"
+          >
+            <g fill="none" stroke="white" strokeWidth="1.8" strokeLinecap="round">
+              <circle cx="6" cy="12" r="5" />
+              <circle cx="18" cy="12" r="5" />
+              <circle cx="30" cy="12" r="5" opacity="0.4" />
+              <circle cx="6" cy="12" r="2" strokeWidth="1.3" />
+              <circle cx="18" cy="12" r="2" strokeWidth="1.3" />
+              <circle cx="30" cy="12" r="2" strokeWidth="1.3" opacity="0.4" />
+            </g>
+          </svg>
           <h1 className="hidden sm:block text-xl md:text-2xl font-bold bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-wider">
             Roadtrip Bingo
           </h1>

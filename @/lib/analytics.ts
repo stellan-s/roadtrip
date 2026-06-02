@@ -33,7 +33,7 @@ function getUserId(): string | undefined {
 interface TrackEventParams {
   eventType: string
   eventName: string
-  properties?: Record<string, any>
+  properties?: Record<string, unknown>
 }
 
 export async function trackEvent({ eventType, eventName, properties = {} }: TrackEventParams) {
@@ -71,18 +71,18 @@ export async function trackEvent({ eventType, eventName, properties = {} }: Trac
 
 // Convenience functions for common events
 export const analytics = {
-  pageView: (pageName: string, properties?: Record<string, any>) =>
+  pageView: (pageName: string, properties?: Record<string, unknown>) =>
     trackEvent({ eventType: 'page_view', eventName: pageName, properties }),
 
-  gameStart: (properties?: Record<string, any>) =>
+  gameStart: (properties?: Record<string, unknown>) =>
     trackEvent({ eventType: 'game', eventName: 'game_start', properties }),
 
-  gameComplete: (properties?: Record<string, any>) =>
+  gameComplete: (properties?: Record<string, unknown>) =>
     trackEvent({ eventType: 'game', eventName: 'game_complete', properties }),
 
-  themeChange: (theme: string, properties?: Record<string, any>) =>
+  themeChange: (theme: string, properties?: Record<string, unknown>) =>
     trackEvent({ eventType: 'interaction', eventName: 'theme_change', properties: { theme, ...properties } }),
 
-  click: (element: string, properties?: Record<string, any>) =>
+  click: (element: string, properties?: Record<string, unknown>) =>
     trackEvent({ eventType: 'interaction', eventName: 'click', properties: { element, ...properties } }),
 }

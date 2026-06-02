@@ -43,15 +43,20 @@ const projectRoot = path.resolve(__dirname, "../..");
 const jsonPath = path.join(projectRoot, "app", "items", "items.json");
 
 const raw = fs.readFileSync(jsonPath, "utf-8");
-const items = JSON.parse(raw);
+const items = JSON.parse(raw) as Array<{
+  key: string;
+  text: Record<string, string>;
+}>;
 
 // Transform…
-const hyphenated = items.map((item: any) => ({
+const hyphenated = items.map((item) => ({
   key: item.key,
   text: Object.fromEntries(
     Object.entries(item.text).map(([lang, txt]) => [
       lang,
-      softHyphenate(lang as keyof typeof hyphers, txt as string),
+      lang in hyphers
+        ? softHyphenate(lang as keyof typeof hyphers, txt)
+        : txt,
     ]),
   ),
 }));

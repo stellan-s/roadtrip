@@ -50,7 +50,9 @@ const hyphenated = items.map((item) => ({
     key: item.key,
     text: Object.fromEntries(Object.entries(item.text).map(([lang, txt]) => [
         lang,
-        softHyphenate(lang, txt),
+        lang in hyphers
+            ? softHyphenate(lang, txt)
+            : txt,
     ])),
 }));
 // Write out a TS module

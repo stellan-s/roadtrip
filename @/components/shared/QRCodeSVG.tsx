@@ -1,5 +1,4 @@
 // app/components/QRCodeDisplay.jsx
-import React from "react";
 import { QRCodeCanvas } from "qrcode.react"; // eller QRCodeSVG för SVG-output
 
 /**
