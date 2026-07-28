@@ -6,6 +6,7 @@ import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { Sparkles, Share2, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { analytics } from "@/lib/analytics";
+import { LastGame, loadLastGame } from "@/lib/utils";
 
 const BASE_URL = "https://roadtrip-bingo.netlify.app";
 const LANDING_FROM_COLOR = "#12c2e9";
@@ -39,6 +40,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const [seedWord, setSeedWord] = useState("");
   const [lang, setLang] = useState<"sv" | "en" | null>(null);
+  const [lastGame, setLastGame] = useState<LastGame | null>(null);
 
   // Reset meta/body background to landing defaults (in case navigating back from bingo)
   useEffect(() => {
@@ -63,6 +65,8 @@ export default function Index() {
     if (typeof window === "undefined") {
       return;
     }
+
+    setLastGame(loadLastGame());
 
     const itemString = window.localStorage.getItem("language");
 
@@ -120,6 +124,7 @@ export default function Index() {
             handleChangeSeedWord={handleChangeSeedWord}
             seedWord={seedWord}
             lang={lang}
+            lastGame={lastGame}
           />
         </div>
       </div>

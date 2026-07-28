@@ -41,6 +41,7 @@ import {
   checkBingo,
   findWinningPattern,
   cleanupLegacyStorage,
+  saveLastGame,
   loadGameState,
   saveGameState,
 } from "@/lib/utils";
@@ -249,6 +250,7 @@ export default function Bingo() {
     // Initialization
     if (!isInitialized) {
       cleanupLegacyStorage();
+      saveLastGame({ seed, language, theme });
 
       const gameState = loadGameState();
       saveGameState(gameState);
@@ -285,6 +287,12 @@ export default function Bingo() {
     if (!state?.markeditems || !state?.theme) return;
 
     try {
+      saveLastGame({
+        seed,
+        language,
+        theme: state.theme,
+      });
+
       const currentState = loadGameState();
       const markedChanged =
         JSON.stringify(currentState.markeditems) !==

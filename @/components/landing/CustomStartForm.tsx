@@ -21,17 +21,19 @@ import { languageCode, languages } from "@/constants/languages";
 import { wordSuggestions } from "@/constants/wordSuggestions";
 import { themes } from "@/lib/themes";
 import { DEFAULT_GAME_STATE } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { cn, type LastGame } from "@/lib/utils";
 import { analytics } from "@/lib/analytics";
 
 export function CustomStartForm({
   handleChangeSeedWord,
   seedWord = "",
   lang,
+  lastGame,
 }: {
   handleChangeSeedWord: (seed: string) => void;
   seedWord?: string;
   lang?: languageCode | null;
+  lastGame?: LastGame | null;
 }) {
   const navigate = useNavigate();
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -63,8 +65,51 @@ export function CustomStartForm({
     navigate(url);
   };
 
+  const handleContinue = () => {
+    if (!lastGame) {
+      return;
+    }
+
+    const params = new URLSearchParams({
+      seed: lastGame.seed,
+      language: lastGame.language,
+      theme: lastGame.theme,
+    });
+
+    analytics.click("continue_last_game", {
+      language: lastGame.language,
+      theme: lastGame.theme,
+      seedWordLength: lastGame.seed.length,
+    });
+
+    navigate(`/bingo?${params.toString()}`);
+  };
+
   return (
     <div className="w-full max-w-md flex flex-col items-center gap-4">
+      {lastGame ? (
+        <button
+          type="button"
+          onClick={handleContinue}
+          className="w-full rounded-[1.75rem] border border-white/20 bg-black/15 px-5 py-4 text-left text-white shadow-lg backdrop-blur-md transition-colors duration-200 hover:bg-black/25"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/55">
+                Continue last game
+              </p>
+              <p className="truncate pt-1 text-lg font-semibold text-white">
+                {lastGame.seed}
+              </p>
+              <p className="pt-1 text-sm text-white/65">
+                {lastGame.language.toUpperCase()} · {themes[lastGame.theme as keyof typeof themes]?.name ?? lastGame.theme}
+              </p>
+            </div>
+            <ArrowRight className="h-5 w-5 shrink-0 text-white/70" />
+          </div>
+        </button>
+      ) : null}
+
       {/* Primary CTA */}
       <Button
         type="button"

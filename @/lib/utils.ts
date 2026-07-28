@@ -12,6 +12,13 @@ export type GameState = {
   markeditems: (string | 0)[];
 };
 
+export type LastGame = {
+  seed: string;
+  language: string;
+  theme: ThemeName | string;
+  updatedAt: string;
+};
+
 const isValidGameState = (state: unknown): state is GameState => {
   if (!state || typeof state !== "object") {
     return false;
@@ -22,6 +29,29 @@ const isValidGameState = (state: unknown): state is GameState => {
     typeof candidate.theme === "string" &&
     Array.isArray(candidate.markeditems) &&
     candidate.markeditems.length === 25
+  );
+};
+
+const isValidLastGame = (state: unknown): state is LastGame => {
+  if (!state || typeof state !== "object") {
+    return false;
+  }
+
+  const candidate = state as {
+    seed?: unknown;
+    language?: unknown;
+    theme?: unknown;
+    updatedAt?: unknown;
+  };
+
+  return (
+    typeof candidate.seed === "string" &&
+    candidate.seed.trim().length > 0 &&
+    typeof candidate.language === "string" &&
+    candidate.language.trim().length > 0 &&
+    typeof candidate.theme === "string" &&
+    candidate.theme.trim().length > 0 &&
+    typeof candidate.updatedAt === "string"
   );
 };
 
@@ -91,5 +121,44 @@ export const saveGameState = (gameState: GameState) => {
     window.localStorage.setItem("game_state", JSON.stringify(gameState));
   } catch (error) {
     console.error("Failed to save game state:", error);
+  }
+};
+
+export const loadLastGame = (): LastGame | null => {
+  if (typeof window === "undefined") return null;
+
+  const lastGameString = window.localStorage.getItem("last_game");
+
+  if (!lastGameString) {
+    return null;
+  }
+
+  try {
+    const parsedLastGame = JSON.parse(lastGameString);
+    if (isValidLastGame(parsedLastGame)) {
+      return parsedLastGame;
+    }
+
+    console.warn("Invalid last game structure, ignoring saved value");
+    return null;
+  } catch (error) {
+    console.error("Failed to parse last game:", error);
+    return null;
+  }
+};
+
+export const saveLastGame = (lastGame: Omit<LastGame, "updatedAt">) => {
+  if (typeof window === "undefined") return;
+
+  try {
+    window.localStorage.setItem(
+      "last_game",
+      JSON.stringify({
+        ...lastGame,
+        updatedAt: new Date().toISOString(),
+      }),
+    );
+  } catch (error) {
+    console.error("Failed to save last game:", error);
   }
 };
